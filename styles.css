@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+}
+
+header {
+    background-color: #763D93;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo img {
+    width: 50px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.search-bar input {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+.search-bar button {
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-icons button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 10px;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.hero-slider {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.slider img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+}
+
+.popular-categories {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.popular-categories h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.category {
+    width: 30%;
+    text-align: center;
+}
+
+.category img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.category h3 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.best-seller {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.best-seller h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.products {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.product {
+    width: 30%;
+    text-align: center;
+}
+
+.product img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product h3 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.product p {
+    margin-top: 5px;
+}
+
+.other-products {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+    background-color: #f4f4f4;
+}
+
+.other {
+    width: 40%;
+    text-align: center;
+}
+
+.other img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.other h3 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+footer {
+    background-color: #f4f4f4;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+}
