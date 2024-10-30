@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.navbar{
+    background-color: #6b20a1;
+    color: #000;
+    display:flex;
+    align-items: center;
+    padding: 10px 20px;
+
+}
+.logo img{
+    margin-right: 10px;
+    width: 45px;
+    height: 50px;
+}
+.logo{
+    display: flex;
+    align-items: center;
+}
+.logo-text{
+    font-size: 24px;
+    font-weight: bold;
+}
+.Search-bar{
+    width: 300px;
+    height: 30px;
+    margin-left: 15rem;
+    background-color: #fff;
+    border-radius: 20px;
+    padding-left: 15px;
+}
+.Search-bar input{
+    height:30px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+}
+/*1rem = 16px: 20rem=16 x 20 =320px*/
+.Search-bar button{
+    background-color: transparent;
+    border: none;
+    color: #000;
+    margin-left: 80px;
+    cursor: pointer;
+}
+.login_btn{
+    margin-left: 20rem;
+}
+.basket_btn{
+    margin-left: 50px;
+}
+nav{
+    background-color:#9337d5;
+    height: 40px;
+    text-align: center;
+    align-items: center;
+    padding-top: 10px;
+}
+nav a{
+    text-decoration: none;
+    color: #000;
+    padding: 20px;
+    margin-top: 30px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    
+  }
+    
+    /* Hide the images by default */
+  .mySlides {
+    display: none;
+  
+    /*margin-left: 85px;*/
+  }
+    
+    /* Next & previous buttons */
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius:50px;
+    user-select: none;
+  }
+  
+    
+    /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 50px;
+  }
+    
+    /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+    
+    /* Caption text */
+  .text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+    
+  
+  
+    
+    /* The dots/bullets/indicators */
+  .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+    
+  .active, .dot:hover {
+    background-color: #717171;
+  }
+    
+    /* Fading animation */
+  .fade {
+    animation-name:fade;
+    animation-duration: 1.5s;
+  }
+    
+  @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+  }
+  
+  .mySlides img{
+    width: 100%;
+    border-radius: 0;
+    /*box-shadow: 0 25px 50px rgba(0,0,0,0.5);*/
+    height: 80vh;
+  }
+  .heading1{
+    align-items: center;
+    text-align: center;
+    font-family:"Great Vibes", cursive;
+    font-size: 40px;
+  }
+  hr{
+    border: 1px solid black;
+    width: 70%;
+    margin: 0 auto;
+  }
+  .heading1 .f{
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .Catagories{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    grid-gap: 50px;
+    margin: 40px;
+
+}
+.Catagories div img{
+    box-shadow: 5px 5px 10px #8d8d8e,-10px -10px 20px #4d4d4d50;
+    width: 100%;
+    height: 50vh;
+    border-radius: 15px;
+}
+.Catagories div{
+    position: relative;
+    text-align: center;
+}
+.Catagories p{
+    
+    position: relative;
+    color: #000;
+    font-size: 30px;
+}
+
