@@ -8,56 +8,67 @@
     <link rel="stylesheet" href="Mainpage.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">
-            <img src="Aura_logo.png" alt="logo">
-            <span class="logo-text">AU-RA<br>Fragrance Your Soul</span>
-        </div>  
-        
-        <div class="Search-bar">
-            <input type="text" placeholder="Search Here">
-            <button>"</button>
-        </div>
-        <div class="login_btn">
-            <button>£</button>
-        </div>
-        <div class="basket_btn">
-            <button>$</button>
-        </div>
-        
-    </header>
+   <!-- Announcement Bar -->
+<div class="announcement-bar">
+    BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
+</div>
 
-    <nav>
-        <a href="">Home</a>
-        <a href="">Categoies</a>
-        <a href="">Shopping</a>
-        <a href="">About-US</a>
-        <a href="">Contact-Us</a>
-    </nav>  
+<!-- Main Navigation -->
+<header class="navbar">
+    <!-- Left-side Links -->
+    <div class="nav-left">
+        <a href="#">SHOP</a>
+        <a href="#">GIFTING</a>
+        <a href="#">OUR HOUSE</a>
+        <a href="#">Au-Ra SOCIETY</a>
+    </div>
+
+    <!-- Centered Logo -->
+    <div class="logo">
+        <img src="Aura_logo.png" alt="logo">
+        <span class="logo-text">AU-RA</span>
+    </div>
+
+    <!-- Right-side Links -->
+    <div class="nav-right">
+        <a href="#">SEARCH</a>
+        <a href="#">ACCOUNT</a>
+        <a href="#">COUNTRY ▼</a>
+        <a href="#">WISHLIST</a>
+        <a href="#">CART (0)</a>
+    </div>
+</header>
+
     <section>
         <div class="slideshow-container">
 
             <!-- Full-width images with number and caption text -->
             <div class="mySlides fade">
     
-                <img src="images/1.jpg" style="width:100%">
+                
+                <video style="width:100%;" autoplay muted loop preload="auto">
+                    <source src="images/video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                </video>
+                   
+                
                 <div class="text">Hampi, KA, India.</div>
             </div>
     
             <div class="mySlides fade">
     
-                <img src="images/2.jpg" style="width:100%">
+                <img src="images/7.png" style="width:100%">
                 <div class="text">Palace of Westminster and Big Ben, London, England.</div>
             </div>
     
             <div class="mySlides fade">
     
-                <img src="images/8.png" style="width:100%">
+                <img src="images/6.png" style="width:100%">
                 <div class="text">Nueva York, NY, Estados Unidos.</div>
             </div>
             <div class="mySlides fade">
     
-                <img src="images/7.png" style="width:100%">
+                <img src="images/8.png" style="width:100%">
                 <div class="text">Louvre Museum, Paris, France</div>
             </div>
             <div class="mySlides fade">
@@ -104,5 +115,129 @@
 
         </div>
     </section>
+    <!-- Bestseller Section -->
+    <section class="bestseller-section">
+        <div class="heading1">
+            <hr class="f">
+            <h1>Bestsellers</h1>
+            <hr>
+        </div>
+        <div class="bestseller-grid">
+            <div class="product">
+                <a href=".html">
+                    
+                    <img src="images/2.jpg" alt="oriental vanilla Perfume">
+                    <p class="product-type">Perfume Oil</p>
+                    <h3>OCEAN DUST</h3>
+                    <p>£160.00</p>
+            </a>
+        </div>
+        <div class="product">
+        
+            <img src="images/3.jpg" alt="Abid Ambre Eau De Parfum">
+            <p class="product-type">Eau De Parfum</p>
+            <h3>ABID AMBRE</h3>
+            <p>£70.00</p>
+            <p>1 size</p>
+        </div>
+        <div class="product">
+           
+            <img src="images/4.jpg" alt="Evano Perfume Oil">
+            <p class="product-type">Perfume Oil</p>
+            <h3>EVANO</h3>
+            <p>From £21.00</p>
+            <p>4 sizes</p>
+        </div>
+    </div>
+</section>
+
+<!-- From the Blog Section -->
+<section class="blog-section">
+    <div class="heading1">
+        <hr class="f">
+        <h1>From the Blog</h1>
+        <hr>
+    </div>
+    <div class="blog-grid">
+        <div class="blog-post">
+            <img src="images/blog1.webp" alt="Fragrance Oils">
+            <h3>Fragrance Oils vs. Essential Oils: What is the Difference?</h3>
+        </div>
+        <div class="blog-post">
+            <img src="images/blog2.webp" alt="Can Perfume Go Off?">
+            <h3>Can Perfume Go Off?</h3>
+        </div>
+        <div class="blog-post">
+            <img src="images/blog3.webp" alt="How is Perfume Made?">
+            <h3>How is Perfume Made?</h3>
+        </div>
+    </div>
+</section>
+
 </body>
+<!-- Footer Section -->
+<footer>
+    <div class="footer-content">
+        <!-- Newsletter Subscription -->
+        <div class="newsletter">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Be the first to discover new arrivals and insider news.</p>
+            <form>
+                <input type="email" placeholder="Email *" required>
+                <label>
+                    <input type="checkbox"> Yes, subscribe me to your newsletter.
+                </label>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <div>
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">Shop All</a></li>
+                    <li><a href="#">Body</a></li>
+                    <li><a href="#">Home Scents</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Accessibility Statement</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Headquarters</h4>
+                <p>500 Terry Francine Street<br>San Francisco, CA 94158<br>info@mysite.com<br>123-456-7890</p>
+            </div>
+            <div>
+                <h4>Socials</h4>
+                <ul>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Methods Section -->
+    <div class="payment-methods">
+        <p>Pay Securely with</p>
+        <img src="images/payment.png" alt="Payment Methods" style="width: auto; height: 30px;">
+        <p>These payment methods are for illustrative purposes only. Update this section to show the payment methods your website accepts based on your payment processor(s).</p>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="footer-bottom">
+        <p>© 2035 by NOUS DEUX FRAGRANCES. Built on Wix Studio™</p>
+    </div>
+</footer>
+
 </html>

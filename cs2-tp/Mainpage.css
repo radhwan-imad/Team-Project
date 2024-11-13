@@ -1,78 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 
-
-
-
-
-*{
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.navbar{
-    background-color: #6b20a1;
-    color: #000;
-    display:flex;
-    align-items: center;
-    padding: 10px 20px;
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fdf5e6; /* Cream-white color */
+    color: #333;
 }
-.logo img{
-    margin-right: 10px;
-    width: 45px;
-    height: 50px;
-}
-.logo{
-    display: flex;
-    align-items: center;
-}
-.logo-text{
-    font-size: 24px;
-    font-weight: bold;
-}
-.Search-bar{
-    width: 300px;
-    height: 30px;
-    margin-left: 15rem;
-    background-color: #fff;
-    border-radius: 20px;
-    padding-left: 15px;
-}
-.Search-bar input{
-    height:30px;
-    padding-left: 10px;
-    border: none;
-    outline: none;
-}
-/*1rem = 16px: 20rem=16 x 20 =320px*/
-.Search-bar button{
-    background-color: transparent;
-    border: none;
-    color: #000;
-    margin-left: 80px;
-    cursor: pointer;
-}
-.login_btn{
-    margin-left: 20rem;
-}
-.basket_btn{
-    margin-left: 50px;
-}
-nav{
-    background-color:#9337d5;
-    height: 40px;
+
+/* Announcement Bar Styling */
+.announcement-bar {
+    background-color: #a27b5c; /* Match the brown color */
+    color: white;
     text-align: center;
-    align-items: center;
-    padding-top: 10px;
-}
-nav a{
-    text-decoration: none;
-    color: #000;
-    padding: 20px;
-    margin-top: 30px;
+    padding: 10px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 0.9em;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f5f0eb; /* Match cream-white background */
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+}
+
+/* Left and Right Navigation Links */
+.nav-left, .nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-left a, .nav-right a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+/* Logo Centered */
+.logo {
+    text-align: center;
+    flex: 1;
+}
+
+.logo img {
+    width: 50px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .nav-left, .nav-right {
+        display: none; /* Hide extra links on smaller screens */
+    }
+
+    .logo-text {
+        font-size: 1em;
+    }
 }
 
 /* Slideshow container */
@@ -80,60 +84,51 @@ nav a{
     max-width: 100%;
     width: 100%;
     position: relative;
-    
-  }
-    
-    /* Hide the images by default */
-  .mySlides {
+    background-color: #fdf5e6; /* Cream-white background */
+}
+
+.mySlides {
     display: none;
-  
-    /*margin-left: 85px;*/
-  }
-    
-    /* Next & previous buttons */
-  .prev, .next {
+}
+
+.mySlides img {
+    width: 100%;
+    height: 80vh;
+}
+
+.prev, .next {
     cursor: pointer;
     position: absolute;
     top: 50%;
-    width: auto;
-    margin-top: -22px;
     padding: 16px;
     color: white;
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
-    border-radius:50px;
-    user-select: none;
-  }
-  
-    
-    /* Position the "next button" to the right */
-  .next {
-    right: 0;
     border-radius: 50px;
-  }
-    
-    /* On hover, add a black background color with a little bit see-through */
-  .prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-  }
-    
-    /* Caption text */
-  .text {
-    color: #f2f2f2;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.text {
+    color: #333;
     font-size: 15px;
     padding: 8px 12px;
     position: absolute;
     bottom: 8px;
     width: 100%;
     text-align: center;
-  }
-    
-  
-  
-    
-    /* The dots/bullets/indicators */
-  .dot {
+}
+
+/* Dot indicators */
+.dot {
     cursor: pointer;
     height: 15px;
     width: 15px;
@@ -142,66 +137,200 @@ nav a{
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
-  }
-    
-  .active, .dot:hover {
+}
+
+.active, .dot:hover {
     background-color: #717171;
-  }
-    
-    /* Fading animation */
-  .fade {
-    animation-name:fade;
-    animation-duration: 1.5s;
-  }
-    
-  @keyframes fade {
-    from {opacity: .4}
-    to {opacity: 1}
-  }
-  
-  .mySlides img{
-    width: 100%;
-    border-radius: 0;
-    /*box-shadow: 0 25px 50px rgba(0,0,0,0.5);*/
-    height: 80vh;
-  }
-  .heading1{
-    align-items: center;
+}
+
+@keyframes fade {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+/* Section Headers */
+.heading1 {
     text-align: center;
-    font-family:"Great Vibes", cursive;
+    font-family: "Great Vibes", cursive;
     font-size: 40px;
-  }
-  hr{
-    border: 1px solid black;
+    margin-top: 1em;
+}
+
+.heading1 hr {
+    border: 1px solid #333;
     width: 70%;
     margin: 0 auto;
-  }
-  .heading1 .f{
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-
-  .Catagories{
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-    grid-gap: 50px;
-    margin: 40px;
-
 }
-.Catagories div img{
-    box-shadow: 5px 5px 10px #8d8d8e,-10px -10px 20px #4d4d4d50;
+
+/* Categories & Card Styling */
+.Catagories, .bestseller-grid, .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+    margin: 40px;
+    background-color: #fdf5e6;
+}
+
+.Catagories div, .bestseller-grid .product, .blog-grid .blog-post {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.Catagories div img, .bestseller-grid .product img, .blog-grid .blog-post img {
+    box-shadow: 5px 5px 10px #8d8d8e, -10px -10px 20px #4d4d4d50;
     width: 100%;
     height: 50vh;
     border-radius: 15px;
-}
-.Catagories div{
-    position: relative;
-    text-align: center;
-}
-.Catagories p{
-    
-    position: relative;
-    color: #000;
-    font-size: 30px;
+    transition: transform 0.3s;
 }
 
+.Catagories p, .bestseller-grid .product h3, .blog-grid .blog-post h3 {
+    color: #333;
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-family: "Great Vibes", cursive;
+}
+
+/* Remove border and padding from product and blog cards */
+.bestseller-grid .product, .blog-grid .blog-post {
+    padding: 0;
+}
+.product, .product-type{
+    text-decoration: none;
+}
+
+/* Hover effect for images in categories, bestsellers, and blog posts */
+.Catagories div img:hover, .bestseller-grid .product img:hover, .blog-grid .blog-post img:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #f0e5d8;
+    padding: 3em 1em;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 2em;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.newsletter {
+    flex: 1 1 250px;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.newsletter h3 {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+
+.newsletter p, .footer-content p, .footer-content a, .footer-content li {
+    color: #555;
+}
+
+.newsletter form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.newsletter input[type="email"] {
+    padding: 0.7em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.newsletter label {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.newsletter button {
+    background-color: black;
+    color: white;
+    padding: 0.7em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-links {
+    display: flex;
+    flex: 3;
+    gap: 2em;
+}
+
+.footer-links div {
+    min-width: 150px;
+}
+
+.footer-links h4 {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.5em;
+}
+
+.footer-links ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.footer-links ul li a:hover {
+    text-decoration: underline;
+}
+
+.payment-methods {
+    text-align: center;
+    margin-top: 1em;
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+    font-size: 0.8em;
+    color: #555;
+}
+
+.payment-methods img {
+    margin-top: 0.5em;
+    max-width: 200px;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.8em;
+    color: #777;
+    margin-top: 1.5em;
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+}
+
+.footer-content a {
+    transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+    color: #000;
+}
