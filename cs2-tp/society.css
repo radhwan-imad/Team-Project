@@ -8,7 +8,8 @@ body {
 .society-intro {
     text-align: center;
     padding: 60px 20px;
-    background-image: url('images/society-bg.jpg'); /* Replace with actual background image */
+    background-image: url('images/society-bg.jpg');
+    /* Replace with actual background image */
     background-size: cover;
     background-position: center;
     color: #333;
@@ -97,7 +98,8 @@ body {
 }
 
 .tier img {
-    width: 150px; /* Triple the size of the image */
+    width: 150px;
+    /* Triple the size of the image */
     margin-bottom: 10px;
 }
 
@@ -164,24 +166,30 @@ body {
     color: #666;
 }
 
-.accordion-button:focus, .accordion-button:hover {
+.accordion-button:focus,
+.accordion-button:hover {
     outline: none;
     color: #333;
 }
+
 /* Society Intro Section */
 .society-intro {
     position: relative;
     text-align: center;
-    padding: 80px 20px 120px; /* Add more bottom padding to avoid overlap */
-    background-image: url('images/background.webp'); /* Use your actual image path */
+    padding: 80px 20px 120px;
+    /* Add more bottom padding to avoid overlap */
+    background-image: url('images/background.webp');
+    /* Use your actual image path */
     background-size: cover;
     background-position: center;
     color: #333;
-    min-height: 500px; /* Ensure enough height for the background image */
+    min-height: 500px;
+    /* Ensure enough height for the background image */
 }
 
 .society-intro .overlay {
-    background-color: rgba(255, 255, 255, 0.7); /* Light overlay to increase contrast */
+    background-color: rgba(255, 255, 255, 0.7);
+    /* Light overlay to increase contrast */
     padding: 60px 20px;
     display: inline-block;
     max-width: 600px;
@@ -228,7 +236,8 @@ body {
 
 /* Ensures rewards section does not overlap */
 .rewards {
-    margin-top: -80px; /* Pull rewards section slightly upwards if needed */
+    margin-top: -80px;
+    /* Pull rewards section slightly upwards if needed */
     padding: 40px 20px;
     background-color: #f5f0eb;
     text-align: center;

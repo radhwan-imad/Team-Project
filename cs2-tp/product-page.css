@@ -7,13 +7,15 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #fdf5e6; /* Cream-white color */
+    background-color: #fdf5e6;
+    /* Cream-white color */
     color: #333;
 }
 
 /* Announcement Bar Styling */
 .announcement-bar {
-    background-color: #a27b5c; /* Match the brown color */
+    background-color: #a27b5c;
+    /* Match the brown color */
     color: white;
     text-align: center;
     padding: 10px;
@@ -27,19 +29,22 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: #f5f0eb; /* Match cream-white background */
+    background-color: #f5f0eb;
+    /* Match cream-white background */
     color: #333;
     font-family: Arial, sans-serif;
     font-size: 1em;
 }
 
 /* Left and Right Navigation Links */
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
     display: flex;
     gap: 20px;
 }
 
-.nav-left a, .nav-right a {
+.nav-left a,
+.nav-right a {
     color: #333;
     text-decoration: none;
     font-weight: 500;
@@ -68,8 +73,11 @@ body {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .nav-left, .nav-right {
-        display: none; /* Hide extra links on smaller screens */
+
+    .nav-left,
+    .nav-right {
+        display: none;
+        /* Hide extra links on smaller screens */
     }
 
     .logo-text {
@@ -125,11 +133,15 @@ body {
     margin-bottom: 20px;
 }
 
-.fragrance-family, .notes, .gender {
+.fragrance-family,
+.notes,
+.gender {
     margin-bottom: 15px;
 }
 
-.fragrance-family h3, .notes h3, .gender h3 {
+.fragrance-family h3,
+.notes h3,
+.gender h3 {
     font-size: 1.2em;
     color: #333;
     margin-bottom: 5px;
@@ -174,7 +186,8 @@ body {
 }
 
 .note img {
-    width: 160px; /* Increased image size */
+    width: 160px;
+    /* Increased image size */
     height: auto;
     margin-right: 20px;
 }
@@ -184,7 +197,8 @@ body {
 }
 
 .note-info h3 {
-    font-size: 0.9em; /* Smaller, subtle font for the headings */
+    font-size: 0.9em;
+    /* Smaller, subtle font for the headings */
     font-weight: bold;
     color: #333;
     margin-bottom: 5px;
@@ -193,14 +207,16 @@ body {
 }
 
 .note-title {
-    font-size: 0.9em; /* Reduced font size for note title */
+    font-size: 0.9em;
+    /* Reduced font size for note title */
     font-weight: 600;
     color: #555;
     margin-bottom: 3px;
 }
 
 .note-description {
-    font-size: 0.85em; /* Smaller, subtle font for descriptions */
+    font-size: 0.85em;
+    /* Smaller, subtle font for descriptions */
     color: #777;
     line-height: 1.4;
 }
@@ -213,6 +229,7 @@ footer {
     color: #333;
     margin-top: 40px;
 }
+
 /* FAQ Section */
 .faq-section {
     margin-top: 40px;
@@ -268,6 +285,7 @@ footer {
     color: #555;
     font-size: 0.9em;
 }
+
 .product-info h1 {
     font-size: 2em;
     font-weight: bold;
@@ -288,12 +306,16 @@ footer {
     line-height: 1.6;
 }
 
-.fragrance-family, .notes, .gender {
+.fragrance-family,
+.notes,
+.gender {
     text-align: center;
     margin-bottom: 15px;
 }
 
-.fragrance-family h3, .notes h3, .gender h3 {
+.fragrance-family h3,
+.notes h3,
+.gender h3 {
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 5px;
@@ -400,6 +422,7 @@ footer {
     color: #333;
     margin: 2px 0;
 }
+
 /* Footer */
 footer {
     background-color: #f0e5d8;
@@ -433,7 +456,10 @@ footer {
     margin-bottom: 0.5em;
 }
 
-.newsletter p, .footer-content p, .footer-content a, .footer-content li {
+.newsletter p,
+.footer-content p,
+.footer-content a,
+.footer-content li {
     color: #555;
 }
 
@@ -522,6 +548,7 @@ footer {
     color: #777;
     margin-top: 1.5em;
 }
+
 /* Products You May Also Like Section */
 .related-products {
     padding: 2em;
@@ -539,7 +566,8 @@ footer {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 1em;
-    font-family: Arial, sans-serif; /* Match main font */
+    font-family: Arial, sans-serif;
+    /* Match main font */
 }
 
 .related-products-grid {
@@ -555,7 +583,8 @@ footer {
 }
 
 .related-products .product:hover {
-    transform: scale(1.05); /* Slight magnification on hover */
+    transform: scale(1.05);
+    /* Slight magnification on hover */
 }
 
 .related-products .product img {
@@ -567,7 +596,8 @@ footer {
 }
 
 .related-products .product img:hover {
-    transform: scale(1.1); /* Zoom in effect on image hover */
+    transform: scale(1.1);
+    /* Zoom in effect on image hover */
 }
 
 .related-products .product-type {
@@ -633,6 +663,7 @@ footer {
     color: #f5a623;
     font-size: 1.2em;
 }
+
 /* Review and Wishlist Styling */
 .review-wishlist {
     display: flex;
@@ -650,7 +681,8 @@ footer {
 }
 
 .review .stars {
-    color: #ffc107; /* Golden color for stars */
+    color: #ffc107;
+    /* Golden color for stars */
     font-size: 1.1em;
 }
 

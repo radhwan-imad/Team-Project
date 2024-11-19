@@ -9,7 +9,8 @@
 
 body {
     font-family: 'Lora', serif;
-    background-color: #fdf5e6; /* Cream-white color */
+    background-color: #fdf5e6;
+    /* Cream-white color */
     color: #333;
 }
 
@@ -30,19 +31,22 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: #f5f0eb; /* Match cream-white background */
+    background-color: #f5f0eb;
+    /* Match cream-white background */
     color: #333;
     font-family: 'Playfair Display', serif;
     font-size: 1em;
 }
 
 /* Left and Right Navigation Links */
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
     display: flex;
     gap: 20px;
 }
 
-.nav-left a, .nav-right a {
+.nav-left a,
+.nav-right a {
     color: #333;
     text-decoration: none;
     font-weight: 500;
@@ -114,7 +118,8 @@ body {
     transform: scale(1.05);
 }
 
-.bestseller-grid .product h3, .bestseller-grid .product p {
+.bestseller-grid .product h3,
+.bestseller-grid .product p {
     color: #333;
     font-size: 1.2em;
     margin-top: 10px;
@@ -127,7 +132,8 @@ body {
 }
 
 .bestseller-grid .product a:hover {
-    color: #a27b5c; /* Match a subtle brown accent on hover */
+    color: #a27b5c;
+    /* Match a subtle brown accent on hover */
 }
 
 .bestseller-grid .product .product-type {
@@ -142,7 +148,8 @@ a {
 }
 
 a:visited {
-    color: #333; /* Prevent blue color for visited links */
+    color: #333;
+    /* Prevent blue color for visited links */
 }
 
 a:hover {
@@ -164,7 +171,9 @@ a:hover {
 }
 
 /* Categories & Card Styling */
-.Catagories, .bestseller-grid, .blog-grid {
+.Catagories,
+.bestseller-grid,
+.blog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 50px;
@@ -172,7 +181,9 @@ a:hover {
     background-color: #fdf5e6;
 }
 
-.Catagories div, .bestseller-grid .product, .blog-grid .blog-post {
+.Catagories div,
+.bestseller-grid .product,
+.blog-grid .blog-post {
     background-color: transparent;
     border: none;
     box-shadow: none;
@@ -180,7 +191,9 @@ a:hover {
     margin-bottom: 1em;
 }
 
-.Catagories div img, .bestseller-grid .product img, .blog-grid .blog-post img {
+.Catagories div img,
+.bestseller-grid .product img,
+.blog-grid .blog-post img {
     box-shadow: 5px 5px 10px #8d8d8e, -10px -10px 20px #4d4d4d50;
     width: 100%;
     height: 50vh;
@@ -188,7 +201,9 @@ a:hover {
     transition: transform 0.3s;
 }
 
-.Catagories p, .bestseller-grid .product h3, .blog-grid .blog-post h3 {
+.Catagories p,
+.bestseller-grid .product h3,
+.blog-grid .blog-post h3 {
     color: #333;
     font-size: 1.2em;
     margin-top: 10px;
@@ -196,16 +211,20 @@ a:hover {
 }
 
 /* Remove border and padding from product and blog cards */
-.bestseller-grid .product, .blog-grid .blog-post {
+.bestseller-grid .product,
+.blog-grid .blog-post {
     padding: 0;
 }
 
-.product, .product-type {
+.product,
+.product-type {
     text-decoration: none;
 }
 
 /* Hover effect for images in categories, bestsellers, and blog posts */
-.Catagories div img:hover, .bestseller-grid .product img:hover, .blog-grid .blog-post img:hover {
+.Catagories div img:hover,
+.bestseller-grid .product img:hover,
+.blog-grid .blog-post img:hover {
     transform: scale(1.05);
 }
 
@@ -239,7 +258,10 @@ footer {
     font-family: 'Playfair Display', serif;
 }
 
-.newsletter p, .footer-content p, .footer-content a, .footer-content li {
+.newsletter p,
+.footer-content p,
+.footer-content a,
+.footer-content li {
     color: #555;
     font-family: 'Lora', serif;
 }
