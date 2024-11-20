@@ -1,0 +1,46 @@
+.about-section {
+    padding: 40px 20px;
+    background-color: #fdf5e6;
+    font-family: 'Lora', serif;
+}
+
+.about-section h1 {
+    font-size: 2em;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 1.1em;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-image img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 30px;
+}
+
+.about-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Footer */
+footer {
+    background-color: #f0e5d8;
+    padding: 3em 1em;
+    color: #333;
+    font-size: 0.9em;
+}
