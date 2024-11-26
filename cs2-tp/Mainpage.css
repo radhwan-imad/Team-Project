@@ -87,15 +87,6 @@ body {
     width: 100%;
     height: 80vh;
 }
-
-/* Best Sellers Section */
-.bestseller-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 50px;
-    margin: 40px;
-    background-color: #fdf5e6;
-}
 .prev, .next{
     cursor: pointer;
     position: absolute;
@@ -144,6 +135,16 @@ body {
     from{opacity: .4;}
     to{opacity: 1;}
 }
+
+/* Best Sellers Section */
+.bestseller-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+    margin: 40px;
+    background-color: #fdf5e6;
+}
+
 .bestseller-grid .product {
     background-color: transparent;
     border: none;
