@@ -103,7 +103,7 @@ if (!empty($_SESSION['form_data'])) {
     <header class="navbar">
         <div class="nav-left">
             <a href="Mainpage.php">HOME</a>
-            <a href="perfumes.php">SHOP ALL</a>
+            <a href="shop-all.php">SHOP ALL</a>
             <a href="Candles.php">CANDLES</a>
             <a href="society.php">Au-Ra SOCIETY</a>
             <a href="about.php">ABOUT US</a>

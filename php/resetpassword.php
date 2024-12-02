@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
     <header class="navbar">
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
-            <a href="perfumes.html">SHOP ALL</a>
+            <a href="shop-all.php">SHOP ALL</a>
             <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
