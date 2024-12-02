@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="nav-right">
             <a href="#">SEARCH</a>
-            <a href="signup.html">ACCOUNT</a>
+            <a href="Signup.php">ACCOUNT</a>
             <a href="#">COUNTRY ▼</a>
             <a href="#">WISHLIST</a>
             <a href="#">CART (0)</a>
