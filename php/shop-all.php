@@ -66,7 +66,7 @@ if (!$all_product) {
         <!-- Left-side Links -->
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.html">SHOP ALL</a>
+            <a href="shop-all.php">SHOP ALL</a>
             <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
