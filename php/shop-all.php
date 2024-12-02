@@ -120,7 +120,7 @@ if (!$all_product) {
                 <p class="product-type"><?php echo htmlspecialchars($row['category_name']); ?></p>
                 <h3><?php echo htmlspecialchars($row['product_name']); ?></h3>
                 <p>£<?php echo number_format($row['Price'], 2); ?></p>
-                <a href="ocean-breeze.php?Product_ID=<?php echo $row['Product_ID']; ?>" class="buy-now">Buy Now</a>
+                <a href="product.php?Product_ID=<?php echo $row['Product_ID']; ?>" class="buy-now">Buy Now</a>
         </div>
         <?php
             }
