@@ -497,3 +497,227 @@ body {
     margin: 0;
     color: #dddddd; /* Softer but visible color */
 }
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    background: linear-gradient(to bottom, #f9f5f2, #fef7f0); /* Soft beige to light cream gradient */
+}
+
+/* Announcement Bar */
+.announcement-bar {
+    background-color: #a27b5c; /* Warm brown */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #fef7f0;
+    font-size: 1em;
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-left a,
+.nav-right a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    margin: 0 10px;
+}
+
+/* Video Cover Styling */
+.video-cover-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video-cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark semi-transparent overlay */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.video-overlay h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fdfdfd;
+}
+
+.video-overlay p {
+    font-size: 1.2rem;
+    color: #dddddd;
+}
+
+/* Background Container (Candles Section) */
+.background-image-container {
+    padding: 40px 20px;
+    background: linear-gradient(to bottom, #fde3c8, #fbcf9e); /* Warm peachy gradient */
+    border: 4px solid #f7b3a1;
+    border-radius: 10px;
+}
+
+/* Page Title and Description */
+.page-title {
+    font-size: 2.5rem;
+    color: #8b4f3f; /* Deep warm brown */
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif;
+}
+
+.page-description {
+    font-size: 1.2rem;
+    color: #a05244; /* Muted brown-pink */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Product Cards Section */
+.product-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    background: transparent; /* Let the gradient show through */
+}
+
+/* Individual Product Card */
+.product-card {
+    display: flex;
+    align-items: center;
+    background: #ffffff; /* White background for contrast */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Image */
+.product-card img {
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px 0 0 12px;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Product Info */
+.product-card .product-info {
+    padding: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fdf7f0; /* Soft cream */
+}
+
+.product-card .product-info h2 {
+    font-size: 2rem;
+    color: #8b4f3f; /* Deep warm brown */
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.product-card .product-info p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Button Styling */
+.product-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #a27b5c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.product-btn:hover {
+    background-color: #925e4c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-card {
+        flex-direction: column;
+    }
+
+    .product-card img {
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .product-card .product-info {
+        text-align: center;
+        padding: 20px;
+    }
+}
+.product-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #a27b5c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.product-btn:hover {
+    background-color: #925e4c;
+    transform: scale(1.05);
+}
