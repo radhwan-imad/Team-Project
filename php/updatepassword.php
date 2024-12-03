@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start session at the beginning
 
-require "config.php"; // Ensure this file connects to the database properly
+require "connection.php"; // Ensure this file connects to the database properly
 
 // Initialize variables
 $email = $key = "";
@@ -39,16 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update the password in the database
             $sql = "UPDATE users SET password = ?, activation = NULL WHERE Email_ID = ? AND activation = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$hashedPassword, $email, $key]);
+            $stmt->bind_param("sss", $hashedPassword, $email, $key); // "sss" indicates string params
+            $stmt->execute();
 
-            if ($stmt->rowCount() > 0) {
+            if ($stmt->affected_rows > 0) { // Check if any row was affected
                 $_SESSION['success'] = "Password reset successfully.";
                 echo "<script>alert('Congratulations! Password reset successfully. Please Login now');</script>";
                 echo "<script>window.location.href = 'Login.php';</script>";
             } else {
                 $errorMessage = "Invalid or expired reset link.";
             }
-        } catch (PDOException $e) {
+        } catch (mysqli_sql_exception $e) {
             $errorMessage = "Database error: " . $e->getMessage();
         }
     }

@@ -12,7 +12,7 @@ if (isset($_POST['submitted'])) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     // Connect to the database
-    require_once('config.php');
+    require_once('connection.php');
 
     // Prepare and validate form inputs
     $first_name = isset($_POST["first-name"]) ? trim($_POST['first-name']) : false; 
@@ -33,27 +33,29 @@ if (isset($_POST['submitted'])) {
     
     
     } else {
-        // Unique email check: using prepared statement
         $verify_query = $conn->prepare("SELECT Email_ID FROM users WHERE Email_ID = ?");
-        $verify_query->execute([$email_id]);
-
-        if ($verify_query->rowCount() != 0) {
+        $verify_query->bind_param("s", $email_id);
+        $verify_query->execute();
+        $result = $verify_query->get_result();
+    
+        if ($result->num_rows != 0) {
             $error_message = 'Email has already been taken!';
         } else {
             try {
                 // Hash the password for storage
                 $hashed_password = password_hash($signup_password, PASSWORD_DEFAULT);
-
+        
                 // Insert user information into the 'users' table
                 $stat = $conn->prepare("INSERT INTO users (First_Name, Last_Name, Email_ID, Password, Contact_NO) VALUES (?, ?, ?, ?, ?)");
-                $stat->execute([$first_name, $last_name, $email_id, $hashed_password, $contact_no]);
-
+                $stat->bind_param("sssss", $first_name, $last_name, $email_id, $hashed_password, $contact_no);  // Bind parameters
+                $stat->execute();
+        
                 // Get the ID of the newly inserted user
-                $id = $conn->lastInsertId();
+                $id = $conn->insert_id; // Use insert_id property instead
                 echo "<script>alert('Congratulations! You are now registered. Please Login now');</script>";
                 echo "<script>window.location.href = 'Login.php';</script>"; // Redirect to login page
-
-            } catch (PDOException $ex) {
+        
+            } catch (mysqli_sql_exception $ex) {
                 $error_message = "Sorry, a database error occurred! <br>Error details: <em>" . $ex->getMessage() . "</em>";
             }
         }

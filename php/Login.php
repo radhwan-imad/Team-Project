@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("config.php"); // Ensure this is the first thing that runs after session start
+require_once("connection.php"); // Ensure this is the first thing that runs after session start
 
 // Initialize error message and form values
 $error_message = '';
@@ -16,11 +16,15 @@ if (isset($_POST['submitted'])) {
             try {
                 // Prepare the statement to avoid SQL injection
                 $stat = $conn->prepare('SELECT Password FROM users WHERE Email_ID = ?');
-                $stat->execute([$_POST['login-email']]);
+                $stat->bind_param("s", $_POST['login-email']);
+                $stat->execute();
 
-                // Fetch the result row and check
-                if ($stat->rowCount() > 0) {
-                    $row = $stat->fetch(PDO::FETCH_ASSOC);
+                // Get the result
+                $result = $stat->get_result();  // Getting result set
+
+                // Check if a row was returned
+                if ($result->num_rows > 0) {  // Checking row count for MySQLi
+                    $row = $result->fetch_assoc();  // Fetch the associated array
 
                     if (password_verify($_POST['login-password'], $row['Password'])) {
                         // Record the user session
@@ -33,7 +37,7 @@ if (isset($_POST['submitted'])) {
                 } else {
                     $error_message = 'Error logging in, email not found.';
                 }
-            } catch (PDOException $ex) {
+            } catch (Exception $ex) {
                 $error_message = "Failed to execute query: " . htmlspecialchars($ex->getMessage());
             }
         } else {

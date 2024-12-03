@@ -1,5 +1,5 @@
 <?php
-require "config.php";  
+require "connection.php";  
 require 'PHPMailer-master/PHPMailer-master/src/Exception.php';
 require 'PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/PHPMailer-master/src/SMTP.php';
@@ -23,24 +23,28 @@ if (isset($_POST['submit'])) {
     } elseif (!filter_var($mailAddress, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Invalid email format!";
     } else {
-        try {
-            // SQL query to select user
-            $stmt = $conn->prepare("SELECT Email_ID, First_Name, User_ID FROM users WHERE Email_ID = ?");
-            $stmt->execute([$mailAddress]);
-            $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        // SQL query to select user
+        if ($stmt = $conn->prepare("SELECT Email_ID, First_Name, User_ID FROM users WHERE Email_ID = ?")) {
+            $stmt->bind_param("s", $mailAddress);
+            $stmt->execute();
+            $stmt->store_result();
 
-            if (!$res) {
+            if ($stmt->num_rows == 0) { // Check if no rows were returned
                 $error_message = "E-mail address did not match!";
             } else {
-                $id = $res['User_ID'];
-                $name = $res['First_Name'];
+                // Fetch user details
+                $stmt->bind_result($email, $name, $id);
+                $stmt->fetch(); // fetch will load the values into the bound variables
 
                 // Generate a unique key for password reset
                 $key = md5(uniqid(rand(), true));
 
                 // Update the user record with the generated key
-                $stmt_update = $conn->prepare("UPDATE users SET activation = ? WHERE User_ID = ?");
-                $stmt_update->execute([$key, $id]);
+                if ($stmt_update = $conn->prepare("UPDATE users SET activation = ? WHERE User_ID = ?")) {
+                    $stmt_update->bind_param("si", $key, $id); // "si" indicates string, integer
+                    $stmt_update->execute();
+                    $stmt_update->close(); // Close the update statement
+                }
 
                 // Prepare the reset link
                 $resetLink = "http://localhost/Team-Project-2024-25-CS2TP/Team-Project/php/updatepassword.php?Email_ID=" . base64_encode($mailAddress) . "&key=$key";
@@ -59,7 +63,7 @@ if (isset($_POST['submit'])) {
                 $phpMailer->Host = 'smtp.gmail.com'; 
                 $phpMailer->SMTPAuth = true;
                 $phpMailer->Username = 'auraprojects.2024@gmail.com'; 
-                $phpMailer->Password = 'jdpj urbw qkwn wtff'; 
+                $phpMailer->Password = 'jdpj urbw qkwn wtff'; // Make sure to use an app password if using 2FA
                 $phpMailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
                 $phpMailer->Port = 587; 
             
@@ -73,11 +77,14 @@ if (isset($_POST['submit'])) {
 
                 if ($phpMailer->send()) {
                     $success_message = "Reset email sent successfully!";
+                } else {
+                    $error_message = "Failed to send email: " . htmlspecialchars($phpMailer->ErrorInfo);
                 }
             }
-        } 
-        catch (PDOException $e) {
-            $error_message = "Error: " . $e->getMessage();
+            $stmt->close(); // Close the statement
+        } else {
+            // Log or handle the error if the statement preparation fails
+            $error_message = "Database error: " . htmlspecialchars($conn->error);
         }
     }
 }
@@ -142,8 +149,8 @@ if (isset($_POST['submit'])) {
     </header>
 
     <main>
-        <section class="reset-password-form-container" >
-            <div class="form-card" >
+        <section class="reset-password-form-container">
+            <div class="form-card">
                 <h2>Reset Password</h2>
                 <form action="" method="post">
                     <?php 
