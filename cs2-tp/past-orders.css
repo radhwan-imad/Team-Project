@@ -95,3 +95,16 @@ main {
     font-size: 0.8em;
     color: #555;
 }
+
+.back-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #a27b5c;
+    background-color: #fff;
+    border: 2px solid #a27b5c;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
