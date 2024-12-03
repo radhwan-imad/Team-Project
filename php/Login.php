@@ -77,15 +77,15 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
     <!-- Main Navigation -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="Mainpage.php">HOME</a>
-            <a href="shop-all.php">SHOP ALL</a>
-            <a href="Candles.php">CANDLES</a>
-            <a href="society.php">Au-Ra SOCIETY</a>
-            <a href="about.php">ABOUT US</a>
+            <a href="Mainpage.html">HOME</a>
+            <a href="shop-all.html">SHOP ALL</a>
+            <a href="Candles.html">CANDLES</a>
+            <a href="society.html">Au-Ra SOCIETY</a>
+            <a href="about.html">ABOUT US</a>
         </div>
 
         <div class="logo">
-            <a href="Mainpage.php">
+            <a href="Mainpage.html">
                 <img src="Aura_logo.png" alt="logo">
             </a>
             <span class="logo-text">AU-RA<br>Fragrance your soul</span>

@@ -1,0 +1,97 @@
+html,
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.past-orders {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.past-orders h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.order-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-details p strong {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #000;
+}
+
+.toggle-details {
+    background: none;
+    border: none;
+    font-size: 0.9em;
+    color: #a27b5c;
+    cursor: pointer;
+}
+
+.toggle-details:hover {
+    color: #8c6247;
+    text-decoration: underline;
+}
+
+.order-details {
+    display: none;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.order-details ul {
+    list-style-type: none;
+}
+
+.order-details li {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.product-image {
+    width: 50px;
+    vertical-align: middle;
+}
+
+.product-info {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.product-info span {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+}
+
+.product-info p {
+    font-size: 0.8em;
+    color: #555;
+}
