@@ -15,32 +15,6 @@
     padding-right: 10px;
 }
 
-.aura-society-column {
-    flex: 1;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 0.9em;
-    line-height: 1.6;
-}
-
-.rewards-list,
-.tier-list {
-    list-style: none;
-    margin: 10px 0;
-}
-
-.rewards-list li,
-.tier-list li {
-    margin-bottom: 12px;
-}
-
-.rewards-list li strong,
-.tier-list li strong {
-    color: #a27b5c;
-}
-
 .orders-container {
     margin-top: 20px;
     overflow: hidden;
@@ -61,28 +35,15 @@
     margin-bottom: 10px;
 }
 
-.order-details p strong {
-    font-size: 1.2em;
-}
-
-.toggle-details {
-    background: none;
-    border: none;
-    font-size: 0.9em;
-    color: #a27b5c;
-    cursor: pointer;
-}
-
-.toggle-details:hover {
-    color: #8c6247;
-    text-decoration: underline;
-}
-
 .order-details {
     display: none;
     padding-top: 10px;
     padding-left: 10px;
     border-top: 1px solid #ddd;
+}
+
+.order-details p strong {
+    font-size: 1.2em;
 }
 
 .order-details ul {
@@ -114,6 +75,19 @@
     color: #555;
 }
 
+.toggle-details {
+    background: none;
+    border: none;
+    font-size: 0.9em;
+    color: #a27b5c;
+    cursor: pointer;
+}
+
+.toggle-details:hover {
+    color: #8c6247;
+    text-decoration: underline;
+}
+
 .back-btn {
     display: inline-block;
     margin-top: 15px;
@@ -135,18 +109,6 @@
     padding: 10px;
 }
 
-.current-points {
-    background-color: #fff6e0;
-    border: 2px solid #a27b5c;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 15px 0;
-    text-align: center;
-    font-size: 1.2em;
-    color: #a27b5c;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .past-orders-column::-webkit-scrollbar {
     width: 8px;
 }
@@ -158,4 +120,42 @@
 
 .past-orders-column::-webkit-scrollbar-thumb:hover {
     background-color: #8c6247;
+}
+
+.aura-society-column {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+.rewards-list,
+.tier-list {
+    list-style: none;
+    margin: 10px 0;
+}
+
+.rewards-list li,
+.tier-list li {
+    margin-bottom: 12px;
+}
+
+.rewards-list li strong,
+.tier-list li strong {
+    color: #a27b5c;
+}
+
+.current-points {
+    background-color: #fff6e0;
+    border: 2px solid #a27b5c;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 1.2em;
+    color: #a27b5c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
