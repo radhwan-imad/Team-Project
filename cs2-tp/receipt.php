@@ -1,18 +1,66 @@
+<?php
+session_start();
+
+// Check if there are no cart items in the session
+if (empty($_SESSION['cart'])) {
+    header("Location: index.php");
+    exit;
+}
+
+$cart_items = $_SESSION['cart'];
+
+// Calculate total price
+$total_price = 0;
+foreach ($cart_items as $item) {
+    $total_price += $item['price'] * $item['quantity'];
+}
+
+// Generate a random order number
+$order_number = 'AU-' . strtoupper(substr(md5(uniqid()), 0, 8));
+
+// Get current date and time
+$order_date = date('Y-m-d H:i:s');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AU-RA</title>
+    <title>Order Receipt - AU-RA</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
-    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="Mainpage.css">
+    <style>
+        .receipt-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .order-details {
+            margin-bottom: 20px;
+        }
+        .order-items {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .order-total {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .receipt-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Announcement Bar -->
-    
-
     <!-- Main Navigation -->
     <header class="navbar">
         <!-- Left-side Links -->
@@ -48,49 +96,37 @@
                 </div>
         
 </header>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <h1>Order Receipt</h1>
+            <p>Order Number: <?php echo $order_number; ?></p>
+            <p>Date: <?php echo $order_date; ?></p>
+        </div>
 
-   <!-- Blog Content Section -->
-   <div class="blog-content">
-    <h1 class="heading1">Fragrance Oils vs. Essential Oils: What is the Difference?</h1>
-    <hr>
-    
-    
-    <div class="section-image story-image">
-        <img src="images/blog11.jpg" alt="Blog Post Image">
-    </div>
+        <div class="order-details">
+            <h2>Order Items</h2>
+            <div class="order-items">
+                <?php foreach ($cart_items as $item): ?>
+                    <div>
+                        <?php echo $item['name']; ?> 
+                        x <?php echo $item['quantity']; ?> 
+                        - £<?php echo number_format($item['price'] * $item['quantity'], 2); ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="order-total">
+                <strong>Total: £<?php echo number_format($total_price, 2); ?></strong>
+            </div>
+        </div>
 
-    <div class="blog-text">
-        <p>
-            Fragrance oils and essential oils are two terms you may have heard when selecting the ideal fragrance for your body, house, or even a new fragrance. Despite their similar sounds, they differ greatly in terms of their benefits, composition, and applications. We'll examine the distinctions between essential and fragrance oils in this post so you can choose the one that best meets your requirements.
-        </p>
-
-        <h2>What Are Fragrance Oils?</h2>
-        <p>
-            Synthetic or mixed oils known as fragrance oils are designed to replicate the scent of natural substances or to provide completely original, artificial scents. These oils frequently create rich, enduring fragrances by combining a range of aromatic components. Perfumes, candles, skincare products, and air fresheners all contain fragrance oils.
-        </p>
-
-        <h2>What Are Essential Oils?</h2>
-        <p>
-            Conversely, essential oils are organic substances that are derived straight from plants, flowers, seeds, and trees. By using techniques like steam distillation or cold-press extraction, the natural plant ingredients are preserved in these oils. Essential oils are utilised extensively in aromatherapy, holistic wellbeing, and natural skincare because of their high concentration.
-        </p>
-
-        <h2>3 Key Differences Between Fragrance Oils and Essential Oils</h2>
-        <ul>
-            <li><strong>Scent Longevity:</strong> Fragrance Oils tend to last significantly longer due to their synthetic components. Essential oils provide more delicate and organic scents but evaporate more quickly.</li>
-            <li><strong>Uses:</strong> Fragrance oils are mostly used to scent cosmetics, candles, and perfumes. Essential oils are frequently utilised in holistic therapies, natural skincare products, and aromatherapy.</li>
-            <li><strong>Cost:</strong> Fragrance Oils are typically more affordable due to their synthetic nature. Essential Oils can be more expensive due to the extraction process and their natural, high-quality ingredients.</li>
-        </ul>
-
-        <h2>What Should You Pick?</h2>
-        <p>
-            Your own demands and preferences will ultimately determine whether you choose essential oils or fragrance oils.
-            <br><strong>Fragrance oils</strong> are an excellent choice if you're searching for a long-lasting scent that offers a particular scent profile (such as your favourite perfume or a distinctive candle scent).
-            <br><strong>Essential oils</strong> are perfect for you if you want to improve your well-being or are looking for a natural, therapeutic experience. Additionally, they provide a more comprehensive strategy for relaxation and well-being.
-        </p>
-    </div>
+      <div class="receipt-actions">
+    <button class="receipt-button" onclick="window.print()">Print Receipt</button>
+    <button class="continue-shopping-button" onclick="window.location.href='shop-all.php'">Continue Shopping</button>
 </div>
 
-     <!-- Footer Section -->
+    </div>
+
+    <!-- Footer Section -->
 <footer>
     <div class="footer-content">
         <!-- Newsletter Subscription -->
@@ -152,8 +188,15 @@
 
     <!-- Footer Copyright -->
     <div class="footer-bottom">
-        <p>© 2035 by NOUS DEUX FRAGRANCES. Built on Wix Studio™</p>
+        <p>2024 AU-RA. All rights reserved.</p>
     </div>
-</footer>
-
+</footer><footer>
+        <!-- Footer content from previous pages -->
+        <div class="footer-content">
+            <div class="footer-bottom">
+                <p>2024 AU-RA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
 </html>

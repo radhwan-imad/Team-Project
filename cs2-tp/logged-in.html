@@ -18,29 +18,43 @@
 
     <!-- Main Navigation -->
     <header class="navbar">
+        <!-- Left-side Links -->
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
-            <a href="perfumes.html">SHOP ALL</a>
-            <a href="Candles.html">CANDLES</a>
+            <a href="Mainpage.php">HOME</a>
+            <a href="shop-all.php">SHOP ALL</a>
+            
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
+
         <!-- Centered Logo -->
         <div class="logo">
             <a href="Mainpage.html">
-                <img src="Aura_logo.png" alt="logo"> </a>
+                <img src="Aura_logo.png" alt="logo"> 
             <span class="logo-text">AU-RA<br>Fragrance your soul</span>
-            
-        </div>
-  
+            </a>
+    </div>
+
         <div class="nav-right">
-            <a href="#">SEARCH</a>
-            <a href="Account.html">ACCOUNT</a>
-            <a href="#">COUNTRY ▼</a>
-            <a href="#">WISHLIST</a>
-            <a href="cart.html">CART (2)</a>
-        </div>
-    </header>
+            <!-- Collapsible Search Bar -->
+                    <form method="GET" action="search.php" class="search-form">
+                        <input
+                            type="text"
+                            name="query"
+                            placeholder="Search for products..."
+                            class="search-input"
+                        >
+                        <button type="submit">Search</button>
+                    </form>
+        <a href="logged-in.html">Welcome, K</a>
+        
+        
+                    <a href="Login.php">ACCOUNT</a>
+                    <a href="contact-us.php">CONTACT-US</a>
+                    <a href="cart.php">CART </a>
+                </div>
+        
+</header>
 
     <!-- Main Content -->
     <main>
@@ -67,22 +81,22 @@
                 <div class="dashboard-links">
                     <a href="past-orders.html" class="dashboard-item">
                         <img src="images/past1.png" alt="Orders Icon">
-                        <span>Past Orders</span>
+                        <h3>Past Orders</h3>
                     </a>
                     <a href="account-settings.html" class="dashboard-item">
                         <img src="images/gents.png" alt="Settings Icon">
-                        <span>Account Settings</span>
+                        <h3>Account Settings</h3>
                     </a>
                     <a href="society.html" class="dashboard-item">
                         <img src="images/rewards.png" alt="Society Icon">
-                        <span>Au-Ra Society</span>
+                        <h3>Au-Ra Society</h3>
                     </a>
                 </div>
             </div>
 
             <!-- Log-Out Button -->
             <div class="logout-btn-container">
-                <a href="logout.html" class="logout-btn">Log Out</a>
+                <a href="Logout.php" class="logout-btn">Log Out</a>
             </div>
         </section>
     </main>

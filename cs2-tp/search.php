@@ -1,51 +1,58 @@
 <?php
-session_start();
-require_once("connection.php"); // Ensure this is the first thing that runs after session start
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Check if the query parameter is set
+if (isset($_GET['query']) && !empty($_GET['query'])) {
+    $search = urlencode($_GET['query']); // Encode the query for URL safety
+    header("Location: shop-all.php?query=$search"); // Redirect to shop-all.php
+    exit;
+} else {
+    // If no query, redirect to shop-all.php without a search query
+    header("Location: shop-all.php");
+    exit;
+}
+?>
 
 
-// Get search query
-if (isset($_GET['query'])) {
-    $search = $_GET['query'];
 
-    // Prepare SQL query
-    $query = "SELECT * FROM products WHERE name LIKE ? OR description LIKE ?";
-    $stmt = $conn->prepare($query);
+
+    // SQL query to fetch results
+    $sql = "SELECT product.Product_ID, product.Name, product.description, product.Price, image.Image_URL 
+            FROM product 
+            LEFT JOIN image ON product.Product_ID = image.Product_ID
+            WHERE product.Name LIKE ? OR product.description LIKE ?";
+    $stmt = $conn->prepare($sql);
     $searchTerm = "%" . $search . "%";
     $stmt->bind_param("ss", $searchTerm, $searchTerm);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Display results
-    echo "<h1>Search Results for '$search'</h1>";
+    echo "<h1>Search Results for '" . htmlspecialchars($search) . "'</h1>";
+    echo "<div class='search-results'>";
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<div>";
-            echo "<h2>" . $row['name'] . "</h2>";
-            echo "<p>" . $row['description'] . "</p>";
-            echo "<p>Price: $" . $row['price'] . "</p>";
-            echo "<img src='" . $row['image_path'] . "' alt='" . $row['name'] . "' style='max-width: 200px;'>";
+            echo "<div class='search-result-item'>";
+            echo "<div class='product-image'>";
+            if (!empty($row['Image_URL'])) {
+                echo "<img src='" . htmlspecialchars($row['Image_URL']) . "' alt='" . htmlspecialchars($row['Name']) . "'>";
+            } else {
+                echo "<img src='placeholder.png' alt='No image available'>"; // Fallback image
+            }
+            echo "</div>";
+            echo "<div class='product-details'>";
+            echo "<h2>" . htmlspecialchars($row['Name']) . "</h2>";
+            echo "<p>" . htmlspecialchars($row['description']) . "</p>";
+            echo "<p><strong>Price: $" . htmlspecialchars($row['Price']) . "</strong></p>";
+            echo "</div>";
             echo "</div>";
         }
     } else {
         echo "<p>No products found.</p>";
     }
-}
+    echo "</div>";
+
 
 $conn->close();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Products</title>
-</head>
-<body>
-    <h1>Product Search</h1>
-    <form method="get" action="search.php">
-        <input type="text" name="query" placeholder="Search for products..." required>
-        <button type="submit">Search</button>
-    </form>
-</body>
-</html>

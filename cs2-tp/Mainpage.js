@@ -56,3 +56,18 @@ function closeFullImg() {
   var fullImg = document.getElementById("fullImg");
   fullimgBox.style.display = 'none';
 }
+// Collapse search bar when clicking outside
+document.addEventListener("click", function (event) {
+  const searchInput = document.querySelector(".search-input");
+  const searchForm = document.querySelector(".search-form");
+
+  // Check if the click is outside the search form
+  if (!searchForm.contains(event.target)) {
+      searchInput.style.width = "50px"; // Collapse the search bar
+  }
+});
+
+// Expand search bar when focused
+document.querySelector(".search-input").addEventListener("click", function () {
+  this.style.width = "300px"; // Expand the search bar
+});

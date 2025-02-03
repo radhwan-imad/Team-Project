@@ -1,12 +1,151 @@
+<?php
+session_start();
+require_once "connection.php"; // Ensure this file sets up $conn (mysqli object)
+$user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+// Get the Product_ID from the URL and sanitize it
+$product_id = isset($_GET['Product_ID']) ? intval($_GET['Product_ID']) : 0;
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+if ($product_id <= 0) {
+    header("Location: error-page.php"); // Redirect if Product_ID is invalid
+    exit;
+}
+
+// Fetch product details
+$product_sql = "
+    SELECT 
+        p.Product_ID, 
+        p.Name AS product_name, 
+        p.description, 
+        p.Price, 
+        p.Best_Seller, 
+        c.Name AS category_name, 
+        i.Image_URL
+    FROM product p
+    LEFT JOIN category c ON p.Category_ID = c.Category_ID
+    LEFT JOIN image i ON p.Image_ID = i.Image_ID
+    WHERE p.Product_ID = ?
+";
+
+$product_stmt = $conn->prepare($product_sql);
+if (!$product_stmt) {
+    die("Error preparing product query: " . $conn->error);
+}
+
+$product_stmt->bind_param("i", $product_id);
+$product_stmt->execute();
+$product_result = $product_stmt->get_result();
+
+// Check if the product exists
+if ($product_result->num_rows > 0) {
+    $product = $product_result->fetch_assoc();
+} else {
+    header("Location: error-page.php"); // Redirect if product not found
+    exit;
+}
+
+// Fetch product notes
+$notes_sql = "
+    SELECT 
+        nl.Note_Name, 
+        nl.Note_Image, 
+        nl.Note_Text
+    FROM product_notes pn
+    LEFT JOIN notes_library nl ON pn.Note_ID = nl.Note_ID
+    WHERE pn.Product_ID = ?
+";
+
+$notes_stmt = $conn->prepare($notes_sql);
+if (!$notes_stmt) {
+    die("Error preparing notes query: " . $conn->error);
+}
+
+$notes_stmt->bind_param("i", $product_id);
+$notes_stmt->execute();
+$notes_result = $notes_stmt->get_result();
+$notes = $notes_result->fetch_all(MYSQLI_ASSOC);
+
+// Prepare arrays to categorize the notes
+$top_notes = [];
+$heart_notes = [];
+$base_notes = [];
+
+// Categorize notes based on the Note_Type
+while ($note = $notes_result->fetch_assoc()) {
+    if ($note['Note_Type'] == 'Top') {
+        $top_notes[] = $note;
+    } elseif ($note['Note_Type'] == 'Heart') {
+        $heart_notes[] = $note;
+    } elseif ($note['Note_Type'] == 'Base') {
+        $base_notes[] = $note;
+    }
+}
+
+// Fetch product reviews
+$reviews_sql = "
+    SELECT 
+        u.First_Name, 
+        u.Last_Name, 
+        r.Rating, 
+        r.Review_Text 
+    FROM 
+        review r
+    JOIN 
+        users u ON r.User_ID = u.User_ID
+    WHERE 
+        r.Product_ID = ?
+";
+
+$reviews_stmt = $conn->prepare($reviews_sql);
+if (!$reviews_stmt) {
+    die("Error preparing reviews query: " . $conn->error);
+}
+
+$reviews_stmt->bind_param("i", $product_id);
+$reviews_stmt->execute();
+$reviews_result = $reviews_stmt->get_result();
+$reviews = $reviews_result->fetch_all(MYSQLI_ASSOC);
+
+// Debugging (only during development; remove in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+//<!-- <div class="notes">
+  //                  <h3>All Notes</h3>-->
+//
+  //                  <!-- Display Top Notes 
+    //                <h4>Top Notes</h4>-->
+      //              <?php foreach ($top_notes as $note): 
+        //                <p><strong>Top:</strong> <?php echo htmlspecialchars($note['Note_Name']); </p>
+          //          <?php endforeach; 
+
+            //        <!-- Display Heart Notes -->
+                   // <h4>Heart Notes</h4>
+             //       <?php foreach ($heart_notes as $note): 
+               //         <p><strong>Heart:</strong> <?php echo htmlspecialchars($note['Note_Name']); </p>
+                 //   <?php endforeach; 
+
+                   // <!-- Display Base Notes -->
+                //    <h4>Base Notes</h4>
+                //    <?php foreach ($base_notes as $note): 
+                  //      <p><strong>Base:</strong> <?php echo htmlspecialchars($note['Note_Name']); </p>
+                  //  <?php endforeach; 
+               // </div>-->
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oriental Vanilla - AU-RA</title>
+    <title><?php echo htmlspecialchars($product['product_name']); ?> - AU-RA</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
-    <link rel="stylesheet" href="product-page.css">
+    <link rel="stylesheet" href="product.css">
+
 </head>
 
 <body>
@@ -15,7 +154,7 @@
         BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
     </div>
 
-  <!-- Main Navigation -->
+    <!-- Main Navigation -->
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
@@ -34,57 +173,48 @@
     </div>
 
         <div class="nav-right">
-            <!-- Collapsible Search Bar -->
-                    <form method="GET" action="search.php" class="search-form">
-                        <input
-                            type="text"
-                            name="query"
-                            placeholder="Search for products..."
-                            class="search-input"
-                        >
-                        <button type="submit">Search</button>
+				<form method="GET" action="shop-all.php" class="search-form">
+            <input type="text" name="query" placeholder="Search for products..." class="search-input">
+            <button type="submit">Search</button>
         </form>
+            
                     <a href="Login.php">ACCOUNT</a>
                     <a href="contact-us.php">CONTACT-US</a>
                     <a href="cart.php">CART (0)</a>
                 </div>
         
-</header>
+    </header>
     <main class="product-detail">
-        <div class="breadcrumb">Home > Oriental Vanilla</div>
+        <div class="breadcrumb">Home > <?php echo htmlspecialchars($product['product_name']);?></div>
 
         <div class="product-container">
             <div class="product-image">
-                <img src="images/spicy bottle.png" alt="Oriental Vanilla Perfume">
+                <img src="images/<?php echo $product['Image_URL']; ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>">
             </div>
 
             <div class="product-info">
-                <h1>Dushkaven</h1>
+                <h1><?php echo htmlspecialchars($product['product_name']); ?></h1>
                 <div class="review-wishlist">
                     <div class="review">
-                        <span class="stars">★★★★★</span> <!-- Replace with actual star rating if dynamic -->
-                        <a href="#reviews">3 reviews</a> <!-- Adjust link as needed -->
+                        <span class="stars">★★★★★</span>
+                        <a href="#reviews"> reviews</a>
                     </div>
                     <div class="wishlist">
                         <a href="#wishlist" class="wishlist-link">♡ Wishlist</a>
                     </div>
                 </div>
 
-                <p class="price">£119.99</p>
-                <p class="description">Duskhaven is a tribute to the exotic, combining the warm spice of nutmeg and saffron with a heart of cinnamon, jasmine, and sandalwood. A base of deep, smoky oud adds depth, making this fragrance a perfect companion for adventurous souls. </p>
+                <p class="price">£<?php echo number_format($product['Price'], 2); ?></p>
+                <p class="description"><?php echo htmlspecialchars($product['description']); ?></p>
+
                 <div class="fragrance-family">
                     <h3>Fragrance Family</h3>
-                    <p>Woody</p>
+                    <p><?php echo htmlspecialchars($product['category_name']); ?></p>
                 </div>
 
-                <div class="notes">
-                    <h3>All Notes</h3>
-                    <p><strong>Top:</strong> Vanilla, Spices</p>
+               
 
-                    <p><strong>Heart:</strong> Jasmine, Amber</p>
 
-                    <p><strong>Base:</strong> Sandalwood, Musk, Oud</p>
-                </div>
 
                 <div class="gender">
                     <h3>Gender</h3>
@@ -92,7 +222,7 @@
                 </div>
 
                 <div class="quantity-section">
-                    <p>100ML</p>
+                    <p> 3.4 Oz </p>
                     <div class="quantity-selector">
                         <button class="quantity-btn">−</button>
                         <input type="number" value="1" min="1" class="quantity-input">
@@ -107,55 +237,34 @@
                     <img src="images/clearpay.jpg" alt="Clearpay" class="payment-image">
                 </div>
 
-                <p class="installment-info">3 interest-free payments of £53.33 with Klarna. No fees.</p>
-                <p class="installment-info">3 interest-free payments of £53.33 with Clearpay. No fees.</p>
+                <p class="installment-info">3 interest-free payments of £<?php echo number_format($product['Price'] / 3, 2); ?> with Klarna. No fees.</p>
+                <p class="installment-info">3 interest-free payments of £<?php echo number_format($product['Price'] / 3, 2); ?> with Clearpay. No fees.</p>
 
                 <div class="pairing-section">
-                    <h4>Create the Perfect Pairing</h4>
-                    <p>Make your scent last all day by pairing it with a candle</p>
-                    <div class="pairing-item">
-                        <img src="images/citrus candle.png" alt="Emirates Oil" class="pairing-image">
-                        <div class="pairing-info">
-                            <p>Dushkaven Candle</p>
-                            <p>£21.00</p>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-
+<!-- Notes -->
+    
     <section class="tasting-notes">
         <h2>Tasting Notes</h2>
         <div class="tasting-notes-content">
-            <div class="note">
-                <img src="images/vanilla note.webp" alt="Vanilla">
-                <div class="note-info">
-                    <h3>Top Note</h3>
-                    <p class="note-title">Vanilla</p>
-                    <p class="note-description">Warm and sweet, evoking comfort and indulgence.</p>
+            <?php foreach ($notes as $note): ?>
+                <div class="note">
+                    <img src="images/<?php echo htmlspecialchars($note['Note_Image']); ?>" alt="<?php echo htmlspecialchars($note['Note_Name']); ?>">
+                    <div class="note-info">
+                        <h3><?php echo htmlspecialchars($note['Note_Name']); ?></h3>
+                        <p><?php echo htmlspecialchars($note['Note_Text']); ?></p>
+                    </div>
                 </div>
-            </div>
-            <div class="note">
-                <img src="images/jasmine note.webp" alt="Jasmine">
-                <div class="note-info">
-                    <h3>Heart Note</h3>
-                    <p class="note-title">Jasmine</p>
-                    <p class="note-description">Delicate and floral, adding depth to the fragrance.</p>
-                </div>
-            </div>
-            <div class="note">
-                <img src="images/sandalwood note.webp" alt="Sandalwood">
-                <div class="note-info">
-                    <h3>Base Note</h3>
-                    <p class="note-title">Sandalwood</p>
-                    <p class="note-description">Earthy and smooth, providing a lasting richness.</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </section>
-    </main>
+
     <section class="faq-section">
         <h2>Frequently Asked Questions</h2>
         <div class="accordion">
@@ -225,28 +334,32 @@
             });
         });
     </script>
-
     <!-- Reviews Section -->
     <section class="reviews-section">
-        <h2>Customer Reviews</h2>
-        <div class="reviews">
-            <div class="review">
-                <h3>Lebron James</h3>
-                <p>★★★★★</p>
-                <p>“Absolutely love the scent! It’s perfect for any occasion.”</p>
-            </div>
-            <div class="review">
-                <h3>Michael Jordan</h3>
-                <p>★★★★☆</p>
-                <p>“A unique fragrance with a warm, comforting feel. Great value!”</p>
-            </div>
-            <div class="review">
-                <h3>Johnny Depp</h3>
-                <p>★★★★★</p>
-                <p>“My favorite perfume so far! I always get compliments.”</p>
-            </div>
-        </div>
+    <h2>Customer Reviews</h2>
+    <div class="reviews">
+        <?php if (!empty($reviews)): ?>
+            <?php foreach ($reviews as $review): ?>
+                <div class="review">
+                    <h3><?php echo htmlspecialchars($review['First_Name'] . ' ' . $review['Last_Name']); ?></h3>
+                    <p>
+                        <?php
+                        // Render star ratings based on the rating value
+                        $rating = intval($review['Rating']);
+                        echo str_repeat('★', $rating) . str_repeat('☆', 5 - $rating);
+                        ?>
+                    </p>
+                    <p>“<?php echo htmlspecialchars($review['Review_Text']); ?>”</p>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No reviews yet. Be the first to review this product!</p>
+        <?php endif; ?>
+    </div>
+</section>
+
     </section>
+    
     <!-- Products You May Also Like Section -->
     <section class="related-products">
         <p class="subtitle">Why not also try</p>
@@ -254,32 +367,32 @@
         <div class="related-products-grid">
             <div class="product">
                 <img src="images/5.jpg" alt="Floral symphony">
-                <p class="product-type">Eau De Parfum </p>
-                <h3>Tresor Lush</h3>
-                <p>£119.00</p>
-                
+                <p class="product-type">Eau De Parfum Combo</p>
+                <h3>Lirien</h3>
+                <p>£109.99</p>
+               
             </div>
             <div class="product">
                 <img src="images/4.jpg" alt="Ocean breeze">
-                <p class="product-type">Eau De Perfume</p>
-                <h3>Lirien</h3>
-                <p>From £99.00</p>
-               
+                <p class="product-type">Perfume Oil</p>
+                <h3>Listrewood</h3>
+                <p>From £119.99.00</p>
+                
             </div>
             <div class="product">
                 <img src="images/1.jpg" alt="Citrus Zest">
                 <p class="product-type">Eau De Parfum</p>
-                <h3>Mosharra Essence</h3>
-                <p>£112.00</p>
-               
+                <h3>Rayun</h3>
+                <p>£109.99</p>
+              
             </div>
             <div class="product">
                 <img src="images/2.jpg" alt="Gourmand Caramel
-                ">
+            ">
                 <p class="product-type">Eau De Parfum</p>
-                <h3>Lustrewood</h3>
-                <p>£99.00</p>
-                
+                <h3>Mosharra Essence</h3>
+                <p>£109.99</p>
+                <p>1 size</p>
             </div>
         </div>
     </section>
@@ -348,6 +461,8 @@
         </div>
 
         <div class="footer-bottom">
-            <p>2024 AU-RA. All rights reserved.</p>
+            <p>© 2035 by NOUS DEUX FRAGRANCES. Built on Wix Studio™</p>
         </div>
     </footer>
+</body>
+</html>

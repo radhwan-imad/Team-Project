@@ -573,3 +573,465 @@ body {
 .section-image.story-image {
     max-width: 800px; /* Increase the width for the "Our Story" image */
 }
+.Catagories a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Set your desired text color */
+    font-family: 'Playfair Display', serif; /* Match the font style */
+    font-size: 1.2em;
+}
+
+
+
+.Catagories a:visited {
+    color: #333; /* Ensure visited links remain the same color */
+}
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f5f0eb;
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-left,
+.nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-left a,
+.nav-right a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-right .search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-right .search-form input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-family: 'Lora', serif;
+    width: 50px; /* Start small */
+    transition: width 0.3s ease-in-out;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.nav-right .search-form input[type="text"]:focus {
+    width: 300px; /* Expand on focus */
+    border-color: #a27b5c;
+    box-shadow: 0 0 5px rgba(162, 123, 92, 0.5);
+    outline: none;
+}
+
+.nav-right .search-form button {
+    padding: 5px 15px;
+    background-color: #a27b5c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-right .search-form button:hover {
+    background-color: #916547;
+}
+
+/* Logo Styling */
+.logo {
+    text-align: center;
+    flex: 1;
+}
+
+.logo img {
+    width: 50px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Shop Controls (Filters & Sorting) */
+.shop-controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #f5f0eb;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.filter-button,
+.sort-options select {
+    background: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+}
+
+/* Search Results Container */
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Individual Search Result Item */
+.search-result-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.search-result-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Image Styling */
+.product-image img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+/* Product Details Styling */
+.product-details h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+    font-family: 'Playfair Display', serif;
+}
+
+.product-details p {
+    font-size: 1em;
+    color: #555;
+}
+/* Fix for Popular Categories Titles */
+.Catagories a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Match text color to Bestsellers */
+    font-family: 'Playfair Display', serif; /* Match font style */
+    font-size: 1.2em; /* Match font size */
+    font-weight: bold; /* Optional: Add bold styling */
+    text-align: center; /* Ensure text alignment */
+}
+
+.Catagories a:visited {
+    color: #333; /* Ensure visited links don't change color */
+}
+
+.Catagories a:hover {
+    color: #a27b5c; /* Optional: Add a subtle hover effect */
+}
+
+/* Button Styling */
+.add-to-cart {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #d4af37;
+    /* Gold background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #a27b5c;
+    transform: scale(1.05);
+}
+/* Search Bar Styling */
+.nav-right .search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-right .search-form input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-family: 'Lora', serif;
+    width: 50px; /* Start small */
+    transition: width 0.3s ease-in-out;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.nav-right .search-form input[type="text"]:focus {
+    width: 300px; /* Expand on focus */
+    border-color: #a27b5c;
+    box-shadow: 0 0 5px rgba(162, 123, 92, 0.5);
+    outline: none;
+}
+
+.nav-right .search-form button {
+    padding: 5px 15px;
+    background-color: #a27b5c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-right .search-form button:hover {
+    background-color: #916547;
+}
+
+/* Ensure other nav items stay aligned */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card img {
+        max-width: 120px;
+    }
+}
+/* General Button Styling */
+.product-btn, .buy-now-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a27b5c; /* Light brown */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif; /* Match the font family */
+    font-size: 1em; /* Consistent font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.product-btn:hover, .buy-now-btn:hover {
+    background-color: #916547;
+    transform: scale(1.05);
+}
+
+/* Ensure the cursor appears as a pointer on hover */
+.product-btn, .buy-now-btn {
+    cursor: pointer; /* Fix for the cursor becoming 'I' */
+}
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: #fdf5e6;
+    color: #333;
+}
+
+/* Announcement Bar Styling */
+.announcement-bar {
+    background-color: #a27b5c;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f5f0eb;
+    color: #333;
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+}
+
+/* Left and Right Navigation Links */
+.nav-left,
+.nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-left a,
+.nav-right a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Logo Centered */
+.logo {
+    text-align: center;
+    flex: 1;
+}
+
+.logo img {
+    width: 50px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Wishlist Container (styled similarly to the cart container) */
+.wishlist-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fdf5e6;
+}
+
+/* Individual Wishlist Item (similar to cart-item) */
+.wishlist-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.wishlist-item img {
+    width: 120px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+.wishlist-item h2 {
+    font-size: 1.2em;
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.wishlist-item p {
+    font-family: 'Lora', serif;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Button for Removing Items (matches the cart remove button style) */
+.remove-button {
+    background-color: #a27b5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #916547;
+    transform: scale(1.05);
+}
+
+/* Wishlist Total (if you need to show a total, similar to the cart total) */
+.wishlist-total {
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Checkout Button (if applicable, styled like the cart checkout button) */
+.checkout-button {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 30px auto;
+    background-color: #d4af37;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #a27b5c;
+    transform: scale(1.05);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .wishlist-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .wishlist-item img {
+        margin-bottom: 10px;
+    }
+}

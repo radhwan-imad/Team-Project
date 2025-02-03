@@ -1,13 +1,29 @@
+<?php
+require_once "connection.php";
+
+$sql = "SELECT product.Product_ID, product.Name, product.description, image.Image_URL 
+        FROM product 
+        INNER JOIN category ON product.Category_ID = category.Category_ID
+        INNER JOIN image ON product.Image_ID = image.Image_ID
+        WHERE category.Name IN ('Fruity Candles', 'Floral Candles') AND image.Is_Main_Image = 1;";
+
+$all_product = $conn->query($sql);
+
+if (!$all_product) {
+    die("Error executing query: " . $conn->error);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AU-RA | Fruity Fragrances</title>
+    <title>AU-RA</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
     <link rel="stylesheet" href="scented-candle.css">
-</head>
+
 
 <body>
     <!-- Announcement Bar -->
@@ -17,85 +33,72 @@
 
     <!-- Main Navigation -->
     <header class="navbar">
+        <!-- Left-side Links -->
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.html">SHOP ALL</a>
-            <a href="candles.html">CANDLES</a>
+            <a href="shop-all.php">SHOP ALL</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
+
+        <!-- Centered Logo -->
         <div class="logo">
             <a href="Mainpage.html">
-                <img src="Aura_logo.png" alt="logo">
+                <img src="Aura_logo.png" alt="logo"> 
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
             </a>
-            <span class="logo-text">AU-RA</span>
-        </div>
+    </div>
+
         <div class="nav-right">
-            <a href="#">SEARCH</a>
-            <a href="Signup.php">ACCOUNT</a>
-            <a href="#">COUNTRY ▼</a>
-            <a href="#">WISHLIST</a>
-            <a href="#">CART (0)</a>
-        </div>
-    </header>
+            <!-- Collapsible Search Bar -->
+                    <form method="GET" action="search.php" class="search-form">
+                        <input
+                            type="text"
+                            name="query"
+                            placeholder="Search for products..."
+                            class="search-input"
+                        >
+                        <button type="submit">Search</button>
+        </form>
+                    <a href="Login.php">ACCOUNT</a>
+                    <a href="contact-us.php">CONTACT-US</a>
+                    <a href="cart.php">CART (0)</a>
+                </div>
+        
+</header>
 
     <!-- Video Cover Section -->
     <div class="video-cover-container">
         <video autoplay muted loop class="video-cover">
-            <source src="images/fruity video.mp4" type="video/mp4">
+            <source src="images/scented candles.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="video-overlay">
             <h1>Welcome to AU-RA</h1>
-            <p>Discover our Floral Perfumes Collection</p>
+            <p>Discover our Scented Candles Collection</p>
         </div>
     </div>
-    
-    <div class="decorative-divider"></div>
-    
+
     <div class="background-image-container">
-        <h1 class="page-title">Bestsellers's Fruity Perfumes</h1>
-        <p class="page-description">Discover our luxurious floral perfumes, designed to captivate and inspire with every spritz. Perfect for any occasion.</p>
+        <h1 class="page-title">Bestseller's Candles</h1>
+        <p class="page-description">Discover our luxurious candle collection, designed to elevate your space with warmth and ambiance. Perfect for every moment.</p>
         
-    <div class="product-cards">
+        <div class="product-cards">
+            <?php while ($row = mysqli_fetch_assoc($all_product)) { ?>
+            <div class="product-card">
+                <img src="images/<?php echo $row['Image_URL']; ?>" alt="<?php echo htmlspecialchars($row['Name']); ?>" class="product-image">
+                <div class="product-info">
+                    <h2><?php echo htmlspecialchars($row['Name']); ?></h2>
+                    <p><?php echo htmlspecialchars($row['description']); ?></p>
+                   <a href="product.php?Product_ID=<?php echo $row['Product_ID']; ?>" class="product-btn">Buy Now</a>
 
-        <div class="product-card">
-            <img src="images/citrus bottle.png" alt="Jasmine Charm" class="product-image">
-            <div class="product-info">
-                <h2>Pristelle</h2>
-                <p>Immerse yourself in the delicate, enchanting scent of jasmine.</p>
-                <button class="product-btn">Buy Now</button>
+                </div>
             </div>
+            <?php } ?>
         </div>
-
-        <div class="product-card">
-            <img src="images/spicy bottle.png" alt="Rose Elegance" class="product-image">
-            <div class="product-info">
-                <h2>Dushkaven</h2>
-                <p>Infuse your space with the romantic scent of blooming roses.</p>
-                <button class="product-btn">Buy Now</button>
-            </div>
-        </div>
-    
-        <div class="product-card">
-            <img src="images/caramel bottle.png" alt="Lavender Bliss" class="product-image">
-            <div class="product-info">
-                <h2>Lustrewood</h2>
-                <p>Relax with the calming aroma of fresh lavender blooms.</p>
-                <button class="product-btn">Buy Now</button>
-            </div>
-        </div>
-    
-        
-
-        
     </div>
-    
-</body>
 
-</html>
-<!-- Footer Section -->
-<footer>
+    <footer>
     <div class="footer-content">
         <div class="newsletter">
             <h3>Subscribe to Our Newsletter</h3>
@@ -149,6 +152,9 @@
             your website accepts based on your payment processor(s).</p>
     </div>
     <div class="footer-bottom">
-        <p>© 2035 by NOUS DEUX FRAGRANCES. Built on Wix Studio™</p>
+        <p>2024 AU-RA. All rights reserved.</p>
     </div>
-</footer>
+    </footer>
+</body>
+</html>
+

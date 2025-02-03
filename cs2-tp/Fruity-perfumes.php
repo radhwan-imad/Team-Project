@@ -1,24 +1,51 @@
+<?php
+session_start();
+
+// Disable caching for this page
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Past date
+
+// Check if the user is logged in by verifying session data
+if (ini_get("session.use_cookies")) {
+    setcookie(session_name(), '', time() - 42000, '/');
+}
+require_once "connection.php";
+$user_id = $_SESSION["User_ID"];
+$sql = "SELECT product.Product_ID, product.Name, product.description, image.Image_URL 
+        FROM product 
+        INNER JOIN category ON product.Category_ID = category.Category_ID
+        INNER JOIN image ON product.Image_ID = image.Image_ID
+        WHERE category.Name = 'Fruity Perfumes' AND image.Is_Main_Image = 1;";
+
+$all_product = $conn->query($sql);
+
+if (!$all_product) {
+    die("Error executing query: " . $conn->error);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AU-RA</title>
+    <title>AU-RA | Fruity Fragrances</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
-    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="scented-candle.css">
+
 </head>
-
 <body>
-    <!-- Announcement Bar -->
-    
+    <div class="announcement-bar">
+        BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
+    </div>
 
-    <!-- Main Navigation -->
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.php">SHOP ALL</a>
+            <a href="shop-all.html">SHOP ALL</a>
+            <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
@@ -41,59 +68,48 @@
                             class="search-input"
                         >
                         <button type="submit">Search</button>
-        </form>
+                    </form>
                     <a href="Login.php">ACCOUNT</a>
                     <a href="contact-us.php">CONTACT-US</a>
                     <a href="cart.php">CART (0)</a>
                 </div>
         
-</header>
+    </header>
 
-   <!-- Blog Content Section -->
-   <div class="blog-content">
-    <h1 class="heading1">Fragrance Oils vs. Essential Oils: What is the Difference?</h1>
-    <hr>
+    <div class="video-cover-container">
+        <video autoplay muted loop class="video-cover">
+            <source src="images/fruity video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay">
+            <h1>Welcome to AU-RA</h1>
+            <p>Discover our Floral Perfumes Collection</p>
+        </div>
+    </div>
     
+    <div class="decorative-divider"></div>
     
-    <div class="section-image story-image">
-        <img src="images/blog11.jpg" alt="Blog Post Image">
+    <div class="background-image-container">
+        <h1 class="page-title">Bestsellers's Fruity Perfumes</h1>
+        <p class="page-description">Discover our luxurious floral perfumes, designed to captivate and inspire with every spritz. Perfect for any occasion.</p>
+        
+        <div class="product-cards">
+            <?php while ($row = mysqli_fetch_assoc($all_product)) { ?>
+            <div class="product-card">
+                <img src="images/<?php echo $row['Image_URL']; ?>" alt="<?php echo htmlspecialchars($row['Name']); ?>" class="product-image">
+                <div class="product-info">
+                    <h2><?php echo htmlspecialchars($row['Name']); ?></h2>
+                    <p><?php echo htmlspecialchars($row['description']); ?></p>
+                   <a href="product.php?Product_ID=<?php echo $row['Product_ID']; ?>" class="buy-now-btn">Buy Now</a>
+
+                </div>
+            </div>
+            <?php } ?>
+        </div>
     </div>
 
-    <div class="blog-text">
-        <p>
-            Fragrance oils and essential oils are two terms you may have heard when selecting the ideal fragrance for your body, house, or even a new fragrance. Despite their similar sounds, they differ greatly in terms of their benefits, composition, and applications. We'll examine the distinctions between essential and fragrance oils in this post so you can choose the one that best meets your requirements.
-        </p>
-
-        <h2>What Are Fragrance Oils?</h2>
-        <p>
-            Synthetic or mixed oils known as fragrance oils are designed to replicate the scent of natural substances or to provide completely original, artificial scents. These oils frequently create rich, enduring fragrances by combining a range of aromatic components. Perfumes, candles, skincare products, and air fresheners all contain fragrance oils.
-        </p>
-
-        <h2>What Are Essential Oils?</h2>
-        <p>
-            Conversely, essential oils are organic substances that are derived straight from plants, flowers, seeds, and trees. By using techniques like steam distillation or cold-press extraction, the natural plant ingredients are preserved in these oils. Essential oils are utilised extensively in aromatherapy, holistic wellbeing, and natural skincare because of their high concentration.
-        </p>
-
-        <h2>3 Key Differences Between Fragrance Oils and Essential Oils</h2>
-        <ul>
-            <li><strong>Scent Longevity:</strong> Fragrance Oils tend to last significantly longer due to their synthetic components. Essential oils provide more delicate and organic scents but evaporate more quickly.</li>
-            <li><strong>Uses:</strong> Fragrance oils are mostly used to scent cosmetics, candles, and perfumes. Essential oils are frequently utilised in holistic therapies, natural skincare products, and aromatherapy.</li>
-            <li><strong>Cost:</strong> Fragrance Oils are typically more affordable due to their synthetic nature. Essential Oils can be more expensive due to the extraction process and their natural, high-quality ingredients.</li>
-        </ul>
-
-        <h2>What Should You Pick?</h2>
-        <p>
-            Your own demands and preferences will ultimately determine whether you choose essential oils or fragrance oils.
-            <br><strong>Fragrance oils</strong> are an excellent choice if you're searching for a long-lasting scent that offers a particular scent profile (such as your favourite perfume or a distinctive candle scent).
-            <br><strong>Essential oils</strong> are perfect for you if you want to improve your well-being or are looking for a natural, therapeutic experience. Additionally, they provide a more comprehensive strategy for relaxation and well-being.
-        </p>
-    </div>
-</div>
-
-     <!-- Footer Section -->
-<footer>
+    <footer>
     <div class="footer-content">
-        <!-- Newsletter Subscription -->
         <div class="newsletter">
             <h3>Subscribe to Our Newsletter</h3>
             <p>Be the first to discover new arrivals and insider news.</p>
@@ -105,8 +121,6 @@
                 <button type="submit">Subscribe</button>
             </form>
         </div>
-
-        <!-- Footer Links -->
         <div class="footer-links">
             <div>
                 <h4>Shop</h4>
@@ -141,19 +155,15 @@
             </div>
         </div>
     </div>
-
-    <!-- Payment Methods Section -->
     <div class="payment-methods">
         <p>Pay Securely with</p>
         <img src="images/payment.png" alt="Payment Methods" style="width: auto; height: 30px;">
         <p>These payment methods are for illustrative purposes only. Update this section to show the payment methods
             your website accepts based on your payment processor(s).</p>
     </div>
-
-    <!-- Footer Copyright -->
     <div class="footer-bottom">
-        <p>© 2035 by NOUS DEUX FRAGRANCES. Built on Wix Studio™</p>
+        <p>2024 AU-RA. All rights reserved.</p>
     </div>
-</footer>
-
+    </footer>
+</body>
 </html>

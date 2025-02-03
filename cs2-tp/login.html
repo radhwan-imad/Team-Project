@@ -1,15 +1,81 @@
+<?php
+session_start();
+require_once("connection.php"); // Ensure this is the first thing that runs after session start
+
+// Initialize error message and form values
+$error_message = '';
+$form_data = [];
+
+if (isset($_POST['submitted'])) {
+    // Check if both email and password fields are filled
+    if (empty($_POST['login-email']) || empty($_POST['login-password'])) {
+        $error_message = 'Please fill both the email and password fields!';
+    } else {
+        // Attempt to connect to the database
+        if ($conn) {
+            try {
+                // Prepare the statement to avoid SQL injection
+                $stat = $conn->prepare('SELECT User_ID, Password FROM users WHERE Email_ID = ?');
+                $stat->bind_param("s", $_POST['login-email']);
+                $stat->execute();
+
+                // Get the result
+                $result = $stat->get_result();
+
+                // Check if a row was returned
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+
+                    // Verify the password
+                    if (password_verify($_POST['login-password'], $row['Password'])) {
+                        // Set session variables
+                        $_SESSION["User_ID"] = $row['User_ID'];
+                        $_SESSION["Email_ID"] = $_POST['login-email'];
+
+                        // Redirect to the payment page
+                        header("Location: Mainpage.php");
+                        exit();
+                    } else {
+                        $error_message = 'Incorrect password. Please try again.';
+                    }
+                } else {
+                    $error_message = 'Email address not found.';
+                }
+            } catch (Exception $ex) {
+                $error_message = "Failed to execute query: " . htmlspecialchars($ex->getMessage());
+            }
+        } else {
+            $error_message = "Unable to connect to the database.";
+        }
+    }
+
+    // Save the error message and input data to session
+    $_SESSION['error_message'] = $error_message;
+    $_SESSION['form_data'] = $_POST;
+
+    // Redirect back to the same page
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Retrieve error message and form data if exists
+$error_message = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : '';
+$form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+
+// Clear session variables after use
+unset($_SESSION['error_message'], $_SESSION['form_data']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - AU-RA</title>
-    <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
+    <link rel="icon" type="img/x-icon" href="Aura_logo1.png">
     <link rel="stylesheet" href="Mainpage.css">
     <link rel="stylesheet" href="account.css"> 
 </head>
-
 <body>
     <!-- Announcement Bar -->
     <div class="announcement-bar">
@@ -18,27 +84,28 @@
 
     <!-- Main Navigation -->
     <header class="navbar">
-        <!-- Left-side Links -->
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.html">SHOP ALL</a>
-            <a href="Candles.html">CANDLES</a>
+            <a href="shop-all.php">SHOP ALL</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
 
-        <!-- Centered Logo -->
         <div class="logo">
             <a href="Mainpage.html">
-                <img src="Aura_logo.png" alt="logo"> </a>
-            <span class="logo-text">AU-RA</span>
+                <img src="Aura_logo.png" alt="logo">
+            </a>
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
         </div>
 
-        <!-- Right-side Links -->
         <div class="nav-right">
+        <?php if (isset($_SESSION["User_ID"])): ?>
+            <a href="Logout.php">LOG OUT</a>
+        <?php else: ?>
+            <a href="Signup.php">SIGN UP</a>
+        <?php endif; ?>
+        
             <a href="#">SEARCH</a>
-            <a href="Login.php">ACCOUNT</a>
-            <a href="#">COUNTRY ▼</a>
             <a href="#">WISHLIST</a>
             <a href="#">CART (0)</a>
         </div>
@@ -52,7 +119,7 @@
                 <form action="#" method="post">
                     <div class="input-group">
                         <label for="login-email">Email Address</label>
-                        <input type="email" id="login-email" name="login-email" placeholder="Enter your email" required>
+                        <input type="email" id="login-email" name="login-email" placeholder="Enter your email" required value="<?php echo htmlspecialchars($form_data["login-email"] ?? ''); ?>">
                     </div>
 
                     <div class="input-group">
@@ -62,21 +129,27 @@
 
                     <div class="button-container">
                         <button type="submit" class="primary-btn">Login</button>
+                        <input type="hidden" name="submitted" value="TRUE" />
                     </div>
 
                     <div class="links">
-                        <p class="helper-text">Forgot your password? <a href="reset-password.html">Reset it here</a>.</p>
-                        <p>Don't have an account? <a href="signup.html">Create one here</a>.</p>
+                        <p class="helper-text">Forgot your password? <a href="ResetPassword.php">Reset it here</a>.</p>
+                        <p>"Don't have an account? <a href="Signup.php">Create one here</a>."</p>
                     </div>
                 </form>
+                
+                <?php if ($error_message): ?>
+                    <div style="color:red; padding: 8px; margin-left: 50px">
+                        <?php echo htmlspecialchars($error_message); ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </section>
     </main>
 
     <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 AU-RA. All rights reserved.</p>
+        <p>© 2024 AU-RA. All rights reserved.</p>
     </footer>
 </body>
-
 </html>
