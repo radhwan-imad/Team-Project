@@ -15,36 +15,27 @@ if (isset($_POST['submitted'])) {
         if ($conn) {
             try {
                 // Prepare the statement to avoid SQL injection
-                $stat = $conn->prepare('SELECT User_ID, Password, First_Name, Last_Name FROM users WHERE Email_ID = ?');
+                $stat = $conn->prepare('SELECT Password FROM users WHERE Email_ID = ?');
                 $stat->bind_param("s", $_POST['login-email']);
                 $stat->execute();
 
                 // Get the result
-                $result = $stat->get_result();
+                $result = $stat->get_result();  // Getting result set
 
                 // Check if a row was returned
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
+                if ($result->num_rows > 0) {  // Checking row count for MySQLi
+                    $row = $result->fetch_assoc();  // Fetch the associated array
 
-                    // Verify the password
                     if (password_verify($_POST['login-password'], $row['Password'])) {
-                        // Set session variables
-                        $_SESSION["User_ID"] = $row['User_ID'];
+                        // Record the user session
                         $_SESSION["Email_ID"] = $_POST['login-email'];
-                        $_SESSION["User_Name"] = $row['First_Name']; // Save user's first name
-                        $_SESSION["Last_Name"] = $row['Last_Name'];
-                        $_SESSION["user_logged_in"] = true;
-                        $updateLogin = $conn->prepare('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE User_ID = ?');
-                        $updateLogin->bind_param('i', $row['User_ID']);
-                        $updateLogin->execute();
-                        // Redirect to the main page
-                        header("Location: logged-in.php");
+                        header("Location: Mainpage.html"); // Redirect to the logged-in page
                         exit();
                     } else {
-                        $error_message = 'Incorrect password. Please try again.';
+                        $error_message = 'Error logging in, password does not match.';
                     }
                 } else {
-                    $error_message = 'Email address not found.';
+                    $error_message = 'Error logging in, email not found.';
                 }
             } catch (Exception $ex) {
                 $error_message = "Failed to execute query: " . htmlspecialchars($ex->getMessage());
@@ -87,36 +78,34 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
         BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
     </div>
 
+    <!-- Main Navigation -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="Mainpage.php">HOME</a>
-            <a href="shop-all.php">SHOP ALL</a>
+            <a href="Mainpage.html">HOME</a>
+            <a href="shop-all.html">SHOP ALL</a>
+            <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
 
         <div class="logo">
-            <a href="Mainpage.php">
+            <a href="Mainpage.html">
                 <img src="Aura_logo.png" alt="logo">
-                <span class="logo-text">AU-RA<br>Fragrance your soul</span>
             </a>
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
         </div>
 
         <div class="nav-right">
-            <form method="GET" action="shop-all.php" class="search-form">
-                <input type="text" name="query" placeholder="Search for products..." class="search-input">
-                <button type="submit">Search</button>
-            </form>
-
-            <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
-              
-                <a href="Logout.php">Logout</a>
-            <?php else: ?>
-                <a href="Signup.php">ACCOUNT</a>
-            <?php endif; ?>
-
-            <a href="contact-us.php">CONTACT-US</a>
-            <a href="cart.php">CART (<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)</a>
+        <?php if (isset($_SESSION["Email_ID"])): ?>
+            <a href="Logout.php">LOG OUT</a>
+        <?php else: ?>
+            <a href="Login.php">LOG IN</a>
+            <a href="Signup.php">SIGN UP</a>
+        <?php endif; ?>
+            <a href="#">SEARCH</a>
+            <a href="#">COUNTRY ▼</a>
+            <a href="#">WISHLIST</a>
+            <a href="#">CART (0)</a>
         </div>
     </header>
 
@@ -142,8 +131,8 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
                     </div>
 
                     <div class="links">
-                        <p class="helper-text">Forgot your password? <a href="resetpassword.php">Reset it here</a>.</p>
-                        <p>"Don't have an account? <a href="Signup.php">Create one here</a>."</p>
+                        <p class="helper-text">Forgot your password? <a href="ResetPassword.php">Reset it here</a>.</p>
+                        <p>Don't have an account? <a href="Signup.php">Create one here</a>.</p>
                     </div>
                 </form>
                 
