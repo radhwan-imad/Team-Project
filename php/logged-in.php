@@ -99,7 +99,7 @@ $lastLogin = date('m/d/Y', strtotime($userData['last_login']));
                         <img src="images/past1.png" alt="Orders Icon">
                         <h3>Past Orders</h3>
                     </a>
-                    <a href="account-settings.php" class="dashboard-item">
+                    <a href="account-settings.html" class="dashboard-item">
                         <img src="images/gents.png" alt="Settings Icon">
                         <h3>Account Settings</h3>
                     </a>
