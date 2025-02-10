@@ -1,3 +1,49 @@
+<?php
+session_start();
+include 'connection.php';
+
+if (!isset($_SESSION['User_ID'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user_id = $_SESSION['User_ID'];
+
+$query = "SELECT o.Order_ID, o.date, o.status, oi.Product_ID, oi.Quantity, p.Name, p.Price, i.Image_URL
+          FROM orders o
+          JOIN order_items oi ON o.Order_ID = oi.Order_ID
+          JOIN product p ON oi.Product_ID = p.Product_ID
+          JOIN image i ON p.Product_ID = i.Product_ID
+          WHERE o.User_ID = ? 
+          ORDER BY o.date DESC";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$orders = [];
+while ($row = $result->fetch_assoc()) {
+    if (!isset($orders[$row['Order_ID']])) {
+        $orders[$row['Order_ID']] = [
+            'date' => $row['date'],
+            'status' => $row['status'],
+            'products' => []
+        ];
+    }
+
+    $orders[$row['Order_ID']]['products'][] = [
+        'Product_ID' => $row['Product_ID'],
+        'Name' => $row['Name'],
+        'Quantity' => $row['Quantity'],
+        'Price' => $row['Price'],
+        'Image_URL' => $row['Image_URL']
+    ];
+}
+
+$stmt->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,81 +83,46 @@
         </div>
     </header>
 
-    <main class="past-orders-container">
+	<main class="past-orders-container">
         <section class="past-orders-column">
             <h2>Past Orders</h2>
             <div class="orders-container">
-                <div class="order-card">
-                    <div class="order-header">
-                        <p><strong>Order ID:</strong> #1</p>
-                        <p><strong>Date:</strong> 20th Nov 2024</p>
-                        <p><strong>Status:</strong> Delivered</p>
-                        <button class="toggle-details">View Details ▼</button>
+                <?php foreach ($orders as $order_id => $order): ?>
+                    <div class="order-card">
+                        <div class="order-header">
+                            <p><strong>Order ID:</strong> #<?php echo $order_id; ?></p>
+                            <p><strong>Date:</strong> <?php echo $order['date']; ?></p>
+                            <p><strong>Status:</strong> <?php echo $order['status']; ?></p>
+                            <button class="toggle-details">View Details ▼</button>
+                        </div>
+                        <div class="order-details">
+                            <ul>
+                                <?php foreach ($order['products'] as $product): ?>
+                                    <li>
+                                        <img src="images/<?php echo $product['Image_URL']; ?>" alt="<?php echo $product['Name']; ?>" class="product-image">
+                                        <div class="product-info">
+                                            <span><strong><?php echo $product['Name']; ?> - £<?php echo $product['Price']; ?></strong></span>
+                                            <p>Quantity: <?php echo $product['Quantity']; ?></p>
+                                            <button class="review-btn" data-product-id="<?php echo $product['Product_ID']; ?>" data-order="<?php echo $order_id; ?>">Leave a Review</button>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <p><strong>Total:</strong> £
+                                <?php
+                                    $total_price = 0;
+                                    foreach ($order['products'] as $product) {
+                                        $total_price += $product['Price'] * $product['Quantity'];
+                                    }
+                                    echo $total_price;
+                                ?>
+                            </p>
+                        </div>
                     </div>
-                    <div class="order-details">
-                        <ul>
-                            <li>
-                                <img src="images/green bottle.png" alt="Radwen's Haven Perfume" class="product-image">
-                                <div class="product-info">
-                                    <span><strong>Radwen's Haven Perfume - £21.00</strong></span>
-                                    <p>Quantity: 1</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="images/floral candle.png" alt="Floral Symphony Candle" class="product-image">
-                                <div class="product-info">
-                                    <span><strong>Floral Symphony Candle - £21.00</strong></span>
-                                    <p>Quantity: 2</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <p><strong>Total:</strong> £63.00</p>
-                    </div>
-                </div>
-                <div class="order-card">
-                    <div class="order-header">
-                        <p><strong>Order ID:</strong> #2</p>
-                        <p><strong>Date:</strong> 5th Nov 2024</p>
-                        <p><strong>Status:</strong> In Progress</p>
-                        <button class="toggle-details">View Details ▼</button>
-                    </div>
-                    <div class="order-details">
-                        <ul>
-                            <li>
-                                <img src="images/vanilla candle.png" alt="Oriental Vanilla Candle"
-                                    class="product-image">
-                                <div class="product-info">
-                                    <span><strong>Oriental Vanilla Candle - £160.00</strong></span>
-                                    <p>Quantity: 1</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <p><strong>Total:</strong> £160.00</p>
-                    </div>
-                </div>
-                <div class="order-card">
-                    <div class="order-header">
-                        <p><strong>Order ID:</strong> #3</p>
-                        <p><strong>Date:</strong> 5th Nov 2024</p>
-                        <p><strong>Status:</strong> In Progress</p>
-                        <button class="toggle-details">View Details ▼</button>
-                    </div>
-                    <div class="order-details">
-                        <ul>
-                            <li>
-                                <img src="images/3.jpg" alt="Pristelle" class="product-image">
-                                <div class="product-info">
-                                    <span><strong>Pristelle - £70.00</strong></span>
-                                    <p>Quantity: 1</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <p><strong>Total:</strong> £70.00</p>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
             <div class="back-btn-container">
-                <a href="logged-in.html" class="back-btn">Back to Dashboard</a>
+                <a href="logged-in.php" class="back-btn">Back to Dashboard</a>
             </div>
         </section>
 
@@ -120,7 +131,7 @@
             <p>Welcome to the Au-Ra Society, our exclusive rewards program! Earn points with every purchase, enjoy free
                 delivery, and unlock access to premium fragrances and experiences.</p>
             <div class="current-points">
-                <p><strong>Your Current Points: 750</strong></p>
+                <p><strong>Your Current Points: 293</strong></p>
             </div>
             <p>Start earning rewards today:</p>
             <ul class="rewards-list">
@@ -197,6 +208,7 @@
             <p>© 2024 by AU-RA. All rights reserved.</p>
         </div>
     </footer>
+
     <script>
         document.querySelectorAll('.toggle-details').forEach(button => {
             button.onclick = function () {
@@ -211,6 +223,38 @@
             };
         });
     </script>
+
+<div id="review-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Leave a Review</h2>
+        <form id="review-form">
+            <input type="hidden" id="order-id" name="order_id">
+            <input type="hidden" id="product-id" name="product_id">
+
+            <label for="rating">Rating:</label>
+            <div class="star-rating">
+                <input type="hidden" id="rating" name="rating" required>
+                <div class="stars">
+                    <span data-value="1">☆</span>
+                    <span data-value="2">☆</span>
+                    <span data-value="3">☆</span>
+                    <span data-value="4">☆</span>
+                    <span data-value="5">☆</span>
+                </div>
+                <div class="rating-text">Click to rate</div>
+            </div>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" required></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</div>
+
+<script src="review.js"></script>
+
 </body>
 
 </html>
