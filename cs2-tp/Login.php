@@ -15,7 +15,8 @@ if (isset($_POST['submitted'])) {
         if ($conn) {
             try {
                 // Prepare the statement to avoid SQL injection
-                $stat = $conn->prepare('SELECT Password FROM users WHERE Email_ID = ?');
+               // Modify this query in login.php
+$stat = $conn->prepare('SELECT User_ID, First_Name, Last_Name, Email_ID, Password FROM users WHERE Email_ID = ?');
                 $stat->bind_param("s", $_POST['login-email']);
                 $stat->execute();
 
@@ -27,9 +28,13 @@ if (isset($_POST['submitted'])) {
                     $row = $result->fetch_assoc();  // Fetch the associated array
 
                     if (password_verify($_POST['login-password'], $row['Password'])) {
-                        // Record the user session
-                        $_SESSION["Email_ID"] = $_POST['login-email'];
-                        header("Location: logged-in.php"); // Redirect to the logged-in page
+                        // Store all necessary user data in session
+                        $_SESSION['User_ID'] = $row['User_ID'];
+                        $_SESSION['User_Name'] = $row['First_Name'];
+                        $_SESSION['Last_Name'] = $row['Last_Name'];
+                        $_SESSION['Email_ID'] = $row['Email_ID'];
+                        
+                        header("Location: logged-in.php");
                         exit();
                     } else {
                         $error_message = 'Error logging in, password does not match.';
