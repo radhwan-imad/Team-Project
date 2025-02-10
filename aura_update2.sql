@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 02:52 PM
+-- Generation Time: Feb 10, 2025 at 08:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -273,8 +273,17 @@ CREATE TABLE `users` (
   `Email_ID` varchar(150) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Contact_NO` varchar(15) DEFAULT NULL,
-  `activation` varchar(255) DEFAULT NULL
+  `activation` varchar(255) DEFAULT NULL,
+  `registration_date` datetime DEFAULT current_timestamp(),
+  `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`User_ID`, `First_Name`, `Last_Name`, `Email_ID`, `Password`, `Contact_NO`, `activation`, `registration_date`, `last_login`) VALUES
+(52, 'Priscilla', 'Asamoah', 'priscillsasamoah@gmail.com', '$2y$10$gfA8qnEDhJXfCzmtaO2jAO4r1RNBcWzsv417BDkjpL4UOoy7mXQOy', '07539433143', NULL, '2025-02-04 14:21:39', '2025-02-10 17:40:20');
 
 -- --------------------------------------------------------
 
@@ -491,7 +500,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `User_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `User_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `user_address`

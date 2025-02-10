@@ -37,7 +37,7 @@ $lastLogin = date('m/d/Y', strtotime($userData['last_login']));
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
-            <a href="Mainpage.php">HOME</a>
+            <a href="Mainpage.html">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
             
             <a href="society.html">Au-Ra SOCIETY</a>
@@ -65,7 +65,7 @@ $lastLogin = date('m/d/Y', strtotime($userData['last_login']));
                     </form>
          Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</a>
         
-                    <a href="Login.php">ACCOUNT</a>
+                    <a href="logged-in.php">ACCOUNT</a>
                     <a href="contact-us.php">CONTACT-US</a>
                     <a href="cart.php">CART </a>
                 </div>
