@@ -29,7 +29,7 @@ if (isset($_POST['submitted'])) {
                     if (password_verify($_POST['login-password'], $row['Password'])) {
                         // Record the user session
                         $_SESSION["Email_ID"] = $_POST['login-email'];
-                        header("Location: Mainpage.html"); // Redirect to the logged-in page
+                        header("Location: logged-in.php"); // Redirect to the logged-in page
                         exit();
                     } else {
                         $error_message = 'Error logging in, password does not match.';
