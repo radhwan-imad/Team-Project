@@ -95,7 +95,7 @@ $lastLogin = date('m/d/Y', strtotime($userData['last_login']));
             <div class="dashboard-options">
                 <h3>Your Dashboard</h3>
                 <div class="dashboard-links">
-                    <a href="past-orders.html" class="dashboard-item">
+                    <a href="past-orders.php" class="dashboard-item">
                         <img src="images/past1.png" alt="Orders Icon">
                         <h3>Past Orders</h3>
                     </a>
