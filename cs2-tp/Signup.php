@@ -42,20 +42,28 @@ if (isset($_POST['submitted'])) {
             try {
                 // Hash the password for storage
                 $hashed_password = password_hash($signup_password, PASSWORD_DEFAULT);
-        
+            
                 // Insert user information into the 'users' table
                 $stat = $conn->prepare("INSERT INTO users (First_Name, Last_Name, Email_ID, Password, Contact_NO) VALUES (?, ?, ?, ?, ?)");
                 $stat->bind_param("sssss", $first_name, $last_name, $email_id, $hashed_password, $contact_no);
                 $stat->execute();
-        
+            
                 // Get the ID of the newly inserted user
                 $id = $conn->insert_id;
+            
+                // Insert a new cart for the user
+                $cart_stmt = $conn->prepare("INSERT INTO cart (User_ID) VALUES (?)");
+                $cart_stmt->bind_param("i", $id);
+                $cart_stmt->execute();
+                $cart_stmt->close();
+            
                 echo "<script>alert('Congratulations! You are now registered. Please Login now');</script>";
                 echo "<script>window.location.href = 'Login.php';</script>";
                 exit; // End script execution after redirect
             } catch (mysqli_sql_exception $ex) {
                 $error_message = "Sorry, a database error occurred!";
             }
+            
         }
     }
 
