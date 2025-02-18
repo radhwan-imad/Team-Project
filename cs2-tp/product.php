@@ -133,6 +133,56 @@ error_reporting(E_ALL);
                   //      <p><strong>Base:</strong> <?php echo htmlspecialchars($note['Note_Name']); </p>
                   //  <?php endforeach; 
                // </div>-->
+
+// Process form submissions first
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Add product to cart
+    if (isset($_POST['add_to_cart'])) {
+        if (!isset($_SESSION['User_ID'])) {
+            header("Location: Login.php");
+            exit;
+        }
+        
+        $user_id = $_SESSION['User_ID'];
+        
+        // Fetch Cart_ID for the User
+        $stmt = $conn->prepare("SELECT Cart_ID FROM cart WHERE User_ID = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($row = $result->fetch_assoc()) {
+            $cart_id = $row['Cart_ID'];
+        } else {
+            // If no cart exists, create one
+            $stmt = $conn->prepare("INSERT INTO cart (User_ID) VALUES (?)");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $cart_id = $stmt->insert_id;
+        }
+        
+        $product_id = $_POST['product_id'];
+        
+        // Check if the product is already in the cart
+        $stmt = $conn->prepare("SELECT Quantity FROM cart_items WHERE Cart_ID = ? AND Product_ID = ?");
+        $stmt->bind_param("ii", $cart_id, $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            $stmt = $conn->prepare("UPDATE cart_items SET Quantity = Quantity + 1 WHERE Cart_ID = ? AND Product_ID = ?");
+        } else {
+            $stmt = $conn->prepare("INSERT INTO cart_items (Cart_ID, Product_ID, Quantity) VALUES (?, ?, 1)");
+        }
+        $stmt->bind_param("ii", $cart_id, $product_id);
+        $stmt->execute();
+
+        
+        header("Location: product.php?Product_ID=" . $product_id);
+        exit;
+    }
+}
+            
 ?>
 
 
@@ -180,7 +230,37 @@ error_reporting(E_ALL);
             
                     <a href="Login.php">ACCOUNT</a>
                     <a href="contact-us.php">CONTACT-US</a>
-                    <a href="cart.php">CART (0)</a>
+                    <a href="cart.php">CART ▼ (<?php 
+                if (isset($_SESSION['User_ID'])) {
+                    $user_id = $_SESSION['User_ID'];
+
+                    // Fetch the cart ID
+                    $stmtc = $conn->prepare("SELECT Cart_ID FROM cart WHERE User_ID = ?");
+                    $stmtc->bind_param("i", $user_id);
+                    $stmtc->execute();
+                    $result_cart = $stmtc->get_result();
+                    if ($row = $result_cart->fetch_assoc()) {
+                        $cart_id = $row['Cart_ID'];
+
+                        // Get the total quantity in the cart
+                        $stmtc = $conn->prepare("SELECT SUM(Quantity) as total_quantity FROM cart_items WHERE Cart_ID = ?");
+                        $stmtc->bind_param("i", $cart_id);
+                        $stmtc->execute();
+                        $stmtc->store_result();
+                        if ($stmtc->num_rows > 0) {
+                            $stmtc->bind_result($total_quantity);
+                            $stmtc->fetch();
+                            echo $total_quantity ?: 0;
+                        } else {
+                            echo 0;
+                        }
+                    } else {
+                        echo 0;
+                    }
+                } else {
+                    echo 0;
+                }
+            ?>)</a>
                 </div>
         
     </header>
@@ -221,16 +301,12 @@ error_reporting(E_ALL);
                     <p>Unisex</p>
                 </div>
 
-                <div class="quantity-section">
-                    <p> 3.4 Oz </p>
-                    <div class="quantity-selector">
-                        <button class="quantity-btn">−</button>
-                        <input type="number" value="1" min="1" class="quantity-input">
-                        <button class="quantity-btn">+</button>
-                    </div>
-                </div>
+                
 
-                <button class="add-to-cart">Add to Cart</button>
+                <form method="POST" action="">
+                        <input type="hidden" name="product_id" value="<?php echo $product['Product_ID']; ?>">
+                        <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+                </form>
                 <div class="payment-options">
                     <img src="images/shoppay.jpg" alt="Shop Pay" class="payment-image">
                     <img src="images/klarna.jpg" alt="Klarna" class="payment-image">
