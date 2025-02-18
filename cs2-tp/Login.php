@@ -25,10 +25,10 @@ if (isset($_POST['submitted'])) {
                     // Verify the password
                     if (password_verify($_POST['login-password'], $row['Password'])) {
                         // Set session variables
-                        $_SESSION["User_ID"] = $row['User_ID'];
-                        $_SESSION["Email_ID"] = $_POST['login-email'];
-                        $_SESSION["User_Name"] = $row['First_Name'];
-                        $_SESSION["user_logged_in"] = true;
+                        $_SESSION['User_ID'] = $row['User_ID'];
+                        $_SESSION['User_Name'] = $row['First_Name'];
+                        $_SESSION['Last_Name'] = $row['Last_Name'];
+                        $_SESSION['Email_ID'] = $row['Email_ID'];
 
                         // Check if the user already has a cart in the database
                         $checkCartStmt = $conn->prepare("SELECT Cart_ID FROM cart WHERE User_ID = ?");
