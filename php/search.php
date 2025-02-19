@@ -52,7 +52,7 @@ if (isset($_GET['query']) && !empty($_GET['query'])) {
         echo "<p>No products found.</p>";
     }
     echo "</div>";
-}
+
 
 $conn->close();
 ?>
