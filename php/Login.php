@@ -181,7 +181,7 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
                     </div>
                     <div class="links">
                         <p class="helper-text">Forgot your password? <a href="resetpassword.php">Reset it here</a>.</p>
-                        <p>"Don't have an account? <a href="Signup.php">Create one here</a>."</p>
+                        <p>Don't have an account? <a href="Signup.php">Create one here</a>."</p>
                     </div>
 
                     <?php if ($error_message): ?>
