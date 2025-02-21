@@ -96,7 +96,7 @@ Project: Au-Ra Perfumes
 -Addai Asamoah Priscilla (230168011): Backend – Laravel backend, Trello tasks, report sections, GitHub setup.
 
 __Acknowledgements__
-Special thanks to Professor X and our CS2 instructors for guidance on project requirements.
+Special thanks to Professor Shereen Fouad and our CS2 instructors for guidance on project requirements.
 Gratitude to Trello for design and project management tools.
 Contact
 For questions or feedback, email auraprojects.2024@gmail.com or join our Discord server at https://discord.gg/vRDX2wVj
