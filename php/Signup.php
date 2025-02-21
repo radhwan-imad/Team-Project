@@ -166,7 +166,8 @@ unset($_SESSION['error_messages'], $_SESSION['form_data']);
                 <input type="text" name="query" placeholder="Search for products..." class="search-input">
                 <button type="submit">Search</button>
             </form>
-            <a href="Login.php">ACCOUNT</a>
+            <a href="Signup.php">SIGN UP</a>
+            <a href="Login.php">LOG IN</a>
             <a href="contact-us.php">CONTACT-US</a>
             <a href="#">CART (0)</a>
         </div>
