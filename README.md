@@ -78,22 +78,22 @@ __Technologies and Tools Used__
 -Frontend: HTML5, CSS3, JavaScript (for responsive UI design and interactivity)
 -Database: MySQL (high-performance, industry-standard database for managing customer data, stock levels, and orders)
 -Development Environment: XAMPP (local server setup at C:\xmp\htdocs\Team-Project-2024-25-CS2TP\Team-Project\), Git, Visual Studio Code
--Collaboration Tools: GitHub (for version control), Trello (for project management), Discord (for team communication), Figma (for design prototyping)
+-Collaboration Tools: GitHub (for version control), Trello (for project management), Discord (for team communication), 
 
-Team
-Number: 40
 
-Project: Au-Ra Perfumes
+__Project: Au-Ra Perfumes__
 
--Gajera Dhruhil (240108542): Front-end/Backend, Logo/Website/Product Design – Webpage, database, logo, animations, requirements, report.
--So Long (240037035): Backend Developer – Normalized database (SQL/phpMyAdmin), non-functional requirements, PHP support.
--Sandhu Yuvraj (220065067): Front-end, Content – Company name, layout, content, personalized perfume names.
--Khan Ayan (220022691): Coordinator, Front-end, Product/Design – Bottles/candles, frontend pages, UI, logbook, requirements, reports.
--Sifa-Kitoko Trisha (230229493): Front-end (UX) – Color scheme, fonts, company name, Trello ideas, design appeal.
--Seleim Ali (230227950): Front-end/Backend, Trello – Website design, Trello management, requirements.
--Khan Mohammed (230176393): Front-end/Backend Support – Perfume ideas, design, Trello tasks, report.
--Imad Radhwan (230169306): GitHub, Front-end – Frontend, “About Us,” GitHub setup, Trello ideas, use case, reports.
--Addai Asamoah Priscilla (230168011): Backend – Laravel backend, Trello tasks, report sections, GitHub setup.
+__Team Number: 40__
+
+-__Gajera Dhruhil (240108542)__: Front-end/Backend, Logo/Website/Product Design – Webpage, database, logo, animations, requirements, report.
+-__So Long (240037035)__: Backend Developer – Normalized database (SQL/phpMyAdmin), non-functional requirements, PHP support.
+-__Sandhu Yuvraj (220065067)__: Front-end, Content – Company name, layout, content, personalized perfume names.
+-__Khan Ayan (220022691)__: Coordinator, Front-end, Product/Design – Bottles/candles, frontend pages, UI, logbook, requirements, reports.
+-__Sifa-Kitoko Trisha (230229493)__: Front-end (UX) – Color scheme, fonts, company name, Trello ideas, design appeal.
+-__Seleim Ali (230227950)__: Front-end/Backend, Trello – Website design, Trello management, requirements.
+-__Khan Mohammed (230176393)__: Front-end/Backend Support – Perfume ideas, design, Trello tasks, report.
+-__Imad Radhwan (230169306)__: GitHub, Front-end – Frontend, “About Us,” GitHub setup, Trello ideas, use case, reports.
+-__Addai Asamoah Priscilla (230168011)__: Backend – Laravel backend, Trello tasks, report sections, GitHub setup.
 
 __Acknowledgements__
 Special thanks to Professor Shereen Fouad and our CS2 instructors for guidance on project requirements.
