@@ -152,9 +152,10 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
             </form>
             <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
                 <a href="logged-in.php">Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?></a>
-                <a href="Logout.php">Logout</a>
+                <a href="Logout.php">LOG OUT</a>
             <?php else: ?>
-                <a href="Signup.php">ACCOUNT</a>
+                <a href="Signup.php">SIGN UP</a>
+                <a href="Login.php">LOG IN</a>
             <?php endif; ?>
             <a href="contact-us.php">CONTACT-US</a>
             <a href="cart.php">CART (<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)</a>
@@ -180,8 +181,8 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
                         <input type="hidden" name="submitted" value="TRUE" />
                     </div>
                     <div class="links">
-                        <p class="helper-text">Forgot your password? <a href="resetpassword.php">Reset it here</a>.</p>
-                        <p>Don't have an account? <a href="Signup.php">Create one here</a>."</p>
+                        <p class="helper-text">Forgot your password? <a href="resetpassword.php">Reset it here</a></p>
+                        <p>Don't have an account? <a href="Signup.php">Create one here</a></p>
                     </div>
 
                     <?php if ($error_message): ?>
