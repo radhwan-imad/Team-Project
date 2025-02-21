@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("connection.php"); // Ensure database connection
+require_once("connection.php"); // Ensure this is the first thing that runs after session start
 
 // Initialize error message and form values
 $error_message = '';
@@ -11,31 +11,35 @@ if (isset($_POST['submitted'])) {
     if (empty($_POST['login-email']) || empty($_POST['login-password'])) {
         $error_message = 'Please fill both the email and password fields!';
     } else {
+        // Attempt to connect to the database
         if ($conn) {
             try {
-                // Prepare statement to prevent SQL injection
-                $stat = $conn->prepare('SELECT User_ID, Password, First_Name FROM users WHERE Email_ID = ?');
+                // Prepare the statement to avoid SQL injection
+               // Modify this query in login.php
+$stat = $conn->prepare('SELECT User_ID, First_Name, Last_Name, Email_ID, Password FROM users WHERE Email_ID = ?');
                 $stat->bind_param("s", $_POST['login-email']);
                 $stat->execute();
-                $result = $stat->get_result();
 
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
+                // Get the result
+                $result = $stat->get_result();  // Getting result set
 
-                    // Verify the password
+                // Check if a row was returned
+                if ($result->num_rows > 0) {  // Checking row count for MySQLi
+                    $row = $result->fetch_assoc();  // Fetch the associated array
+
                     if (password_verify($_POST['login-password'], $row['Password'])) {
-                        // Set session variables
+                        // Store all necessary user data in session
                         $_SESSION['User_ID'] = $row['User_ID'];
                         $_SESSION['User_Name'] = $row['First_Name'];
                         $_SESSION['Last_Name'] = $row['Last_Name'];
                         $_SESSION['Email_ID'] = $row['Email_ID'];
-
+                       
+                        $_SESSION["user_logged_in"] = true;
                         // Check if the user already has a cart in the database
                         $checkCartStmt = $conn->prepare("SELECT Cart_ID FROM cart WHERE User_ID = ?");
                         $checkCartStmt->bind_param("i", $row['User_ID']);
                         $checkCartStmt->execute();
                         $cartResult = $checkCartStmt->get_result();
-
                         if ($cartResult->num_rows > 0) {
                             // Fetch existing Cart_ID
                             $cartRow = $cartResult->fetch_assoc();
@@ -47,10 +51,8 @@ if (isset($_POST['submitted'])) {
                             $createCartStmt->execute();
                             $cartID = $createCartStmt->insert_id;
                         }
-
                         // Store Cart_ID in session
                         $_SESSION["Cart_ID"] = $cartID;
-
                         // Merge session cart items into the database
                         if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                             foreach ($_SESSION['cart'] as $productID => $quantity) {
@@ -59,7 +61,6 @@ if (isset($_POST['submitted'])) {
                                 $checkCartItemStmt->bind_param("ii", $cartID, $productID);
                                 $checkCartItemStmt->execute();
                                 $cartItemResult = $checkCartItemStmt->get_result();
-
                                 if ($cartItemResult->num_rows > 0) {
                                     // If item exists, update quantity
                                     $cartItemRow = $cartItemResult->fetch_assoc();
@@ -77,15 +78,14 @@ if (isset($_POST['submitted'])) {
                             // Clear session cart after merging
                             unset($_SESSION['cart']);
                         }
-
-                        // Redirect to the logged-in page
-                        header("Location: logged-in.html");
+                    
+                        header("Location: logged-in.php");
                         exit();
                     } else {
-                        $error_message = 'Incorrect password. Please try again.';
+                        $error_message = 'Error logging in, password does not match.';
                     }
                 } else {
-                    $error_message = 'Email address not found.';
+                    $error_message = 'Error logging in, email not found.';
                 }
             } catch (Exception $ex) {
                 $error_message = "Failed to execute query: " . htmlspecialchars($ex->getMessage());
@@ -95,7 +95,7 @@ if (isset($_POST['submitted'])) {
         }
     }
 
-    // Store error message and form data in session
+    // Save the error message and input data to session
     $_SESSION['error_message'] = $error_message;
     $_SESSION['form_data'] = $_POST;
 
@@ -104,9 +104,9 @@ if (isset($_POST['submitted'])) {
     exit();
 }
 
-// Retrieve error message and form data if available
-$error_message = $_SESSION['error_message'] ?? '';
-$form_data = $_SESSION['form_data'] ?? [];
+// Retrieve error message and form data if exists
+$error_message = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : '';
+$form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
 
 // Clear session variables after use
 unset($_SESSION['error_message'], $_SESSION['form_data']);
@@ -128,39 +128,39 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
         BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
     </div>
 
+    <!-- Main Navigation -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="Mainpage.php">HOME</a>
-            <a href="shop-all.php">SHOP ALL</a>
+            <a href="Mainpage.html">HOME</a>
+            <a href="shop-all.html">SHOP ALL</a>
+            <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
 
         <div class="logo">
-            <a href="Mainpage.php">
+            <a href="Mainpage.html">
                 <img src="Aura_logo.png" alt="logo">
-                <span class="logo-text">AU-RA<br>Fragrance your soul</span>
             </a>
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
         </div>
 
         <div class="nav-right">
-            <form method="GET" action="shop-all.php" class="search-form">
+        <form method="GET" action="shop-all.php" class="search-form">
                 <input type="text" name="query" placeholder="Search for products..." class="search-input">
                 <button type="submit">Search</button>
             </form>
-
             <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
                 <a href="logged-in.php">Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?></a>
-                <a href="Logout.php">Logout</a>
+                <a href="Logout.php">LOG OUT</a>
             <?php else: ?>
-                <a href="Signup.php">ACCOUNT</a>
+                <a href="Signup.php">SIGN UP</a>
+                <a href="Login.php">LOG IN</a>
             <?php endif; ?>
-
             <a href="contact-us.php">CONTACT-US</a>
             <a href="cart.php">CART (<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)</a>
         </div>
     </header>
-
     <main>
         <section class="login-form-container">
             <div class="form-card">
@@ -181,8 +181,8 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
                         <input type="hidden" name="submitted" value="TRUE" />
                     </div>
                     <div class="links">
-                        <p class="helper-text">Forgot your password? <a href="resetpassword.php">Reset it here</a>.</p>
-                        <p>"Don't have an account? <a href="Signup.php">Create one here</a>."</p>
+                        <p class="helper-text">Forgot your password? <a href="resetpassword.php">Reset it here</a></p>
+                        <p>Don't have an account? <a href="Signup.php">Create one here</a></p>
                     </div>
 
                     <?php if ($error_message): ?>
@@ -261,3 +261,4 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
     </footer>
 </body>
 </html>
+   
