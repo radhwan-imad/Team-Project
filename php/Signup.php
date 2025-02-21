@@ -89,14 +89,44 @@ unset($_SESSION['error_messages'], $_SESSION['form_data']);
     <link rel="stylesheet" href="Mainpage.css">
     <link rel="stylesheet" href="account.css">
     <style>
+        /* Override default browser password toggle icons */
+        input[type="password"]::-webkit-password-button,
+        input[type="password"]::-ms-reveal {
+            display: none !important;
+        }
+
+        input[type="password"] {
+            -webkit-text-security: disc; /* Ensure password masking */
+        }
+
         .input-group { margin-bottom: 20px; position: relative; }
         .input-group label { display: block; margin-bottom: 8px; font-weight: normal; color: #666; } /* Changed to gray, non-bold */
-        .input-group input { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .input-group input { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            /* Disable browser default password toggle icon */
+            -webkit-appearance: none; /* Chrome, Safari, Edge */
+            -moz-appearance: none; /* Firefox */
+            appearance: none; /* Standard */
+        }
         .input-group.invalid input { border: 2px solid red; }
         .input-group small { color: #666; font-size: 12px; display: block; margin-top: 5px; }
         .error { color: red; font-size: 14px; margin-top: 5px; }
         .success { color: #4caf50; font-size: 16px; text-align: center; margin-bottom: 20px; }
-        .password-toggle { cursor: pointer; position: absolute; right: 10px; top: 40px; color: #a27b5c; }
+        .password-toggle { 
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            color: #a27b5c;
+            font-size: 14px;
+            background: none; /* Ensure no background for icons */
+            border: none; /* Ensure no border for icons */
+            padding: 0; /* Remove padding that might imply an icon */
+        }
         .form-card { max-width: 400px; margin: 40px auto; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
         .form-card h2 { color: #333; font-weight: bold; font-size: 24px; margin-bottom: 20px; } /* Reverted to bold, dark gray */
         .primary-btn { background: #a27b5c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
@@ -189,7 +219,7 @@ unset($_SESSION['error_messages'], $_SESSION['form_data']);
                         <div class="button-container">
                             <button type="submit" name="submit" class="primary-btn" id="submit-btn">Sign Up</button>
                             <input type="hidden" name="submitted" value="true">
-                            <button type="reset" class="reset-btn">Reset Form</button>
+                            <button type="button" class="reset-btn" onclick="confirmReset()">Reset Form</button>
                         </div>
                         <div class="links">
                             <p>Already have an account? <a href="Login.php">Login here</a></p>
@@ -294,6 +324,12 @@ unset($_SESSION['error_messages'], $_SESSION['form_data']);
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
             return true; // Let PHP handle final validation
+        }
+
+        function confirmReset() {
+            if (confirm("Are you sure you want to reset the form? All entered data will be lost.")) {
+                document.getElementById('signup-form').reset();
+            }
         }
     </script>
 </body>
