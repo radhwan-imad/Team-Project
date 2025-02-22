@@ -121,7 +121,7 @@ $lastLogin = date('m/d/Y', strtotime($userData['last_login']));
     <footer>
         <p>&copy; 2024 AU-RA. All rights reserved.</p>
         <ul class="footer-links">
-            <li><a href="contact-us.php">Contact Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
             <li><a href="privacy-policy.html">Privacy Policy</a></li>
             <li><a href="terms.html">Terms of Service</a></li>
         </ul>

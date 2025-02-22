@@ -235,54 +235,50 @@ unset($_SESSION['error_messages'], $_SESSION['form_data']);
     </main>
 
     <footer>
-
-    <div class="footer-content">
-        <!-- Newsletter Subscription -->
-        <div class="newsletter">
-            <h3>Subscribe to Our Newsletter</h3>
-            <p>Be the first to discover new arrivals and insider news.</p>
-            <form>
-                <input type="email" placeholder="Email *" required>
-                <label>
-                    <input type="checkbox"> Yes, subscribe me to your newsletter.
-                </label>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-
-        <!-- Footer Links -->
-        <div class="footer-links">
-            <div>
-                <h4>Shop</h4>
-                <ul>
-                        <li><a href="shop-all.php">Shop All</a></li>
-                        <li><a href="Scented candles.php">Candle</a></li>
-                        <li><a href="Mainpage.php">Home</a></li>
-                    </ul>
+        <div class="footer-content">
+            <div class="newsletter">
+                <h3>Subscribe to Our Newsletter</h3>
+                <p>Be the first to discover new arrivals and insider news.</p>
+                <form>
+                    <input type="email" placeholder="Email *" required>
+                    <label>
+                        <input type="checkbox"> Yes, subscribe me to your newsletter.
+                    </label>
+                    <button type="submit">Subscribe</button>
+                </form>
             </div>
-            <div>
-                <h4>Legal</h4>
-                <ul>
-                        <li><a href="about.html">Terms & Conditions</a></li>
-                        <li><a href="about.html">Privacy Policy</a></li>
-                        <li><a href="society.html">Shipping Policy</a></li>
-                        <li><a href="contact-us.php">Refund Policy</a></li>
-                        <li><a href="society.html">Accessibility Statement</a></li>
+            <div class="footer-links">
+                <div>
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#">Shop All</a></li>
+                        <li><a href="#">Body</a></li>
+                        <li><a href="#">Home Scents</a></li>
                     </ul>
-            </div>
-            <div>
-                <h4>Headquarters</h4>
-                <p>500 Terry Francine Street<br>San Francisco, CA 94158<br>info@mysite.com<br>123-456-7890</p>
-            </div>
-            <div>
-                <h4>Socials</h4>
-                <ul>
-                        <li><a href="https://www.tiktok.com/login">TikTok</a></li>
-                        <li><a href="https://www.instagram.com/">Instagram</a></li>
-                        <li><a href="https://en-gb.facebook.com/">Facebook</a></li>
-                        <li><a href="https://www.youtube.com/">YouTube</a></li>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Accessibility Statement</a></li>
                     </ul>
-
+                </div>
+                <div>
+                    <h4>Headquarters</h4>
+                    <p>500 Terry Francine Street<br>San Francisco, CA 94158<br>info@mysite.com<br>123-456-7890</p>
+                </div>
+                <div>
+                    <h4>Socials</h4>
+                    <ul>
+                        <li><a href="#">TikTok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="payment-methods">
