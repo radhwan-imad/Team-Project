@@ -6,14 +6,13 @@ if(!isset($_SESSION['User_ID'])) {
     exit();
 }
 
-$userDetails = $conn->prepare('SELECT registration_date, last_login FROM users WHERE User_ID = ?');
+$userDetails = $conn->prepare('SELECT registration_date FROM users WHERE User_ID = ?');
 $userDetails->bind_param('i', $_SESSION['User_ID']);
 $userDetails->execute();
 $result = $userDetails->get_result();
 $userData = $result->fetch_assoc();
 
 $memberSince = date('F Y', strtotime($userData['registration_date']));
-$lastLogin = date('m/d/Y', strtotime($userData['last_login']));
 
 ?>
 <!DOCTYPE html>
@@ -85,7 +84,7 @@ $lastLogin = date('m/d/Y', strtotime($userData['last_login']));
                         <p><strong>Name:</strong>  <?php echo htmlspecialchars($_SESSION['User_Name']) ?> <?php echo htmlspecialchars($_SESSION['Last_Name']); ?></p>
                         <p><strong>Email:</strong>  <?php echo htmlspecialchars($_SESSION['Email_ID']); ?></p>
                         <p><strong>Member Since:</strong> <?php echo htmlspecialchars($memberSince); ?></p>
-                        <p><strong>Last Login:</strong><?php echo htmlspecialchars($lastLogin); ?></p>
+                     
                     </div>
                 </div>
             </div>

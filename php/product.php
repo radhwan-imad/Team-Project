@@ -1,10 +1,12 @@
 <?php
-
+session_start();
 require_once "connection.php"; // Ensure this file sets up $conn (mysqli object)
-
+$user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 // Get the Product_ID from the URL and sanitize it
 $product_id = isset($_GET['Product_ID']) ? intval($_GET['Product_ID']) : 0;
-
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 if ($product_id <= 0) {
     header("Location: error-page.php"); // Redirect if Product_ID is invalid
     exit;
@@ -131,6 +133,56 @@ error_reporting(E_ALL);
                   //      <p><strong>Base:</strong> <?php echo htmlspecialchars($note['Note_Name']); </p>
                   //  <?php endforeach; 
                // </div>-->
+
+// Process form submissions first
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Add product to cart
+    if (isset($_POST['add_to_cart'])) {
+        if (!isset($_SESSION['User_ID'])) {
+            header("Location: Login.php");
+            exit;
+        }
+        
+        $user_id = $_SESSION['User_ID'];
+        
+        // Fetch Cart_ID for the User
+        $stmt = $conn->prepare("SELECT Cart_ID FROM cart WHERE User_ID = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($row = $result->fetch_assoc()) {
+            $cart_id = $row['Cart_ID'];
+        } else {
+            // If no cart exists, create one
+            $stmt = $conn->prepare("INSERT INTO cart (User_ID) VALUES (?)");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $cart_id = $stmt->insert_id;
+        }
+        
+        $product_id = $_POST['product_id'];
+        
+        // Check if the product is already in the cart
+        $stmt = $conn->prepare("SELECT Quantity FROM cart_items WHERE Cart_ID = ? AND Product_ID = ?");
+        $stmt->bind_param("ii", $cart_id, $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            $stmt = $conn->prepare("UPDATE cart_items SET Quantity = Quantity + 1 WHERE Cart_ID = ? AND Product_ID = ?");
+        } else {
+            $stmt = $conn->prepare("INSERT INTO cart_items (Cart_ID, Product_ID, Quantity) VALUES (?, ?, 1)");
+        }
+        $stmt->bind_param("ii", $cart_id, $product_id);
+        $stmt->execute();
+
+        
+        header("Location: product.php?Product_ID=" . $product_id);
+        exit;
+    }
+}
+            
 ?>
 
 
@@ -142,7 +194,8 @@ error_reporting(E_ALL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['product_name']); ?> - AU-RA</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
-    <link rel="stylesheet" href="product-page.css">
+    <link rel="stylesheet" href="product.css">
+
 </head>
 
 <body>
@@ -155,26 +208,62 @@ error_reporting(E_ALL);
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a ><a href="perfumes.php">PERFUMES</a>
-            <a href="Candles.html">CANDLES</a>
-            <a href="#">Au-Ra SOCIETY</a>
+            <a href="Mainpage.html">HOME</a>
+            <a href="shop-all.php">SHOP ALL</a>
+            <a href="society.html">Au-Ra SOCIETY</a>
+            <a href="about.html">ABOUT US</a>
         </div>
 
-
+        <!-- Centered Logo -->
         <div class="logo">
-            <a href="Mainpage.html"><img src="Aura_logo.png" alt="logo"></a>
-            <span class="logo-text">AU-RA</span>
-        </div>
+            <a href="Mainpage.html">
+                <img src="Aura_logo.png" alt="logo"> 
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
+            </a>
+    </div>
 
         <div class="nav-right">
-            <a href="#">SEARCH</a>
-            <a href="#">ACCOUNT</a>
-            <a href="#">COUNTRY ▼</a>
-            <a href="#">WISHLIST</a>
-            <a href="#">CART (0)</a>
-        </div>
-    </header>
+				<form method="GET" action="shop-all.php" class="search-form">
+            <input type="text" name="query" placeholder="Search for products..." class="search-input">
+            <button type="submit">Search</button>
+        </form>
+            
+                    <a href="Login.php">ACCOUNT</a>
+                    <a href="contact-us.php">CONTACT-US</a>
+                    <a href="cart.php">CART ▼ (<?php 
+                if (isset($_SESSION['User_ID'])) {
+                    $user_id = $_SESSION['User_ID'];
 
+                    // Fetch the cart ID
+                    $stmtc = $conn->prepare("SELECT Cart_ID FROM cart WHERE User_ID = ?");
+                    $stmtc->bind_param("i", $user_id);
+                    $stmtc->execute();
+                    $result_cart = $stmtc->get_result();
+                    if ($row = $result_cart->fetch_assoc()) {
+                        $cart_id = $row['Cart_ID'];
+
+                        // Get the total quantity in the cart
+                        $stmtc = $conn->prepare("SELECT SUM(Quantity) as total_quantity FROM cart_items WHERE Cart_ID = ?");
+                        $stmtc->bind_param("i", $cart_id);
+                        $stmtc->execute();
+                        $stmtc->store_result();
+                        if ($stmtc->num_rows > 0) {
+                            $stmtc->bind_result($total_quantity);
+                            $stmtc->fetch();
+                            echo $total_quantity ?: 0;
+                        } else {
+                            echo 0;
+                        }
+                    } else {
+                        echo 0;
+                    }
+                } else {
+                    echo 0;
+                }
+            ?>)</a>
+                </div>
+        
+    </header>
     <main class="product-detail">
         <div class="breadcrumb">Home > <?php echo htmlspecialchars($product['product_name']);?></div>
 
@@ -212,16 +301,12 @@ error_reporting(E_ALL);
                     <p>Unisex</p>
                 </div>
 
-                <div class="quantity-section">
-                    <p>100ML</p>
-                    <div class="quantity-selector">
-                        <button class="quantity-btn">−</button>
-                        <input type="number" value="1" min="1" class="quantity-input">
-                        <button class="quantity-btn">+</button>
-                    </div>
-                </div>
+                
 
-                <button class="add-to-cart">Add to Cart</button>
+                <form method="POST" action="">
+                        <input type="hidden" name="product_id" value="<?php echo $product['Product_ID']; ?>">
+                        <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+                </form>
                 <div class="payment-options">
                     <img src="images/shoppay.jpg" alt="Shop Pay" class="payment-image">
                     <img src="images/klarna.jpg" alt="Klarna" class="payment-image">
@@ -232,13 +317,7 @@ error_reporting(E_ALL);
                 <p class="installment-info">3 interest-free payments of £<?php echo number_format($product['Price'] / 3, 2); ?> with Clearpay. No fees.</p>
 
                 <div class="pairing-section">
-                    <h4>Create the Perfect Pairing</h4>
-                    <p>Make your scent last all day by pairing it with an ocean-scented candle.</p>
-                    <div class="pairing-item">
-                        <img src="images/ocean candle.png" alt="Ocean Candle" class="pairing-image">
-                        <div class="pairing-info">
-                            <p>Ocean Mist Candle</p>
-                            <p>£25.00</p>
+
                         </div>
                     </div>
                 </div>
@@ -365,30 +444,30 @@ error_reporting(E_ALL);
             <div class="product">
                 <img src="images/5.jpg" alt="Floral symphony">
                 <p class="product-type">Eau De Parfum Combo</p>
-                <h3>Sweet Escape & Wood De Amber Set</h3>
-                <p>£130.00</p>
-                <p>1 size</p>
+                <h3>Lirien</h3>
+                <p>£109.99</p>
+               
             </div>
             <div class="product">
                 <img src="images/4.jpg" alt="Ocean breeze">
                 <p class="product-type">Perfume Oil</p>
-                <h3>Oud Sheikha</h3>
-                <p>From £21.00</p>
-                <p>4 sizes</p>
+                <h3>Listrewood</h3>
+                <p>From £119.99.00</p>
+                
             </div>
             <div class="product">
                 <img src="images/1.jpg" alt="Citrus Zest">
                 <p class="product-type">Eau De Parfum</p>
-                <h3>Amore Di Mari</h3>
-                <p>£160.00</p>
-                <p>1 size</p>
+                <h3>Rayun</h3>
+                <p>£109.99</p>
+              
             </div>
             <div class="product">
                 <img src="images/2.jpg" alt="Gourmand Caramel
             ">
                 <p class="product-type">Eau De Parfum</p>
-                <h3>Oud Aristo</h3>
-                <p>£70.00</p>
+                <h3>Mosharra Essence</h3>
+                <p>£109.99</p>
                 <p>1 size</p>
             </div>
         </div>

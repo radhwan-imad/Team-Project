@@ -1,25 +1,66 @@
 <?php
-    session_start();
-    session_destroy();
+session_start();
+
+// Check if there are no cart items in the session
+if (empty($_SESSION['cart'])) {
+    header("Location: index.php");
+    exit;
+}
+
+$cart_items = $_SESSION['cart'];
+
+// Calculate total price
+$total_price = 0;
+foreach ($cart_items as $item) {
+    $total_price += $item['price'] * $item['quantity'];
+}
+
+// Generate a random order number
+$order_number = 'AU-' . strtoupper(substr(md5(uniqid()), 0, 8));
+
+// Get current date and time
+$order_date = date('Y-m-d H:i:s');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - AU-RA</title>
+    <title>Order Receipt - AU-RA</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
     <link rel="stylesheet" href="Mainpage.css">
-    <link rel="stylesheet" href="account.css"> 
+    <style>
+        .receipt-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .order-details {
+            margin-bottom: 20px;
+        }
+        .order-items {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .order-total {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .receipt-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
-    </div>
-
     <!-- Main Navigation -->
     <header class="navbar">
         <!-- Left-side Links -->
@@ -38,10 +79,9 @@
             </a>
     </div>
 
-
-        <!-- Right-side Links -->
         <div class="nav-right">
-            <form method="GET" action="search.php" class="search-form">
+            <!-- Collapsible Search Bar -->
+                    <form method="GET" action="search.php" class="search-form">
                         <input
                             type="text"
                             name="query"
@@ -49,31 +89,45 @@
                             class="search-input"
                         >
                         <button type="submit">Search</button>
-        			</form>
-            <a href="Login.php">LOG IN</a>
-            <a href="Signup.php">SIGN UP</a>
-            <a href="contact-us.php">CONTACT-US</a>
-            <a href="cart.php">CART (0)</a>
+        </form>
+                    <a href="Login.php">ACCOUNT</a>
+                    <a href="contact-us.php">CONTACT-US</a>
+                    <a href="cart.php">CART (0)</a>
+                </div>
+        
+</header>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <h1>Order Receipt</h1>
+            <p>Order Number: <?php echo $order_number; ?></p>
+            <p>Date: <?php echo $order_date; ?></p>
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <main>
-        <section class="login-form-container">
-            <div class="form-card">
-                <form action="#" method="post">
-                    <div class="input-group">
-					<h2>Logged out now!</h2>
-        <p>Would you like to log in again? <a href="Login.php">Log in</a></p>
-    </div>
+        <div class="order-details">
+            <h2>Order Items</h2>
+            <div class="order-items">
+                <?php foreach ($cart_items as $item): ?>
+                    <div>
+                        <?php echo $item['name']; ?> 
+                        x <?php echo $item['quantity']; ?> 
+                        - £<?php echo number_format($item['price'] * $item['quantity'], 2); ?>
                     </div>
-                </form>
+                <?php endforeach; ?>
             </div>
-        </section>
-    </main>
+            <div class="order-total">
+                <strong>Total: £<?php echo number_format($total_price, 2); ?></strong>
+            </div>
+        </div>
+
+      <div class="receipt-actions">
+    <button class="receipt-button" onclick="window.print()">Print Receipt</button>
+    <button class="continue-shopping-button" onclick="window.location.href='shop-all.php'">Continue Shopping</button>
+</div>
+
+    </div>
 
     <!-- Footer Section -->
-    <footer>
+<footer>
     <div class="footer-content">
         <!-- Newsletter Subscription -->
         <div class="newsletter">
@@ -136,6 +190,13 @@
     <div class="footer-bottom">
         <p>2024 AU-RA. All rights reserved.</p>
     </div>
-</footer>
+</footer><footer>
+        <!-- Footer content from previous pages -->
+        <div class="footer-content">
+            <div class="footer-bottom">
+                <p>2024 AU-RA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

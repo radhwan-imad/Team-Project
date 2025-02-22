@@ -230,19 +230,19 @@ while ($row = $result->fetch_assoc()) {
                 <div>
                     <h4>Shop</h4>
                     <ul>
-                        <li><a href="shop-all.php">Shop All</a></li>
-                        <li><a href="Scented candles.php">Candle</a></li>
-                        <li><a href="Mainpage.php">Home</a></li>
+                        <li><a href="#">Shop All</a></li>
+                        <li><a href="#">Body</a></li>
+                        <li><a href="#">Home Scents</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="about.html">Terms & Conditions</a></li>
-                        <li><a href="about.html">Privacy Policy</a></li>
-                        <li><a href="society.html">Shipping Policy</a></li>
-                        <li><a href="contact-us.php">Refund Policy</a></li>
-                        <li><a href="society.html">Accessibility Statement</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Accessibility Statement</a></li>
                     </ul>
                 </div>
                 <div>
@@ -252,10 +252,10 @@ while ($row = $result->fetch_assoc()) {
                 <div>
                     <h4>Socials</h4>
                     <ul>
-                        <li><a href="https://www.tiktok.com/login">TikTok</a></li>
-                        <li><a href="https://www.instagram.com/">Instagram</a></li>
-                        <li><a href="https://en-gb.facebook.com/">Facebook</a></li>
-                        <li><a href="https://www.youtube.com/">YouTube</a></li>
+                        <li><a href="#">TikTok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">YouTube</a></li>
                     </ul>
                 </div>
             </div>
