@@ -184,6 +184,7 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
     <!-- Footer Section -->
     <footer>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="footer-content">
             <div class="newsletter">
                 <h3>Subscribe to Our Newsletter</h3>
@@ -196,6 +197,8 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
                     <button type="submit">Subscribe</button>
                 </form>
 =======
+=======
+>>>>>>> 5cca72053d37e8f0484203bd19a821b40a724bff
     <div class="footer-content">
         <!-- Newsletter Subscription -->
         <div class="newsletter">
@@ -215,6 +218,7 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
             <div>
                 <h4>Shop</h4>
                 <ul>
+<<<<<<< HEAD
                         <li><a href="shop-all.php">Shop All</a></li>
                         <li><a href="Scented candles.php">Candle</a></li>
                         <li><a href="Mainpage.php">Home</a></li>
@@ -256,6 +260,35 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
                 </div>
 =======
 >>>>>>> parent of c5a91e9 (Merge branch 'main' into main)
+=======
+                    <li><a href="#">Shop All</a></li>
+                    <li><a href="#">Body</a></li>
+                    <li><a href="#">Home Scents</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Accessibility Statement</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Headquarters</h4>
+                <p>500 Terry Francine Street<br>San Francisco, CA 94158<br>info@mysite.com<br>123-456-7890</p>
+            </div>
+            <div>
+                <h4>Socials</h4>
+                <ul>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+>>>>>>> 5cca72053d37e8f0484203bd19a821b40a724bff
             </div>
         </div>
     </div>
@@ -275,4 +308,8 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
 </footer>
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 5cca72053d37e8f0484203bd19a821b40a724bff

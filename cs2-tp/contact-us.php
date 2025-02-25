@@ -162,6 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Footer Section -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <footer>
         <div class="footer-content">
             <!-- Newsletter Subscription -->
@@ -201,11 +202,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
         </div>
 
+=======
+<footer>
+    <div class="footer-content">
+        <!-- Newsletter Subscription -->
+        <div class="newsletter">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Be the first to discover new arrivals and insider news.</p>
+            <form>
+                <input type="email" placeholder="Email *" required>
+                <label>
+                    <input type="checkbox"> Yes, subscribe me to your newsletter.
+                </label>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+>>>>>>> 5cca72053d37e8f0484203bd19a821b40a724bff
         <!-- Footer Links -->
         <div class="footer-links">
             <div>
                 <h4>Shop</h4>
                 <ul>
+<<<<<<< HEAD
                         <li><a href="shop-all.php">Shop All</a></li>
                         <li><a href="Scented candles.php">Candle</a></li>
                         <li><a href="Mainpage.php">Home</a></li>
@@ -238,6 +257,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 =======
 >>>>>>> parent of c5a91e9 (Merge branch 'main' into main)
+=======
+                    <li><a href="#">Shop All</a></li>
+                    <li><a href="#">Body</a></li>
+                    <li><a href="#">Home Scents</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Accessibility Statement</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Headquarters</h4>
+                <p>500 Terry Francine Street<br>San Francisco, CA 94158<br>info@mysite.com<br>123-456-7890</p>
+            </div>
+            <div>
+                <h4>Socials</h4>
+                <ul>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+>>>>>>> 5cca72053d37e8f0484203bd19a821b40a724bff
             </div>
         </div>
     </div>
