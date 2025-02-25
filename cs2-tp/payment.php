@@ -4,7 +4,11 @@ if (empty($_SESSION["User_ID"])) {
 	header("Location: Login.php");
 	exit;
 }
-
+// Check if cart is empty or no items selected for checkout
+if (empty($_SESSION['cart'])) {
+    header("Location: cart.php");
+    exit;
+}
 
 $cart_items = $_SESSION['cart'];
 

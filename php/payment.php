@@ -1,18 +1,127 @@
 <?php
-session_start();
-if (empty($_SESSION["User_ID"])) {
-	header("Location: Login.php");
-	exit;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Log all POST data
+error_log("Received POST data: " . print_r($_POST, true));
+
+include("connection.php");
+
+function logError($message) {
+    error_log(date('[Y-m-d H:i:s] ') . $message);
 }
 
+// Check if it's an AJAX POST request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+    $conn->begin_transaction();
+    try {
+        $User_ID = $_POST['User_ID'] ?? '';
+        $train_id = $_POST['train_id'] ?? '';
+        $no_of_seats = $_POST['no_of_seats'] ?? '';
+        $ticket_type = $_POST['ticket_type'] ?? '';
+        $total_fare = $_POST['total_fare'] ?? '';
 
-$cart_items = $_SESSION['cart'];
+        // Input validation
+        $required_fields = ['no_of_seats', 'total_fare', 'ticket_type', 'train_id', 'User_ID'];
+        foreach ($required_fields as $field) {
+            if (empty($_POST[$field])) {
+                throw new Exception("Missing required field: $field");
+            }
+        }
 
-// Calculate total price
-$total_price = 0;
-foreach ($cart_items as $item) {
-    $total_price += $item['price'] * $item['quantity'];
+        // Get train details
+        $sql_train = "SELECT * FROM Train_details WHERE Train_ID = ?";
+        $stmt_train = $conn->prepare($sql_train);
+        $stmt_train->bind_param("i", $train_id);
+        $stmt_train->execute();
+        $result_train = $stmt_train->get_result();
+
+        if ($result_train->num_rows === 0) {
+            throw new Exception("Train not found.");
+        }
+        $train = $result_train->fetch_assoc();
+        $Tdate = $train['Date'];
+
+        // Insert ticket
+        $insert_ticket = "INSERT INTO Train_tickets (No_of_seats, Train_ID, Ticket_type, Date_of_journey, User_ID) VALUES (?, ?, ?, ?, ?)";
+        $stmt_ticket = $conn->prepare($insert_ticket);
+        if ($stmt_ticket === false) {
+            throw new Exception("Failed to prepare statement: " . $conn->error);
+        }
+
+        $stmt_ticket->bind_param("iissi", $no_of_seats, $train_id, $ticket_type, $Tdate, $User_ID);
+
+        if (!$stmt_ticket->execute()) {
+            throw new Exception("Error inserting ticket: " . $stmt_ticket->error);
+        }
+
+        $ticketid = $stmt_ticket->insert_id;
+
+        // Insert booking
+        $date = date('Y-m-d');
+        $insert_booking = "INSERT INTO Booking (Ticket_ID, Booking_date, Booking_Amount, User_ID) VALUES (?, ?, ?, ?)";
+        $stmt_booking = $conn->prepare($insert_booking);
+        $stmt_booking->bind_param("isdi", $ticketid, $date, $total_fare, $User_ID);
+        if (!$stmt_booking->execute()) {
+            throw new Exception("Error inserting booking: " . $stmt_booking->error);
+        }
+
+        $bookingid = $stmt_booking->insert_id;
+
+        // Check if user is a member
+        $sql_user = "SELECT Member_OR_Not FROM User_details WHERE User_ID = ?";
+        $stmt_user = $conn->prepare($sql_user);
+        $stmt_user->bind_param("i", $User_ID);
+        $stmt_user->execute();
+        $result_user = $stmt_user->get_result();
+        $user = $result_user->fetch_assoc();
+
+        $discount = ($user['Member_OR_Not'] == 'Yes') ? 20 : 0;
+
+        // Insert payment
+        $status = 'Paid';
+        $payer_name = $_POST['card_name'] ?? 'Unknown';
+        $pay_type = 'Credit Card'; // Assuming credit card payment
+        $insert_payment = "INSERT INTO Payment_details (Booking_ID, User_ID, Status, Date, Amount, Payer_Name, Pay_type, Discount_in_percent) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt_payment = $conn->prepare($insert_payment);
+        $stmt_payment->bind_param("iissdssi", $bookingid, $User_ID, $status, $date, $total_fare, $payer_name, $pay_type, $discount);
+        if (!$stmt_payment->execute()) {
+            throw new Exception("Error inserting payment: " . $stmt_payment->error);
+        }
+
+        // Update available seats
+        $update_seats_sql = "UPDATE Train_details SET Total_no_of_seats = Total_no_of_seats - ? WHERE Train_ID = ? AND Total_no_of_seats >= ?";
+        $stmt_update_seats = $conn->prepare($update_seats_sql);
+        $stmt_update_seats->bind_param("iii", $no_of_seats, $train_id, $no_of_seats);
+        if (!$stmt_update_seats->execute()) {
+            throw new Exception("Error updating seats: " . $stmt_update_seats->error);
+        }
+
+        if ($stmt_update_seats->affected_rows === 0) {
+            throw new Exception("Not enough seats available.");
+        }
+
+        $conn->commit(); // Commit transaction
+        echo json_encode(['status' => 'success', 'booking_id' => $bookingid]);
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        logError("Payment failed: " . $e->getMessage());
+        echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    } finally {
+        $conn->close();
+    }
+    exit();
 }
+
+// If it's not an AJAX POST request, we display the form
+$User_ID = $_POST['User_ID'] ?? '';
+$train_id = $_POST['train_id'] ?? '';
+$no_of_seats = $_POST['no_of_seats'] ?? '';
+$ticket_type = $_POST['ticket_type'] ?? '';
+$total_fare = $_POST['total_fare'] ?? '';
+
 ?>
 
 <!DOCTYPE html>
@@ -20,42 +129,10 @@ foreach ($cart_items as $item) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Page - AU-RA</title>
-    <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
-    <link rel="stylesheet" href="Mainpage.css">
+    <title>Payment Page</title>
     <link rel="stylesheet" href="payment.css">
 </head>
 <body>
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
-    </div>
-
-    <!-- Navbar -->
-    <header class="navbar">
-        <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.php">SHOP ALL</a>
-            <a href="society.html">Au-Ra SOCIETY</a>
-            <a href="about.html">ABOUT US</a>
-        </div>
-        <div class="logo">
-            <a href="Mainpage.html">
-                <img src="Aura_logo.png" alt="logo">
-                <span class="logo-text">AU-RA<br>Fragrance your soul</span>
-            </a>
-        </div>
-        <div class="nav-right">
-            <form method="GET" action="search.php" class="search-form">
-                <input type="text" name="query" placeholder="Search for products..." class="search-input">
-                <button type="submit">Search</button>
-            </form>
-            <a href="Login.php">ACCOUNT</a>
-            <a href="contact-us.php">CONTACT-US</a>
-            <a href="cart.php">CART (<?php echo count($cart_items); ?>)</a>
-        </div>
-    </header>
-
     <main>
         <div class="container">
             <div class="left_section">
@@ -108,26 +185,24 @@ foreach ($cart_items as $item) {
                             <input type="text" id="card_cvc" name="card_cvc" placeholder="e.g. 123" required maxlength="3">
                         </div>
                     </div>
-                    <button type="submit" id="submit_btn">Pay Now</button>
+                    <input type="hidden" name="User_ID" value="<?php echo htmlspecialchars($User_ID); ?>">
+                    <input type="hidden" name="train_id" value="<?php echo htmlspecialchars($train_id); ?>">
+                    <input type="hidden" name="no_of_seats" value="<?php echo htmlspecialchars($no_of_seats); ?>">
+                    <input type="hidden" name="ticket_type" value="<?php echo htmlspecialchars($ticket_type); ?>">
+                    <input type="hidden" name="total_fare" value="<?php echo htmlspecialchars($total_fare); ?>">
+                    <button type="submit" id="submit_btn">Confirm</button>
                 </form>
                 <div class="thank hidden">
                     <img src="images/icon-complete.svg" alt="">
                     <h1>Thank you!</h1>
-                    <p>Your payment has been processed</p>
-                    <button onclick="window.location.href='receipt.php'">View Receipt</button>
+                    <p>We've added your card details</p>
+                    <button>Continue</button>
                 </div>
             </div>
         </div>
     </main>
-
-    <!-- Footer (same as previous version) -->
-    <footer>
-        <!-- Footer content remains the same as in the previous version -->
-    </footer>
     
     <script>
-        // JavaScript remains the same as in the previous version, 
-        // with only the continue button's onclick changed to point to receipt.php
         const cardNumber = document.getElementById("number");
         const numberInp = document.getElementById("card_number");
         const nameInp = document.getElementById("card_name");
@@ -139,7 +214,6 @@ foreach ($cart_items as $item) {
         const cardCvc = document.getElementById("cvc");
         const cvcInp = document.getElementById("card_cvc");
         const form = document.getElementById("payment-form");
-        const thankSection = document.querySelector(".thank");
 
         function setCardNumber(e) {
             cardNumber.innerText = format(e.target.value);
@@ -159,29 +233,40 @@ foreach ($cart_items as $item) {
 
         function handleSubmit(e) {
             e.preventDefault();
+            const formData = new FormData(form);
             
-            // Simple client-side validation
-            const cardNameValid = nameInp.value.trim() !== "";
-            const cardNumberValid = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/.test(numberInp.value);
-            const monthValid = /^(0[1-9]|1[0-2])$/.test(monthInp.value);
-            const yearValid = /^\d{2}$/.test(yearInp.value);
-            const cvcValid = /^\d{3}$/.test(cvcInp.value);
+            console.log("Form data:", Object.fromEntries(formData));
 
-            if (!cardNameValid || !cardNumberValid || !monthValid || !yearValid || !cvcValid) {
-                alert("Please fill in all fields correctly.");
-                return;
-            }
-
-            // Simulate payment processing
-            setTimeout(() => {
-                form.classList.add("hidden");
-                thankSection.classList.remove("hidden");
+            fetch('payment1.php', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                console.log("Response status:", response.status);
+                console.log("Response headers:", response.headers);
                 
-                // Clear cart after successful payment
-                fetch('clear_cart.php', {
-                    method: 'POST'
-                });
-            }, 1500);
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log("Parsed result:", result);
+                if (result.status === 'success') {
+                    window.location.href = `ticket.php?booking_id=${result.booking_id}`;
+                } else {
+                    alert(result.message || 'An error occurred during payment processing.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(`An error occurred. Please try again later. Error details: ${error.message}`);
+            });
         }
 
         function format(s) {
@@ -194,71 +279,10 @@ foreach ($cart_items as $item) {
         yearInp.addEventListener("keyup", setCardYear);
         cvcInp.addEventListener("keyup", setCardCvc);
         form.addEventListener("submit", handleSubmit);
+
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error("JavaScript error:", message, "at", source, ":", lineno);
+        };
     </script>
-    <!-- Footer Section -->
-<footer>
-    <div class="footer-content">
-        <!-- Newsletter Subscription -->
-        <div class="newsletter">
-            <h3>Subscribe to Our Newsletter</h3>
-            <p>Be the first to discover new arrivals and insider news.</p>
-            <form>
-                <input type="email" placeholder="Email *" required>
-                <label>
-                    <input type="checkbox"> Yes, subscribe me to your newsletter.
-                </label>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-
-        <!-- Footer Links -->
-        <div class="footer-links">
-            <div>
-                <h4>Shop</h4>
-                <ul>
-                    <li><a href="#">Shop All</a></li>
-                    <li><a href="#">Body</a></li>
-                    <li><a href="#">Home Scents</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Shipping Policy</a></li>
-                    <li><a href="#">Refund Policy</a></li>
-                    <li><a href="#">Accessibility Statement</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Headquarters</h4>
-                <p>500 Terry Francine Street<br>San Francisco, CA 94158<br>info@mysite.com<br>123-456-7890</p>
-            </div>
-            <div>
-                <h4>Socials</h4>
-                <ul>
-                    <li><a href="#">TikTok</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">YouTube</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payment Methods Section -->
-    <div class="payment-methods">
-        <p>Pay Securely with</p>
-        <img src="images/payment.png" alt="Payment Methods" style="width: auto; height: 30px;">
-        <p>These payment methods are for illustrative purposes only. Update this section to show the payment methods
-            your website accepts based on your payment processor(s).</p>
-    </div>
-
-    <!-- Footer Copyright -->
-    <div class="footer-bottom">
-        <p>2024 AU-RA. All rights reserved.</p>
-    </div>
-</footer>
 </body>
 </html>

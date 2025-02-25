@@ -126,40 +126,27 @@ if (isset($_POST['submit'])) {
 
     <!-- Main Navigation -->
     <header class="navbar">
-        <!-- Left-side Links -->
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
+            <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
 
-        <!-- Centered Logo -->
         <div class="logo">
-            <a href="Mainpage.html">
-                <img src="Aura_logo.png" alt="logo"> 
-            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
-            </a>
-    </div>
+            <a href="Mainpage.html"><img src="Aura_logo.png" alt="logo"></a>
+            <span class="logo-text">AU-RA</span>
+        </div>
 
         <div class="nav-right">
-            <!-- Collapsible Search Bar -->
-                    <form method="GET" action="search.php" class="search-form">
-                        <input
-                            type="text"
-                            name="query"
-                            placeholder="Search for products..."
-                            class="search-input"
-                        >
-                        <button type="submit">Search</button>
-        </form>
-                    <a href="Login.php">ACCOUNT</a>
-                    <a href="contact-us.php">CONTACT-US</a>
-                    <a href="cart.php">CART (0)</a>
-                </div>
-        
-</header>
-
+            <a href="#">SEARCH</a>
+            <a href="signup.php">ACCOUNT</a>
+            <a href="#">COUNTRY ▼</a>
+            <a href="#">WISHLIST</a>
+            <a href="#">CART (0)</a>
+        </div>
+    </header>
 
     <main>
         <section class="reset-password-form-container">
@@ -182,7 +169,7 @@ if (isset($_POST['submit'])) {
                         <button type="submit" name="submit" class="primary-btn">Send Verification Code</button>
                     </div>
                     <div class="links">
-                        <p>Remember your password? <a href="Login.php">Login here</a>.</p>
+                        <p>Remember your password? <a href="login.html">Login here</a>.</p>
                     </div>
                 </form>
             </div>
@@ -192,7 +179,7 @@ if (isset($_POST['submit'])) {
             <div class="info-container" style="margin-top: 100px;">
                 <h3>How to Reset Your Password</h3>
                 <p>To reset your password, enter the email associated with your account, and we will send you a verification code. Once you enter the code, you can choose a new password.</p>
-                <p>If you have any trouble, feel free to <a href="contact-us.php">"contact support"</a>.</p>
+                <p>If you have any trouble, feel free to <a href="contact.html">contact support</a>.</p>
             </div>
         </section>
     </main>
