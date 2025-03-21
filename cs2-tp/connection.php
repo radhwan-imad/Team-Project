@@ -2,11 +2,11 @@
 //Server name is localhost
 $servername = "localhost";
 //In my case, User name is root
-$username = "cs2team40";
+$username = "root";
 //password is empty
-$password = "q6jxdg3oFxNuvVi";
+$password = "";
 //database name is aura
-$database = "cs2team40_aura";
+$database = "aura";
 // Creating a connection
 $conn = new mysqli($servername,$username,$password,$database);
 // check connection

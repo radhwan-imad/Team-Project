@@ -86,7 +86,7 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
     <!-- Main Navigation -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
+            <a href="Mainpage.php">HOME</a>
             <a href="shop-all.html">SHOP ALL</a>
             <a href="Candles.html">CANDLES</a>
             <a href="society.html">Au-Ra SOCIETY</a>
@@ -94,7 +94,7 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
         </div>
 
         <div class="logo">
-            <a href="Mainpage.html">
+            <a href="Mainpage.php">
                 <img src="Aura_logo.png" alt="logo">
             </a>
             <span class="logo-text">AU-RA<br>Fragrance your soul</span>

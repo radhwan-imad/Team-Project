@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,39 +20,38 @@
     </div>
 
     <!-- Main Navigation -->
-    <header class="navbar">
-        <!-- Left-side Links -->
-        <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.php">SHOP ALL</a>
-            <a href="society.html">Au-Ra SOCIETY</a>
-            <a href="about.html">ABOUT US</a>
-        </div>
-
-        <!-- Centered Logo -->
-        <div class="logo">
-            <a href="Mainpage.html">
-                <img src="Aura_logo.png" alt="logo"> 
-            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
-            </a>
+<header class="navbar">
+    <div class="nav-left">
+        <a href="Mainpage.php">HOME</a>
+        <a href="shop-all.php">SHOP ALL</a>
+        <a href="society.html">Au-Ra SOCIETY</a>
+        <a href="about.html">ABOUT US</a>
     </div>
 
-        <div class="nav-right">
-            <!-- Collapsible Search Bar -->
-                    <form method="GET" action="search.php" class="search-form">
-                        <input
-                            type="text"
-                            name="query"
-                            placeholder="Search for products..."
-                            class="search-input"
-                        >
-                        <button type="submit">Search</button>
+    <div class="logo">
+        <a href="Mainpage.php">
+            <img src="Aura_logo.png" alt="logo">
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
+        </a>
+    </div>
+
+    <div class="nav-right">
+        <form method="GET" action="shop-all.php" class="search-form">
+            <input type="text" name="query" placeholder="Search for products..." class="search-input">
+            <button type="submit">Search</button>
         </form>
-                    <a href="Login.php">ACCOUNT</a>
-                    <a href="contact-us.php">CONTACT-US</a>
-                    <a href="cart.php">CART (0)</a>
-                </div>
-        
+
+        <!-- Always show "Welcome, K" -->
+        <a href="logged-in.html">Welcome, K</a>
+        <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
+            <a href="Logout.php">Logout</a>
+        <?php else: ?>
+            <a href="Signup.php">ACCOUNT</a>
+        <?php endif; ?>
+
+        <a href="contact-us.php">CONTACT-US</a>
+        <a href="cart.php">CART (<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)</a>
+    </div>
 </header>
 
     <section>

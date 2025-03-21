@@ -1,92 +1,170 @@
-const cardNumber = document.getElementById("number");
-const numberInp = document.getElementById("card_number");
-const nameInp = document.getElementById("card_name");
-const cardName = document.getElementById("name");
-const cardMonth = document.getElementById("month");
-const cardYear = document.getElementById("year");
-const monthInp = document.getElementById("card_month");
-const yearInp = document.getElementById("card_year");
-const cardCvc = document.getElementById("cvc");
-const cvcInp = document.getElementById("card_cvc");
-const submitBtn = document.getElementById("submit_btn");
-const compeleted = document.querySelector(".thank");
-const form = document.querySelector("form");
+document.addEventListener('DOMContentLoaded', function() {
+    // Card display elements
+    const cardNumber = document.getElementById("number");
+    const numberInp = document.getElementById("card_number");
+    const nameInp = document.getElementById("card_name");
+    const cardName = document.getElementById("name");
+    const cardMonth = document.getElementById("month");
+    const cardYear = document.getElementById("year");
+    const monthInp = document.getElementById("card_month");
+    const yearInp = document.getElementById("card_year");
+    const cardCvc = document.getElementById("cvc");
+    const cvcInp = document.getElementById("card_cvc");
+    
+    // Form and submit elements
+    const form = document.getElementById("payment-form");
+    const submitBtn = document.getElementById("submit_btn");
+    const thankYouSection = document.querySelector(".thank");
+    const receiptDetails = document.getElementById("receipt-details");
+    const continueBtn = document.getElementById("continue-btn");
 
-function setCardNumber(e) {
-    cardNumber.innerText = format(e.target.value);
-}
-function setCardName(e) {
-  cardName.innerText = format(e.target.value);
-}
-function setCardMonth(e) {
-  cardMonth.innerText = format(e.target.value);
-}
-function setCardYear(e) {
-  cardYear.innerText = format(e.target.value);
-}
-function setCardCvc(e) {
-  cardCvc.innerText = format(e.target.value);
-}
+    // Card display functions
+    function updateCardDisplay(input, display, defaultText = '') {
+        display.textContent = input.value || defaultText;
+    }
 
-function handleSubmit(e) {
-    e.preventDefault();
-    if (!nameInp.value) {
-      nameInp.classList.add('error');
-      nameInp.parentElement.classList.add("error_message")
-    } else {
-      nameInp.classList.remove("error");
-      nameInp.parentElement.classList.remove("error_message");
+    function formatCardNumber(value) {
+        // Remove non-digit characters
+        const cleanValue = value.replace(/\D/g, '');
+        // Add space every 4 digits
+        return cleanValue.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
     }
-    if (!numberInp.value) {
-      numberInp.classList.add('error')
-      numberInp.parentElement.classList.add("error_message");
-    } else if (numberInp.value.length < 16) {
-        numberInp.classList.add("error")
-    } else {
-      numberInp.classList.remove("error");
-      numberInp.parentElement.classList.remove("error_message");
-    }
-    if (!monthInp.value) {
-      monthInp.classList.add("error")
-      monthInp.parentElement.classList.add("error_message");
-    } else {
-      monthInp.classList.remove("error");
-      monthInp.parentElement.classList.remove("error_message");
-    }
-    if (!yearInp.value) {
-      yearInp.classList.add("error")
-      yearInp.parentElement.classList.add("error_message");
-    } else {
-      yearInp.classList.remove("error");
-      yearInp.parentElement.classList.remove("error_message");
-    }
-    if (!cvcInp.value) {
-      cvcInp.classList.add("error")
-      cvcInp.parentElement.classList.add("error_message");
-    } else {
-      cvcInp.classList.remove("error");
-      cvcInp.parentElement.classList.remove("error_message");
-    }
-    if (
-      nameInp.value &&
-      numberInp.value &&
-      monthInp.value &&
-      yearInp.value &&
-      cvcInp.value &&
-      numberInp.value.length == 16
-    ) {
-      compeleted.classList.remove("hidden");
-      form.classList.add("hidden");
-    }
-  
-}
-function format(s) {
-  return s.toString().replace(/\d{4}(?=.)/g, "$& ");
-}
 
-numberInp.addEventListener("keyup", setCardNumber);
-nameInp.addEventListener("keyup", setCardName);
-monthInp.addEventListener("keyup", setCardMonth);
-yearInp.addEventListener("keyup", setCardYear);
-cvcInp.addEventListener("keyup", setCardCvc);
-submitBtn.addEventListener("click", handleSubmit);
+    // Event listeners for card display
+    numberInp.addEventListener("input", function() {
+        this.value = formatCardNumber(this.value);
+        updateCardDisplay(this, cardNumber, "0000 0000 0000 0000");
+    });
+
+    nameInp.addEventListener("input", function() {
+        updateCardDisplay(this, cardName, "Jane Appleseed");
+    });
+
+    monthInp.addEventListener("input", function() {
+        updateCardDisplay(this, cardMonth, "00");
+    });
+
+    yearInp.addEventListener("input", function() {
+        updateCardDisplay(this, cardYear, "00");
+    });
+
+    cvcInp.addEventListener("input", function() {
+        updateCardDisplay(this, cardCvc, "000");
+    });
+
+    // Validation functions
+    function validateField(input, validationFn, errorMessage) {
+        const errorSpan = input.nextElementSibling;
+        const isValid = validationFn(input.value);
+        
+        if (!isValid) {
+            input.classList.add('error');
+            errorSpan.textContent = errorMessage;
+        } else {
+            input.classList.remove('error');
+            errorSpan.textContent = '';
+        }
+        
+        return isValid;
+    }
+
+    function validateForm() {
+        const validations = [
+            {
+                input: nameInp,
+                validate: (value) => value.trim().length >= 2,
+                message: 'Name must be at least 2 characters'
+            },
+            {
+                input: numberInp,
+                validate: (value) => /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/.test(value),
+                message: 'Invalid card number'
+            },
+            {
+                input: monthInp,
+                validate: (value) => /^(0[1-9]|1[0-2])$/.test(value),
+                message: 'Invalid month'
+            },
+            {
+                input: yearInp,
+                validate: (value) => /^(2[3-9]|3[0-5])$/.test(value),
+                message: 'Invalid year'
+            },
+            {
+                input: cvcInp,
+                validate: (value) => /^\d{3}$/.test(value),
+                message: 'Invalid CVC'
+            }
+        ];
+
+        return validations.every(({ input, validate, message }) => 
+            validateField(input, validate, message)
+        );
+    }
+
+    // Form submission handler
+    function handleSubmit(e) {
+        e.preventDefault();
+        
+        // Validate form
+        if (!validateForm()) {
+            console.log('Validation failed');
+            return;
+        }
+
+        // Prepare form data
+        const formData = new FormData(form);
+
+        // Send AJAX request
+        fetch('payment.php', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log('Payment result:', result);
+            
+            if (result.status === 'success') {
+                // Display receipt details
+                const receiptHTML = `
+                    <p>Booking ID: ${result.booking_id}</p>
+                    <p>Amount: $${result.transaction_details.amount.toFixed(2)}</p>
+                    <p>Card: ${result.transaction_details.card_number}</p>
+                    <p>Date: ${result.transaction_details.date}</p>
+                `;
+                receiptDetails.innerHTML = receiptHTML;
+
+                // Show thank you section
+                form.classList.add('hidden');
+                thankYouSection.classList.remove('hidden');
+            } else {
+                // Show error message
+                alert(result.message || 'Payment processing failed');
+            }
+        })
+        .catch(error => {
+            console.error('Payment error:', error);
+            alert(`An error occurred: ${error.message}`);
+        });
+    }
+
+    // Continue button handler
+    if (continueBtn) {
+        continueBtn.addEventListener('click', () => {
+            // Redirect to appropriate page
+            window.location.href = 'index.php'; // Change as needed
+        });
+    }
+
+    // Add form submission event listener
+    form.addEventListener('submit', handleSubmit);
+});

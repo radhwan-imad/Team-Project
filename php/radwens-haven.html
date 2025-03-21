@@ -15,31 +15,41 @@
         BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS
     </div>
 
-    <!-- Main Navigation -->
+  <!-- Main Navigation -->
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
             <a href="Mainpage.html">HOME</a>
-            <a href="shop-all.html">SHOP ALL</a>
-            <a href="Candles.html">CANDLES</a>
+            <a href="shop-all.php">SHOP ALL</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
 
-
+        <!-- Centered Logo -->
         <div class="logo">
-            <img src="Aura_logo.png" alt="logo">
-            <span class="logo-text">AU-RA</span>
-        </div>
+            <a href="Mainpage.html">
+                <img src="Aura_logo.png" alt="logo"> 
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
+            </a>
+    </div>
 
         <div class="nav-right">
-            <a href="#">SEARCH</a>
-            <a href="Signup.php">ACCOUNT</a>
-            <a href="#">COUNTRY ▼</a>
-            <a href="#">WISHLIST</a>
-            <a href="#">CART (0)</a>
-        </div>
-    </header>
+            <!-- Collapsible Search Bar -->
+                    <form method="GET" action="search.php" class="search-form">
+                        <input
+                            type="text"
+                            name="query"
+                            placeholder="Search for products..."
+                            class="search-input"
+                        >
+                        <button type="submit">Search</button>
+        </form>
+                    <a href="Login.php">ACCOUNT</a>
+                    <a href="contact-us.php">CONTACT-US</a>
+                    <a href="cart.php">CART (0)</a>
+                </div>
+        
+</header>
 
     <main class="product-detail">
         <div class="breadcrumb">Home > Ocean Breeze</div>
@@ -50,7 +60,7 @@
             </div>
 
             <div class="product-info">
-                <h1>Ayura Bloom</h1>
+                <h1>Radwens's Haven</h1>
                 <div class="review-wishlist">
                     <div class="review">
                         <span class="stars">★★★★★</span>
@@ -62,7 +72,7 @@
                 </div>
 
                 <p class="price">£99.99</p>
-                <p class="description">Transport yourself to a serene garden with Ayura Bloom, where herbaceous and citrus notes of bergamot and white lily bloom into a vibrant green heart. Accents of vanilla and coffee create an enchanting finish, making this fragrance an irresistible escape into nature’s embrace. </p>
+                <p class="description">Journey into opulence with Radwen's Haven, a sophisticated blend of zesty grapefruit, spicy nutmeg, and luxurious saffron. The heart blooms with orange blossom, cinnamon, jasmine, and sandalwood, settling into an amber and sandalwood base for an unforgettable, warm finish. </p>
 
                 <div class="fragrance-family">
                     <h3>Fragrance Family</h3>
@@ -71,9 +81,9 @@
 
                 <div class="notes">
                     <h3>All Notes</h3>
-                    <p><strong>Top:</strong> Lavender, Marine Accord</p>
-                    <p><strong>Heart:</strong> Rose, Sage</p>
-                    <p><strong>Base:</strong> Musk, Oakmoss</p>
+                    <p><strong>Top:</strong> Orange Blossom</p>
+                    <p><strong>Heart:</strong>Grape Fruit</p>
+                    <p><strong>Base:</strong> Sandalwood</p>
                 </div>
 
                 <div class="gender">
@@ -119,27 +129,27 @@
         <h2>Tasting Notes</h2>
         <div class="tasting-notes-content">
             <div class="note">
-                <img src="images/lavender note.webp" alt="Lavender">
+                <img src="images/grapefruit.png" alt="Lavender">
                 <div class="note-info">
                     <h3>Top Note</h3>
-                    <p class="note-title">Lavender</p>
-                    <p class="note-description">Fresh and invigorating, like a cool ocean breeze.</p>
+                    <p class="note-title">Grape Fruit</p>
+                    <p class="note-description">A tangy grapefruit top note adds zing to this lively, invigorating fragrance.</p>
                 </div>
             </div>
             <div class="note">
-                <img src="images/rose note.webp" alt="Rose">
+                <img src="images/Orange_Blossom.png" alt="Rose">
                 <div class="note-info">
                     <h3>Heart Note</h3>
-                    <p class="note-title">Rose</p>
-                    <p class="note-description">Calming and herbal, adding depth to the fragrance.</p>
+                    <p class="note-title">Orange Blossom</p>
+                    <p class="note-description">Soft orange blossom heart notes bring floral, romantic warmth to this hypnotic fragrance.</p>
                 </div>
             </div>
             <div class="note">
-                <img src="images/musk note.webp" alt="Oakmoss">
+                <img src="images/Sandalwood.png" alt="Oakmoss">
                 <div class="note-info">
                     <h3>Base Note</h3>
-                    <p class="note-title">Oakmoss</p>
-                    <p class="note-description">Earthy and grounding, providing a lasting richness.</p>
+                    <p class="note-title">Sandalwood</p>
+                    <p class="note-description">Sandalwood base notes awaken the senses with their woody warmth.</p>
                 </div>
             </div>
         </div>
