@@ -37,7 +37,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
+            <a href="Mainpage.php">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
             
             <a href="society.html">Au-Ra SOCIETY</a>
@@ -46,7 +46,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
 
         <!-- Centered Logo -->
         <div class="logo">
-            <a href="Mainpage.html">
+            <a href="Mainpage.php">
                 <img src="Aura_logo.png" alt="logo"> 
             <span class="logo-text">AU-RA<br>Fragrance your soul</span>
             </a>
@@ -99,7 +99,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
                         <img src="images/past1.png" alt="Orders Icon">
                         <h3>Past Orders</h3>
                     </a>
-                    <a href="account-settings.html" class="dashboard-item">
+                    <a href="account-settings.php" class="dashboard-item">
                         <img src="images/gents.png" alt="Settings Icon">
                         <h3>Account Settings</h3>
                     </a>

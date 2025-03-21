@@ -101,7 +101,7 @@ $conn->close();
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
+            <a href="Mainpage.php">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
@@ -109,7 +109,7 @@ $conn->close();
 
         <!-- Centered Logo -->
         <div class="logo">
-            <a href="Mainpage.html">
+            <a href="Mainpage.php">
                 <img src="Aura_logo.png" alt="logo"> 
             </a>
             <span class="logo-text">AU-RA<br>Fragrance your soul</span>
@@ -120,7 +120,9 @@ $conn->close();
             <form method="GET" action="search.php" class="search-form">
                 <input type="text" name="query" placeholder="Search for products..." class="search-input">
                 <button type="submit">Search</button>
+            
             </form>
+            Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</a>
             <a href="Login.php">ACCOUNT</a>
             <a href="contact-us.php">CONTACT-US</a>
             <a href="cart.php">CART (0)</a>
