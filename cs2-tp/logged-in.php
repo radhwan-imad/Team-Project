@@ -77,7 +77,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
         <section class="user-dashboard">
             <!-- Profile Section -->
             <div class="profile-overview">
-                <h2>Welcome Back,  <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</h2>
+            <span>Welcome, <?php echo htmlspecialchars($_SESSION['User_Name'], ENT_QUOTES, 'UTF-8'); ?>!</span>
                 <img src="images/meme cat.jpg" alt="User Picture" class="user-picture">
                 <p>Explore our exclusive offers and updates tailored just for you. Thank you for choosing AU-RA!</p>
                 <div class="profile-info">

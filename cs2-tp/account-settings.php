@@ -199,7 +199,7 @@ if (isset($_POST['submitted'])) {
             error_log("Profile updated successfully for User_ID: " . $_SESSION['User_ID']);
 
             // Update session variables with the new data
-            $_SESSION['Name'] = $name;
+            $_SESSION['User_Name'] = $name;
             $_SESSION['Last_Name'] = $last_name;
             $_SESSION['Email_ID'] = $email;
             $_SESSION['Contact_NO'] = $phone;
