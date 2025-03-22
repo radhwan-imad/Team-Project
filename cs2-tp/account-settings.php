@@ -325,7 +325,7 @@ $conn->close();
                 <a href="account-settings.php">ACCOUNT</a>
                 <a href="Logout.php">LOGOUT</a>
             <?php else: ?>
-                <a href="Login.php">ACCOUNT</a>
+                <a href="logged-in.php">ACCOUNT</a>
             <?php endif; ?>
             <a href="contact-us.php">CONTACT-US</a>
             <a href="cart.php">CART (0)</a>
