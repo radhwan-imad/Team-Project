@@ -173,6 +173,7 @@ if (!$viewWishlist) {
                 <input type="text" name="query" placeholder="Search for products..." class="search-input" value="<?php echo htmlspecialchars($search_query); ?>">
                 <button type="submit">Search</button>
             </form>
+            Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</a>
             <a href="Signup.php">ACCOUNT</a>
             <a href="contact-us.php">CONTACT-US</a>
             <!-- Wishlist Link using persistent (database) wishlist -->

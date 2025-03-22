@@ -1,10 +1,12 @@
 <?php
-
+session_start();
 require_once "connection.php"; // Ensure this file sets up $conn (mysqli object)
-
+$user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 // Get the Product_ID from the URL and sanitize it
 $product_id = isset($_GET['Product_ID']) ? intval($_GET['Product_ID']) : 0;
-
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 if ($product_id <= 0) {
     header("Location: error-page.php"); // Redirect if Product_ID is invalid
     exit;
@@ -142,7 +144,8 @@ error_reporting(E_ALL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['product_name']); ?> - AU-RA</title>
     <link rel="icon" type="image/x-icon" href="Aura_logo1.png">
-    <link rel="stylesheet" href="product-page.css">
+    <link rel="stylesheet" href="product.css">
+
 </head>
 
 <body>
@@ -155,26 +158,32 @@ error_reporting(E_ALL);
     <header class="navbar">
         <!-- Left-side Links -->
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a ><a href="perfumes.php">PERFUMES</a>
-            <a href="Candles.html">CANDLES</a>
-            <a href="#">Au-Ra SOCIETY</a>
+            <a href="Mainpage.html">HOME</a>
+            <a href="shop-all.php">SHOP ALL</a>
+            <a href="society.html">Au-Ra SOCIETY</a>
+            <a href="about.html">ABOUT US</a>
         </div>
 
-
+        <!-- Centered Logo -->
         <div class="logo">
-            <a href="Mainpage.html"><img src="Aura_logo.png" alt="logo"></a>
-            <span class="logo-text">AU-RA</span>
-        </div>
+            <a href="Mainpage.html">
+                <img src="Aura_logo.png" alt="logo"> 
+            <span class="logo-text">AU-RA<br>Fragrance your soul</span>
+            </a>
+    </div>
 
         <div class="nav-right">
-            <a href="#">SEARCH</a>
-            <a href="#">ACCOUNT</a>
-            <a href="#">COUNTRY ▼</a>
-            <a href="#">WISHLIST</a>
-            <a href="#">CART (0)</a>
-        </div>
+				<form method="GET" action="shop-all.php" class="search-form">
+            <input type="text" name="query" placeholder="Search for products..." class="search-input">
+            <button type="submit">Search</button>
+        </form>
+            
+                    <a href="Login.php">ACCOUNT</a>
+                    <a href="contact-us.php">CONTACT-US</a>
+                    <a href="cart.php">CART (0)</a>
+                </div>
+        
     </header>
-
     <main class="product-detail">
         <div class="breadcrumb">Home > <?php echo htmlspecialchars($product['product_name']);?></div>
 
@@ -213,7 +222,7 @@ error_reporting(E_ALL);
                 </div>
 
                 <div class="quantity-section">
-                    <p>100ML</p>
+                    <p> 3.4 Oz </p>
                     <div class="quantity-selector">
                         <button class="quantity-btn">−</button>
                         <input type="number" value="1" min="1" class="quantity-input">
@@ -232,13 +241,7 @@ error_reporting(E_ALL);
                 <p class="installment-info">3 interest-free payments of £<?php echo number_format($product['Price'] / 3, 2); ?> with Clearpay. No fees.</p>
 
                 <div class="pairing-section">
-                    <h4>Create the Perfect Pairing</h4>
-                    <p>Make your scent last all day by pairing it with an ocean-scented candle.</p>
-                    <div class="pairing-item">
-                        <img src="images/ocean candle.png" alt="Ocean Candle" class="pairing-image">
-                        <div class="pairing-info">
-                            <p>Ocean Mist Candle</p>
-                            <p>£25.00</p>
+
                         </div>
                     </div>
                 </div>
@@ -365,30 +368,30 @@ error_reporting(E_ALL);
             <div class="product">
                 <img src="images/5.jpg" alt="Floral symphony">
                 <p class="product-type">Eau De Parfum Combo</p>
-                <h3>Sweet Escape & Wood De Amber Set</h3>
-                <p>£130.00</p>
-                <p>1 size</p>
+                <h3>Lirien</h3>
+                <p>£109.99</p>
+               
             </div>
             <div class="product">
                 <img src="images/4.jpg" alt="Ocean breeze">
                 <p class="product-type">Perfume Oil</p>
-                <h3>Oud Sheikha</h3>
-                <p>From £21.00</p>
-                <p>4 sizes</p>
+                <h3>Listrewood</h3>
+                <p>From £119.99.00</p>
+                
             </div>
             <div class="product">
                 <img src="images/1.jpg" alt="Citrus Zest">
                 <p class="product-type">Eau De Parfum</p>
-                <h3>Amore Di Mari</h3>
-                <p>£160.00</p>
-                <p>1 size</p>
+                <h3>Rayun</h3>
+                <p>£109.99</p>
+              
             </div>
             <div class="product">
                 <img src="images/2.jpg" alt="Gourmand Caramel
             ">
                 <p class="product-type">Eau De Parfum</p>
-                <h3>Oud Aristo</h3>
-                <p>£70.00</p>
+                <h3>Mosharra Essence</h3>
+                <p>£109.99</p>
                 <p>1 size</p>
             </div>
         </div>

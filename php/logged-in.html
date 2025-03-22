@@ -1,23 +1,6 @@
-
-<?php session_start();
-require_once("connection.php");
-if(!isset($_SESSION['User_ID'])) {
-    header("Location: Login.php");
-    exit();
-}
-
-$userDetails = $conn->prepare('SELECT registration_date FROM users WHERE User_ID = ?');
-$userDetails->bind_param('i', $_SESSION['User_ID']);
-$userDetails->execute();
-$result = $userDetails->get_result();
-$userData = $result->fetch_assoc();
-
-$memberSince = date('F Y', strtotime($userData['registration_date']));
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +29,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
 
         <!-- Centered Logo -->
         <div class="logo">
-            <a href="Mainpage.php">
+            <a href="Mainpage.html">
                 <img src="Aura_logo.png" alt="logo"> 
             <span class="logo-text">AU-RA<br>Fragrance your soul</span>
             </a>
@@ -63,9 +46,10 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
                         >
                         <button type="submit">Search</button>
                     </form>
-         Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</a>
+        <a href="logged-in.html">Welcome, K</a>
         
-                    <a href="logged-in.php">ACCOUNT</a>
+        
+                    <a href="Login.php">ACCOUNT</a>
                     <a href="contact-us.php">CONTACT-US</a>
                     <a href="cart.php">CART </a>
                 </div>
@@ -77,15 +61,15 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
         <section class="user-dashboard">
             <!-- Profile Section -->
             <div class="profile-overview">
-                <h2>Welcome Back,  <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</h2>
+                <h2>Welcome Back, Ayan!</h2>
                 <img src="images/meme cat.jpg" alt="User Picture" class="user-picture">
                 <p>Explore our exclusive offers and updates tailored just for you. Thank you for choosing AU-RA!</p>
                 <div class="profile-info">
                     <div class="profile-details">
-                        <p><strong>Name:</strong>  <?php echo htmlspecialchars($_SESSION['User_Name']) ?> <?php echo htmlspecialchars($_SESSION['Last_Name']); ?></p>
-                        <p><strong>Email:</strong>  <?php echo htmlspecialchars($_SESSION['Email_ID']); ?></p>
-                        <p><strong>Member Since:</strong> <?php echo htmlspecialchars($memberSince); ?></p>
-                    
+                        <p><strong>Name:</strong> Ayan K</p>
+                        <p><strong>Email:</strong> Ayan@aura.com</p>
+                        <p><strong>Member Since:</strong> August 2024</p>
+                        <p><strong>Last Login:</strong> 02/12/2024</p>
                     </div>
                 </div>
             </div>
@@ -99,7 +83,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
                         <img src="images/past1.png" alt="Orders Icon">
                         <h3>Past Orders</h3>
                     </a>
-                    <a href="account-settings.php" class="dashboard-item">
+                    <a href="account-settings.html" class="dashboard-item">
                         <img src="images/gents.png" alt="Settings Icon">
                         <h3>Account Settings</h3>
                     </a>

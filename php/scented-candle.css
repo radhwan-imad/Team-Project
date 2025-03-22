@@ -721,3 +721,91 @@ body {
     background-color: #925e4c;
     transform: scale(1.05);
 }
+/* Search Bar Styling */
+.nav-right .search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-right .search-form input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-family: 'Lora', serif;
+    width: 50px; /* Start small */
+    transition: width 0.3s ease-in-out;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.nav-right .search-form input[type="text"]:focus {
+    width: 300px; /* Expand on focus */
+    border-color: #a27b5c;
+    box-shadow: 0 0 5px rgba(162, 123, 92, 0.5);
+    outline: none;
+}
+
+.nav-right .search-form button {
+    padding: 5px 15px;
+    background-color: #a27b5c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-right .search-form button:hover {
+    background-color: #916547;
+}
+
+/* Ensure other nav items stay aligned */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card img {
+        max-width: 120px;
+    }
+}
+/* General Button Styling */
+.product-btn, .buy-now-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a27b5c; /* Light brown */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif; /* Match the font family */
+    font-size: 1em; /* Consistent font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.product-btn:hover, .buy-now-btn:hover {
+    background-color: #916547;
+    transform: scale(1.05);
+}
+
+/* Ensure the cursor appears as a pointer on hover */
+.product-btn, .buy-now-btn {
+    cursor: pointer; /* Fix for the cursor becoming 'I' */
+}

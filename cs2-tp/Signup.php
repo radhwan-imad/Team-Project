@@ -150,13 +150,13 @@ unset($_SESSION['error_messages'], $_SESSION['form_data']);
     <div class="announcement-bar">BLACK FRIDAY IS HERE! UP TO 50% OFF PLUS MANY COMBINATION DISCOUNTS</div>
     <header class="navbar">
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
+            <a href="Mainpage.php">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
             <a href="society.html">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
         <div class="logo">
-            <a href="Mainpage.html">
+            <a href="Mainpage.php">
                 <img src="Aura_logo.png" alt="logo">
                 <span class="logo-text">AU-RA<br>Fragrance your soul</span>
             </a>
