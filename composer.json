@@ -1,0 +1,11 @@
+{
+    "name": "rainb/team-project",
+    "autoload": {
+        "psr-4": {
+            "Rainb\\TeamProject\\": "src/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

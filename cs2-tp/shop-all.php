@@ -155,9 +155,9 @@ if (!$viewWishlist) {
     <!-- Main Navigation -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="Mainpage.html">HOME</a>
+            <a href="Mainpage.php">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
-            <a href="society.html">Au-Ra SOCIETY</a>
+            <a href="society.php">Au-Ra SOCIETY</a>
             <a href="about.html">ABOUT US</a>
         </div>
 
@@ -173,8 +173,8 @@ if (!$viewWishlist) {
                 <input type="text" name="query" placeholder="Search for products..." class="search-input" value="<?php echo htmlspecialchars($search_query); ?>">
                 <button type="submit">Search</button>
             </form>
-            Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</a>
-            <a href="Signup.php">ACCOUNT</a>
+     
+            <a href="logged-in.php">ACCOUNT</a>
             <a href="contact-us.php">CONTACT-US</a>
             <!-- Wishlist Link using persistent (database) wishlist -->
             <a href="wishlist.php">WISHLIST (<?php 

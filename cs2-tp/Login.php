@@ -108,7 +108,6 @@ unset($_SESSION['error_message'], $_SESSION['form_data']);
             <a href="Signup.php">SIGN UP</a>
         <?php endif; ?>
             <a href="#">SEARCH</a>
-            <a href="#">COUNTRY ▼</a>
             <a href="#">WISHLIST</a>
             <a href="#">CART (0)</a>
         </div>

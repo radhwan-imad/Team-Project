@@ -40,8 +40,8 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
             <a href="Mainpage.php">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
             
-            <a href="society.html">Au-Ra SOCIETY</a>
-            <a href="about.html">ABOUT US</a>
+            <a href="society.php">Au-Ra SOCIETY</a>
+            <a href="about.php">ABOUT US</a>
         </div>
 
         <!-- Centered Logo -->
@@ -77,7 +77,7 @@ $memberSince = date('F Y', strtotime($userData['registration_date']));
         <section class="user-dashboard">
             <!-- Profile Section -->
             <div class="profile-overview">
-                <h2>Welcome Back,  <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</h2>
+            <span>Welcome, <?php echo htmlspecialchars($_SESSION['User_Name'], ENT_QUOTES, 'UTF-8'); ?>!</span>
                 <img src="images/meme cat.jpg" alt="User Picture" class="user-picture">
                 <p>Explore our exclusive offers and updates tailored just for you. Thank you for choosing AU-RA!</p>
                 <div class="profile-info">
