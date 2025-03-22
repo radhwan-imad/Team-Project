@@ -302,8 +302,8 @@ $conn->close();
         <div class="nav-left">
             <a href="Mainpage.php">HOME</a>
             <a href="shop-all.php">SHOP ALL</a>
-            <a href="society.html">Au-Ra SOCIETY</a>
-            <a href="about.html">ABOUT US</a>
+            <a href="society.php">Au-Ra SOCIETY</a>
+            <a href="about.php">ABOUT US</a>
         </div>
 
         <!-- Centered Logo -->

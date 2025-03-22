@@ -24,8 +24,8 @@ session_start();
     <div class="nav-left">
         <a href="Mainpage.php">HOME</a>
         <a href="shop-all.php">SHOP ALL</a>
-        <a href="society.html">Au-Ra SOCIETY</a>
-        <a href="about.html">ABOUT US</a>
+        <a href="society.php">Au-Ra SOCIETY</a>
+        <a href="about.php">ABOUT US</a>
     </div>
 
     <div class="logo">
@@ -41,7 +41,7 @@ session_start();
             <button type="submit">Search</button>
         </form>
 
-        <!-- Always show "Welcome, K" -->
+      
 
         <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
             <a href="Logout.php">Logout</a>
