@@ -42,11 +42,11 @@ session_start();
         </form>
 
         <!-- Always show "Welcome, K" -->
-        Welcome, <?php echo htmlspecialchars($_SESSION['User_Name']); ?>!</a>
+
         <?php if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
             <a href="Logout.php">Logout</a>
         <?php else: ?>
-            <a href="Signup.php">ACCOUNT</a>
+            <a href="logged-in.php">ACCOUNT</a>
         <?php endif; ?>
 
         <a href="contact-us.php">CONTACT-US</a>
