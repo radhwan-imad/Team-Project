@@ -1,0 +1,244 @@
+body {
+    font-family: 'Playfair Display', serif;
+    background-color: #fdf5e6;
+    color: #333;
+}
+
+/* Society Intro Section */
+.society-intro {
+    text-align: center;
+    padding: 60px 20px;
+    background-image: url('images/society-bg.jpg');
+    /* Replace with actual background image */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
+
+.society-intro h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.society-intro p {
+    font-size: 1.1em;
+    max-width: 600px;
+    margin: 0 auto 1.5em;
+}
+
+.society-intro .buttons button {
+    font-size: 1em;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn {
+    background-color: #333;
+    color: white;
+}
+
+.login-btn {
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+}
+
+/* Rewards Section */
+.rewards {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f5f0eb;
+}
+
+.rewards h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.reward-options {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.reward {
+    text-align: center;
+}
+
+.reward img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+/* Tiers Section */
+.tiers {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.tiers h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.tier-levels {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tier {
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 200px;
+}
+
+.tier img {
+    width: 150px;
+    /* Triple the size of the image */
+    margin-bottom: 10px;
+}
+
+.tier h3 {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+/* How It Works Section */
+.how-it-works {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f5f0eb;
+}
+
+.how-it-works h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.step {
+    text-align: center;
+    width: 200px;
+}
+
+.step img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+/* FAQ Section */
+.faq {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.faq h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.accordion-button {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #f5f0eb;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.accordion-content {
+    display: none;
+    padding: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.accordion-button:focus,
+.accordion-button:hover {
+    outline: none;
+    color: #333;
+}
+
+/* Society Intro Section */
+.society-intro {
+    position: relative;
+    text-align: center;
+    padding: 80px 20px 120px;
+    /* Add more bottom padding to avoid overlap */
+    background-image: url('images/background.webp');
+    /* Use your actual image path */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    min-height: 500px;
+    /* Ensure enough height for the background image */
+}
+
+.society-intro .overlay {
+    background-color: rgba(255, 255, 255, 0.7);
+    /* Light overlay to increase contrast */
+    padding: 60px 20px;
+    display: inline-block;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.society-intro h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+.society-intro p {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 1.5em;
+}
+
+.society-intro .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.society-intro .buttons button {
+    font-size: 1em;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn {
+    background-color: #333;
+    color: white;
+}
+
+.login-btn {
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+}
+
+/* Ensures rewards section does not overlap */
+.rewards {
+    margin-top: -80px;
+    /* Pull rewards section slightly upwards if needed */
+    padding: 40px 20px;
+    background-color: #f5f0eb;
+    text-align: center;
+}

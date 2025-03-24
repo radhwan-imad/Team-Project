@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
+
+:root {
+  --Red: hsl(0, 100%, 66%);
+  --White: hsl(0, 0%, 100%);
+  --Light-grayish-violet: hsl(270, 3%, 87%);
+  --Dark-grayish-violet: hsl(279, 6%, 55%);
+  --Very-dark-violet: hsl(278, 68%, 11%);
+}
+
+*, * > * {
+  font-family: 'Space Grotesk', sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #fefaf5; /* Optional: a light background color for the page */
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Container holding left (card preview) & right (form) sections */
+.container {
+  display: flex;
+  align-items: flex-start;  /* Align at the top */
+  gap: 2rem;               /* Space between left and right sections */
+  padding: 2rem;           /* Space around the container */
+}
+
+/* Left Section (Background with card preview) */
+.left_section {
+  width: 40%;
+  min-height: 100vh;
+  background-image: url('images/bg-main-desktop.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Cards container */
+.cards {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Front card styling */
+.front_card {
+  position: relative;
+  transform: translateX(-100px);
+}
+.card_logo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+#number {
+  position: absolute;
+  color: var(--White);
+  bottom: 5rem;
+  left: 1rem;
+  letter-spacing: 2px;
+}
+.card_info {
+  position: absolute;
+  bottom: 2rem;
+  left: 1rem;
+  right: 3rem;
+  display: flex;
+  color: var(--White);
+  justify-content: space-between;
+}
+
+/* Back card styling */
+.back_card {
+  position: relative;
+}
+#error {
+  border: 2px solid var(--Red);
+}
+.error_message {
+  gap: 0;
+}
+.error_message::after {
+  content: "can't be blank";
+  color: var(--Red);
+  margin-top: .2rem;
+}
+#cvc {
+  position: absolute;
+  right: 3.5rem;
+  top: 7rem;
+  color: var(--Light-grayish-violet);
+}
+
+/* Right Section (Payment Form) */
+.right_section {
+  width: 60%; /* Fills remaining space */
+  padding: 2rem; /* Space around the form container */
+  background-color: #fff; /* Optional white background */
+  border-radius: 8px; /* Optional rounding */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Payment Form */
+.right_section form {
+  display: grid;
+  gap: 1.2rem; /* Increased gap between form rows */
+  width: 400px; /* Slightly wider form */
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, auto);
+}
+
+/* Labels & Inputs */
+label {
+  color: var(--Very-dark-violet);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+input {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid var(--Dark-grayish-violet);
+  border-radius: 6px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input::placeholder {
+  font-family: inherit;
+  color: var(--Dark-grayish-violet);
+}
+input:focus {
+  outline-color: hsl(249, 99%, 64%);
+}
+
+/* Grid sections for form fields */
+.grid_1 {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / span 2; /* spanning 2 columns */
+}
+.grid_2 {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / span 2;
+}
+.grid_3 {
+  display: flex;
+  flex-direction: column;
+}
+.grid_4 {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / span 2;
+}
+.card_information {
+  display: flex;
+  grid-column: 1 / span 2;
+  gap: 1rem;
+}
+#card_date {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / span 2;
+}
+#card_date .two_inp {
+  display: flex;
+  gap: 0.5rem; /* space between month & year inputs */
+}
+#card_date div input {
+  width: 70px;
+}
+#card_cvc {
+  width: 100%;
+}
+
+/* Pay Now button */
+form button {
+  grid-column: 1 / span 2;
+  font-size: 1rem;
+  height: 50px;
+  color: var(--White);
+  border-radius: 6px;
+  background: var(--Very-dark-violet);
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+/* Thank you section after form submission */
+.thank {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.thank h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+.thank p {
+  font-size: 1rem;
+  color: var(--Dark-grayish-violet);
+}
+.thank button {
+  color: var(--White);
+  width: 100%;
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: var(--Very-dark-violet);
+  cursor: pointer;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1023px) {
+  .front_card .card_container img,
+  .front_card,
+  .back_card img,
+  .back_card {
+    width: 300px;
+  }
+  .card_logo {
+    width: 50px;
+  }
+  #number {
+    font-size: 1.1rem;
+  }
+  #cvc {
+    top: 42%;
+    right: 12%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .left_section {
+    width: 100%;
+    min-height: 30vh;
+    background-image: url('images/bg-main-mobile.png');
+  }
+  .cards {
+    flex-direction: column-reverse;
+    left: 61%;
+    top: 60%;
+    gap: 0;
+  }
+  .back_card {
+    transform: translateY(70px);
+  }
+  .front_card {
+    z-index: 100;
+  }
+  .right_section {
+    width: 100%;
+    margin-top: 2rem;
+    box-shadow: none;
+  }
+  .right_section form {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    gap: 1rem;
+  }
+}
+/* Helper class to span full width in the grid */
+.grid_full {
+    grid-column: 1 / span 2;
+}
+
+/* Promo Code Section Styling */
+.promo-code-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    /* Lay out label on its own row, then input & button in next row, message below */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.promo-code-section label {
+    grid-column: 1 / span 2;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.promo-code-section input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.promo-code-section button {
+    padding: 0.5rem 1rem;
+    background-color: var(--Very-dark-violet, #321c1c);
+    color: var(--White, #fff);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.promo-code-section button:hover {
+    opacity: 0.9;
+}
+
+.promo-message {
+    grid-column: 1 / span 2;
+    margin-top: 0.5rem;
+    color: green;
+    font-weight: bold;
+}
+
+/* Pay Now button in .grid_full to ensure it sits on a new row */
+.grid_full button#submit_btn {
+    width: auto;       /* or 100% if you want it full width */
+    margin-top: 1rem;  /* spacing above */
+}
